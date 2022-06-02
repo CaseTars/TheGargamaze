@@ -1,3 +1,3 @@
 # TheGargamaze
 
-* 'Projeto Final de POO'
+* Projeto Final de POO
