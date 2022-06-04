@@ -4,12 +4,13 @@ public class Builder {
     private View view;
     private Player pCase;
     private Player pTars;
-    private Space space;
+    private Space space; //n precisa
     
     public void build() {
         view = new View();
         space = new Space();
         space.connectView(view);
+       
         
         // leitura de arquivo
         
@@ -18,6 +19,10 @@ public class Builder {
         
         pTars = new Player(1,0);
         space.insert(pTars);
+    
+        Control control = new Control();
+        control.conectCase(pCase);
+        control.conectTars(pTars);
     }
     
     View getView() {
