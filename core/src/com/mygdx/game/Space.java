@@ -4,7 +4,7 @@ import com.mygdx.game.elements.Element;
 import com.mygdx.game.interfaces.IMove;
 
 public class Space implements IMove{
-	public static final int size = 31; 
+	public static int size; 
 	
 	private Cell[][] cells; 
 	

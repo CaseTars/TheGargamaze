@@ -39,7 +39,7 @@ public class View {
         for(int x = 0;x < size;x++) {
         	for(int y = 0;y < size;y++) {
         		ViewCell aux = cells[x][y];
-        		batch.draw(aux.getTexture(), aux.getX(), aux.getY());
+        		batch.draw(aux.getTexture(), aux.getX(), aux.getY(), ViewCell.size, ViewCell.size);
         	}	
         }
 

@@ -7,17 +7,17 @@ import com.mygdx.game.interfaces.IViewCell;
 import com.mygdx.game.interfaces.IVisual;
 
 public class ViewCell implements IViewCell {
-    public static final int size = 16;
+    public static final float size = 480f/Space.size;
     
 	private static Texture imgCase;
     private static Texture imgTars;
     private static Texture imgCaseTars;
     private static Texture imgWall;
     private static Texture imgGround;
-    
+
     private Texture current = imgGround;
-    private int x;
-    private int y;
+    private float x;
+    private float y;
     
     public ViewCell(int x, int y) {
         this.x = x*size;
@@ -27,9 +27,10 @@ public class ViewCell implements IViewCell {
     public static void loadImages() {
         imgCase     = new Texture(Gdx.files.internal("case.png"));
         imgTars     = new Texture(Gdx.files.internal("tars.png"));
-        imgCaseTars = new Texture(Gdx.files.internal("case+tars.png"));
+        //imgCaseTars = new Texture(Gdx.files.internal("case+tars.png"));
         imgWall     = new Texture(Gdx.files.internal("wall.png"));
         imgGround   = new Texture(Gdx.files.internal("ground.png"));
+        imgCaseTars= new Texture(Gdx.files.internal("HappySantache.png"));
     }
 	
     public static void dispose() {
@@ -61,11 +62,11 @@ public class ViewCell implements IViewCell {
 	    return current;
 	}
 	
-	public int getX() {
+	public float getX() {
         return x;
     }
 	
-	public int getY() {
+	public float getY() {
         return y;
     }
 }

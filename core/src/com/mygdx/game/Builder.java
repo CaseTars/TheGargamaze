@@ -11,8 +11,9 @@ public class Builder {
     private Space space; //n precisa
     
     public void build() {
+    	Space.size = 31; //receber do arquivo
+    	space = new Space();
         view = new View();
-        space = new Space();
         
         for(int x = 0; x<Space.size; x++)
             for(int y = 0; y<Space.size; y++)
@@ -29,8 +30,8 @@ public class Builder {
         space.insert(pTars);
         
         Wall wall;
-        for(int i = 0; i<11; i++) {
-            wall = new Wall(10+i,15);
+        for(int i = 0; i<4; i++) {
+            wall = new Wall(2+i,7);
             space.insert(wall);
         }
     
