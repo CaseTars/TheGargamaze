@@ -1,5 +1,8 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
+import com.mygdx.game.elements.Player;
+
 public class Builder {
     private View view;
     private Player pCase;
@@ -16,15 +19,20 @@ public class Builder {
                 
         // leitura de arquivo
         
-        pCase = new Player(0,0);
+        pCase = new Player(1,1, 'C');
+        pCase.connect(space);
         space.insert(pCase);
         
-        pTars = new Player(1,0);
+        pTars = new Player(1,2, 'T');
+        pTars.connect(space);
         space.insert(pTars);
     
         Control control = new Control();
+        
         control.conectCase(pCase);
         control.conectTars(pTars);
+        
+        Gdx.input.setInputProcessor(control);
     }
     
     View getView() {

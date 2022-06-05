@@ -23,6 +23,7 @@ public class View {
         batch = new SpriteBatch();
         ViewCell.loadImages();
         
+        cells = new ViewCell[size][size];
         for(int x = 0;x < size;x++)
             for(int y = 0;y < size;y++)
                 cells[x][y] = new ViewCell(x,y);
@@ -44,6 +45,11 @@ public class View {
 
         batch.end();
     }   
+    
+    public void dispose() {
+    	ViewCell.dispose();
+    	batch.dispose();
+    }
     
     public ViewCell getCell(int x, int y) {
         return cells[x][y];

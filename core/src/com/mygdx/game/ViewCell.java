@@ -15,7 +15,7 @@ public class ViewCell implements IViewCell {
     private static Texture imgWall;
     private static Texture imgGround;
     
-    private Texture current;
+    private Texture current = imgGround;
     private int x;
     private int y;
     
@@ -32,6 +32,14 @@ public class ViewCell implements IViewCell {
         imgGround   = new Texture(Gdx.files.internal("ground.png"));
     }
 	
+    public static void dispose() {
+    	imgCase.dispose();
+        imgTars.dispose();
+        imgCaseTars.dispose();
+        imgWall.dispose();
+        imgGround.dispose();
+    }
+    
 	public void update(Array<IVisual> textures) {
 		if(textures.size == 0)
 		    current = imgGround;

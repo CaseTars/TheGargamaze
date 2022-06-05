@@ -6,7 +6,7 @@ import com.mygdx.game.interfaces.IViewCell;
 import com.mygdx.game.interfaces.IVisual;
 
 public class Cell {
-    private Array<Element> elements;
+    private Array<Element> elements = new Array<Element>();
     private IViewCell viewCell;
     
     public void connect(IViewCell viewCell) {
@@ -31,7 +31,7 @@ public class Cell {
     }
     
     private void updateView() {
-    	Array<IVisual> textures;
+    	Array<IVisual> textures = new Array<IVisual>();
     	for(Element element: elements) {
     		textures.add(element);
     	}

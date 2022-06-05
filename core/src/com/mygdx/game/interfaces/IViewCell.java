@@ -1,5 +1,7 @@
 package com.mygdx.game.interfaces;
 
-public interface IViewCell {
+import com.badlogic.gdx.utils.Array;
 
+public interface IViewCell {
+	public void update(Array<IVisual> textures);
 }

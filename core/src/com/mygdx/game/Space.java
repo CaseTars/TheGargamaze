@@ -10,7 +10,10 @@ public class Space implements IMove{
 	private View view;
 	
 	public Space() {
-		cells = new Cell[size][size]; //pd ser q de problema
+		cells = new Cell[size][size]; 
+		for(int x = 0;x < size;x++)
+			for(int y = 0;y < size;y++)
+				cells[x][y] = new Cell();
 	}
 	
 	public void insert(Element toInsert) {
@@ -23,11 +26,10 @@ public class Space implements IMove{
 	
 	public boolean move(Element toMove, int xF, int yF) {
 		if(cells[xF][yF].isObstructed()) return false;
-		
 		cells[toMove.getX()][toMove.getY()].remove(toMove);
 		cells[xF][yF].insert(toMove);
 		//laterna
-		
+    	
 		return true;
 	}
 	

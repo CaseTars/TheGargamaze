@@ -2,7 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.interfaces.ICommand;
 
 public class Control implements InputProcessor {
     private ICommand pCase;
