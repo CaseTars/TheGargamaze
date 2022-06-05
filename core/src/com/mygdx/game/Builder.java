@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.elements.Player;
+import com.mygdx.game.elements.Wall;
 
 public class Builder {
     private View view;
@@ -26,6 +27,12 @@ public class Builder {
         pTars = new Player(1,2, 'T');
         pTars.connect(space);
         space.insert(pTars);
+        
+        Wall wall;
+        for(int i = 0; i<11; i++) {
+            wall = new Wall(10+i,15);
+            space.insert(wall);
+        }
     
         Control control = new Control();
         

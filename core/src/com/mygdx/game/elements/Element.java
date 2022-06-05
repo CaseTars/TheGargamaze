@@ -10,10 +10,6 @@ public abstract class Element implements IVisual {
 		this.x = x;
 		this.y = y;
 	}
-    // From IVisual
-    public abstract char type();
-    public abstract char variation();
-    public abstract char state();
 
     public int getX() {
     	return x;
@@ -26,5 +22,9 @@ public abstract class Element implements IVisual {
     public boolean isObstructed() {
     	return false;
     }
-    
+
+    // From IVisual
+    public abstract char type();
+    public abstract char variation();
+    public abstract char state();
 }

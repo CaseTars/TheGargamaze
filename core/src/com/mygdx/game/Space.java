@@ -7,7 +7,6 @@ public class Space implements IMove{
 	public static final int size = 31; 
 	
 	private Cell[][] cells; 
-	private View view;
 	
 	public Space() {
 		cells = new Cell[size][size]; 
@@ -18,10 +17,6 @@ public class Space implements IMove{
 	
 	public void insert(Element toInsert) {
 		cells[toInsert.getX()][toInsert.getY()].insert(toInsert);
-	}
-	
-	public void connectView(View view) {
-		this.view = view;
 	}
 	
 	public boolean move(Element toMove, int xF, int yF) {

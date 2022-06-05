@@ -24,8 +24,6 @@ public class Player extends Element implements ICommand{
 
 	@Override
 	public void moveRight() {
-    	System.out.println(space.move(this, x+1, y));
-
 		if(space.move(this, x+1, y))
 			x += 1;
 	}
