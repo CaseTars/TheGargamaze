@@ -1,11 +1,11 @@
 package com.mygdx.game;
 
-import javax.xml.catalog.CatalogFeatures.Builder;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.mygdx.game.interfaces.ITime;
 
 public class AppTheGargamaze extends ApplicationAdapter {
 	private View view;

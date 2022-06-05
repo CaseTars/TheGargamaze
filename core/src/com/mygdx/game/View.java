@@ -11,8 +11,9 @@ import com.mygdx.game.interfaces.IViewCell;
 import com.mygdx.game.interfaces.IVisual;
 
 public class View {
-    private static final int size = Space.size;
-    private ViewCell[][] cells = new ViewCell[size][size];
+    public static final int size = Space.size;
+    
+    private ViewCell[][] cells;
     private OrthographicCamera camera;
     private SpriteBatch batch;
 
@@ -20,6 +21,11 @@ public class View {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
         batch = new SpriteBatch();
+        ViewCell.loadImages();
+        
+        for(int x = 0;x < size;x++)
+            for(int y = 0;y < size;y++)
+                cells[x][y] = new ViewCell(x,y);
     }
 
     public void show() {
@@ -37,6 +43,9 @@ public class View {
         }
 
         batch.end();
-
+    }   
+    
+    public ViewCell getCell(int x, int y) {
+        return cells[x][y];
     }
 }

@@ -4,8 +4,8 @@ import com.mygdx.game.elements.Element;
 import com.mygdx.game.interfaces.IMove;
 
 public class Space implements IMove{
+	public static final int size = 31; 
 	
-	private static final int size = 31;  
 	private Cell[][] cells; 
 	private View view;
 	
@@ -22,7 +22,7 @@ public class Space implements IMove{
 	}
 	
 	public boolean move(Element toMove, int xF, int yF) {
-		if(cells[xF][yF].isObstructed) return false;
+		if(cells[xF][yF].isObstructed()) return false;
 		
 		cells[toMove.getX()][toMove.getY()].remove(toMove);
 		cells[xF][yF].insert(toMove);
@@ -31,5 +31,7 @@ public class Space implements IMove{
 		return true;
 	}
 	
-	
+	public Cell getCell(int x, int y) {
+        return cells[x][y];
+    }
 }

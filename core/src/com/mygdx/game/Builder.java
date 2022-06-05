@@ -9,9 +9,11 @@ public class Builder {
     public void build() {
         view = new View();
         space = new Space();
-        space.connectView(view);
-       
         
+        for(int x = 0; x<Space.size; x++)
+            for(int y = 0; y<Space.size; y++)
+                space.getCell(x, y).connect(view.getCell(x, y));
+                
         // leitura de arquivo
         
         pCase = new Player(0,0);
