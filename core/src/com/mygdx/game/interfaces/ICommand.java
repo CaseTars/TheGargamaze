@@ -1,6 +1,6 @@
 package com.mygdx.game.interfaces;
 
-public interface Icommand {
+public interface ICommand {
 	
 	public void moveLeft();
 	public void moveRight();

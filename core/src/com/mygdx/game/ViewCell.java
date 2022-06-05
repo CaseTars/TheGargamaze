@@ -1,5 +1,11 @@
 package com.mygdx.game;
 
-public class ViewCell {
+import com.mygdx.game.interfaces.IVisual;
 
+public class ViewCell {
+	private Array 
+	
+	public void update(Array<IVisual> textures) {
+		
+	}
 }

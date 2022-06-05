@@ -9,8 +9,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 public class AppTheGargamaze extends ApplicationAdapter {
 	private View view;
-	private Itime Tcase;
-	private Itime Ttars;
+	private ITime Tcase;
+	private ITime Ttars;
 	
 	@Override
 	public void create () {

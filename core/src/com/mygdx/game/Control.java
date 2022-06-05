@@ -5,14 +5,14 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Rectangle;
 
 public class Control implements InputProcessor {
-    private Icommand pCase;
-    private Icommand pTars;
+    private ICommand pCase;
+    private ICommand pTars;
     
-    public void conectCase(Icommand pCase) {
+    public void conectCase(ICommand pCase) {
     	this.pCase = pCase;
     }
     
-    public void conectTars(Icommand pTars) {
+    public void conectTars(ICommand pTars) {
     	this.pTars = pTars;
     }
     
