@@ -22,7 +22,7 @@ public class ViewCell implements IUpdate {
     private IVisualCell cell;
     
     public ViewCell(int x, int y) {
-        this.x = x*size;
+        this.x = (x*size) + 160;
         this.y = y*size;
     }
     

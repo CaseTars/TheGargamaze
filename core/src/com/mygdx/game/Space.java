@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.elements.Element;
+import com.mygdx.game.elements.Wall;
 import com.mygdx.game.exceptions.ObstructedCell;
 import com.mygdx.game.interfaces.ISpace;
 import com.mygdx.game.interfaces.ILantern;
@@ -16,7 +17,8 @@ public class Space implements ISpace{
 		cells = new Cell[size][size]; 
 		for(int x = 0;x < size;x++)
 			for(int y = 0;y < size;y++)
-				cells[x][y] = new Cell(false);
+				if(x == 0 || x == 30 || y == 0 || y == 30) cells[x][y] = new Cell(true);
+				else cells[x][y] = new Cell(false);
 	}
 	
 	public void insert(Element toInsert) {

@@ -24,19 +24,25 @@ public class View {
     }
 
     public void show() {
-        ScreenUtils.clear(0, 0, 0.2f, 1); //cor do fundo
+        ScreenUtils.clear(.1f, 0, .1f, 1); //cor do fundo
         camera.update();
         
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         
-        for(int x = 0;x < size;x++) {
-        	for(int y = 0;y < size;y++) {
+//        for(int x = 0;x < size;x++) {
+//        	for(int y = 0;y < size;y++) {
+//        		ViewCell aux = cells[x][y];
+//        		batch.draw(aux.getTexture(), aux.getX(), aux.getY(), ViewCell.size, ViewCell.size);
+//        	}	
+//        }
+        
+        for(int y = size-1;y >= 0;y--) {
+        	for(int x = 0;x < size;x++) {
         		ViewCell aux = cells[x][y];
-        		batch.draw(aux.getTexture(), aux.getX(), aux.getY(), ViewCell.size, ViewCell.size);
-        	}	
+    			batch.draw(aux.getTexture(), aux.getX(), aux.getY(), ViewCell.size, ViewCell.size);
+        	}
         }
-
         batch.end();
     }   
     

@@ -23,15 +23,8 @@ public class Builder {
         connectCells();
         // leitura de arquivo
         
-        try{
-        	String[][] assemblyFile = readAssemblyFile();
-        	//Space.size = assemblyFile.length;
-        }
-        catch(IOException erro) {  //rever esses erros
-        	System.out.println(erro);
-        }  
         
-        String[][] assemblyFile = new String[Space.size][Space.size];
+        
         //pegar o tamanho do labirinto
         
         pCase = new Player(1,1, 'C');
@@ -42,96 +35,41 @@ public class Builder {
         pTars.connect(space);
         space.insert(pTars);        
         
-        //teste
-        Wall wall;
-        int[][] positions = {{3, 3},
-                             {3, 4},
-                             {3, 5},
-                             {3, 6},
-                             {3, 7},
-                             {3, 8},
-                             {3, 9},
-                             {3, 10},
-                             {3, 11},
-                             {3, 12},
-                             {3, 13},
-                             {4, 3},
-                             {4, 9},
-                             {5, 3},
-                             {5, 4},
-                             {5, 5},
-                             {5, 7},
-                             {5, 8},
-                             {5, 9},
-                             {5, 11},
-                             {5, 12},
-                             {5, 13},
-                             {6, 3},
-                             {6, 7},
-                             {6, 11},
-                             {6, 13},
-                             {7, 3},
-                             {7, 5},
-                             {7, 7},
-                             {7, 9},
-                             {7, 10},
-                             {7, 11},
-                             {7, 13},
-                             {8, 3},
-                             {8, 5},
-                             {8, 7},
-                             {8, 9},
-                             {8, 13},
-                             {9, 3},
-                             {9, 5},
-                             {9, 7},
-                             {9, 9},
-                             {9, 11},
-                             {9, 13},
-                             {10, 3},
-                             {10, 5},
-                             {10, 7},
-                             {10, 11},
-                             {10, 13},
-                             {11, 3},
-                             {11, 5},
-                             {11, 6},
-                             {11, 7},
-                             {11, 8},
-                             {11, 9},
-                             {11, 10},
-                             {11, 11},
-                             {11, 13},
-                             {12, 13},
-                             {13, 3},
-                             {13, 4},
-                             {13, 5},
-                             {13, 6},
-                             {13, 7},
-                             {13, 8},
-                             {13, 9},
-                             {13, 10},
-                             {13, 11},
-                             {13, 12},
-                             {13, 13},};
+        try{
+        	String[][] assemblyFile = readAssemblyFile();
+        	for(int x = 0;x < Space.size;x++) {
+    			for(int y = 0;y < Space.size;y++) {
+    				int posY = Space.size-1-y;
+            		if(assemblyFile[y][x].charAt(0) == 'W') {
+            		Wall wall = new Wall(x,posY);
+                    space.insert(wall);
+            		}
+                }
+            }
+        	
+        	//Impressor de mapa
+//        	for(int i=0;i < 31;i++) {
+//        		for(int j= 0;j < 31;j++) {
+//        			if(i==0 || i ==  30 || j == 0 || j == 30) {
+//        				System.out.print("W");
+//            			if(j<30) System.out.print(",");
+//
+//        			}
+//        			else {
+//        				System.out.print("-");
+//            			if(j<30) System.out.print(",");
+//
+//        			}
+//        		}
+//        		System.out.println(" ");
+//        	}
 
-        //for(int i = 0; i<4; i++) {
-        //  wall = new Wall(2+i,7);
-        //  space.insert(wall);
-        //}
-        ////teste
-        //
-        //for(int y = assemblyFile.length-1;y >= 0;y--) {
-        //for(int x = assemblyFile[y].length-1;x >= 0;x++) {
-        //    System.out.println(assemblyFile[y][x]);
-        //  }
-        //}
-
-        for(int i = 0; i<positions.length; i++) {
-            wall = new Wall(positions[i][0], positions[i][1]);
-            space.insert(wall);
+        	
         }
-        
+        catch(IOException erro) {  //rever esses erros
+        	System.out.println(erro);
+        }  
+           
         Lantern lantern = new Lantern();
         lantern.connect(pCase);
         lantern.connect(space);
@@ -144,7 +82,7 @@ public class Builder {
         pTars.connect(lantern);
         space.addLantern(lantern);
         
-        lantern.setRadius(3);
+        lantern.setRadius(30);
         
         Control control = new Control();
         
@@ -174,24 +112,19 @@ public class Builder {
         return pTars;
     }
     
-    private String[][] readAssemblyFile() throws IOException { //arrumar as variaveis
-    	FileReader arq = new FileReader("Maze.txt");
-        BufferedReader lerArq = new BufferedReader(arq);
+    private String[][] readAssemblyFile() throws IOException { 
+    	FileReader file = new FileReader("Maze.txt");
+        BufferedReader readFile = new BufferedReader(file);
         
-        Vector<String[]> v = new Vector<String[]>();
+        Vector<String[]> maze = new Vector<String[]>();
         
-        String linha = lerArq.readLine(); // 
-           while (linha != null) {
-	    	   String ln[]  = linha.split(",");
-	           v.add(ln);
-	          // for(int i =0 ; i < ln.length;i++) {
-	        	//   System.out.printf(ln[i]);
-	        	//   System.out.println(" ");
-	           //}
-
-             linha = lerArq.readLine(); 
+        String line =readFile.readLine(); 
+           while (line != null) {
+	    	   String ln[]  = line.split(",");
+	           maze.add(ln);
+             line = readFile.readLine(); 
            }        	
-        arq.close();
-        return (String[][])v.toArray(new String[v.size()][]);  //rever o retorno
+        file.close();
+        return (String[][])maze.toArray(new String[maze.size()][]); 
     }
 }
