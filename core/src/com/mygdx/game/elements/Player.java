@@ -1,11 +1,14 @@
 package com.mygdx.game.elements;
 
-import com.mygdx.game.interfaces.ICommand;
+import com.mygdx.game.exceptions.ObstructedCell;
+import com.mygdx.game.interfaces.ILantern;
 import com.mygdx.game.interfaces.IMove;
+import com.mygdx.game.interfaces.IPlayer;
 
-public class Player extends Element implements ICommand{
+public class Player extends Element implements IPlayer{
 	private IMove space;
 	private char variation;
+	private ILantern lantern;
 	
 	public Player(int x, int y, char variation) {
 		super(x, y);
@@ -16,28 +19,42 @@ public class Player extends Element implements ICommand{
 		this.space = space;
 	}
 	
+    public void connect(ILantern lantern) {
+        this.lantern = lantern;
+    }
+	
 	@Override
 	public void moveLeft() {
-		if(space.move(this, x-1, y))
-			x -= 1;
+        move(-1,0);
 	}
 
 	@Override
 	public void moveRight() {
-		if(space.move(this, x+1, y))
-			x += 1;
+        move(+1,0);
 	}
 
 	@Override
 	public void moveUp() {
-		if(space.move(this, x, y+1))
-			y += 1;
+        move(0,+1);
 	}
 
 	@Override
 	public void moveDown() {
-		if(space.move(this, x, y-1))
-			y -= 1;
+        move(0,-1);
+	}
+	
+	private void move(int dx, int dy) {
+	    int xi = x, yi = y;
+	    
+	    x += dx;
+        y += dy;
+        
+        try {
+            space.move(this, xi, yi);
+        } catch (ObstructedCell e) {
+            x = xi;
+            y = yi;
+        }
 	}
 	
 	@Override

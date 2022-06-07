@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.mygdx.game.interfaces.IViewCell;
+import com.mygdx.game.interfaces.IUpdate;
 import com.mygdx.game.interfaces.IVisual;
 
 public class View {
