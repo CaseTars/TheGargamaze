@@ -3,12 +3,11 @@ package com.mygdx.game;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.elements.Element;
 import com.mygdx.game.exceptions.ObstructedCell;
-import com.mygdx.game.interfaces.IMove;
 import com.mygdx.game.interfaces.ISpace;
 import com.mygdx.game.interfaces.ILantern;
 
 public class Space implements ISpace{
-	public static final int size = 31; 
+	public static int size;
 	
 	private Array<ILantern> lanterns = new Array<ILantern>();
 	private Cell[][] cells; 

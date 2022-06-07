@@ -1,14 +1,8 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.mygdx.game.interfaces.IUpdate;
-import com.mygdx.game.interfaces.IVisual;
 
 public class View {
     public static final int size = Space.size;
@@ -39,7 +33,7 @@ public class View {
         for(int x = 0;x < size;x++) {
         	for(int y = 0;y < size;y++) {
         		ViewCell aux = cells[x][y];
-        		batch.draw(aux.getTexture(), aux.getX(), aux.getY());
+        		batch.draw(aux.getTexture(), aux.getX(), aux.getY(), ViewCell.size, ViewCell.size);
         	}	
         }
 

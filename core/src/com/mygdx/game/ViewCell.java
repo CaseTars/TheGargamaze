@@ -6,17 +6,18 @@ import com.mygdx.game.interfaces.IUpdate;
 import com.mygdx.game.interfaces.IVisualCell;
 
 public class ViewCell implements IUpdate {
-    public static final int size = 16;
+    public static final float size = 480f/Space.size;
     
 	private static Texture imgCase;
     private static Texture imgTars;
     private static Texture imgCaseTars;
     private static Texture imgWall;
     private static Texture imgGround;
-    
+
     private Texture current = imgGround;
-    private int x;
-    private int y;
+
+    private float x;
+    private float y;
     private IVisualCell cell;
     
     public ViewCell(int x, int y) {
@@ -31,9 +32,11 @@ public class ViewCell implements IUpdate {
     public static void loadImages() {
         imgCase     = new Texture(Gdx.files.internal("case.png"));
         imgTars     = new Texture(Gdx.files.internal("tars.png"));
-        imgCaseTars = new Texture(Gdx.files.internal("case+tars.png"));
+        //imgCaseTars = new Texture(Gdx.files.internal("case+tars.png"));
         imgWall     = new Texture(Gdx.files.internal("wall.png"));
         imgGround   = new Texture(Gdx.files.internal("ground.png"));
+        imgCaseTars = new Texture(Gdx.files.internal("HappySantache.png"));
+        imgDark     = new Texture(Gdx.files.internal("dark.png"));
     }
 	
     public static void dispose() {
@@ -42,11 +45,12 @@ public class ViewCell implements IUpdate {
         imgCaseTars.dispose();
         imgWall.dispose();
         imgGround.dispose();
+        imgDark.dispose();
     }
     
 	public void update() {
 	   if(!cell.visible())
-	       current = imgGround;
+	       current = imgDark;
 	   else {
 	       int n = cell.nElements();
 	       if(n == 0)
@@ -81,11 +85,11 @@ public class ViewCell implements IUpdate {
 	    return current;
 	}
 	
-	public int getX() {
+	public float getX() {
         return x;
     }
 	
-	public int getY() {
+	public float getY() {
         return y;
     }
 }
