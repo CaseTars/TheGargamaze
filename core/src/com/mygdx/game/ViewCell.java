@@ -13,6 +13,7 @@ public class ViewCell implements IUpdate {
     private static Texture imgCaseTars;
     private static Texture imgWall;
     private static Texture imgGround;
+    private static Texture imgDark;
 
     private Texture current = imgGround;
 

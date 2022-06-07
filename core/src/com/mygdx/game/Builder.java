@@ -25,7 +25,7 @@ public class Builder {
         
         try{
         	String[][] assemblyFile = readAssemblyFile();
-        	Space.size = assemblyFile.length;
+        	//Space.size = assemblyFile.length;
         }
         catch(IOException erro) {  //rever esses erros
         	System.out.println(erro);
@@ -144,7 +144,7 @@ public class Builder {
         pTars.connect(lantern);
         space.addLantern(lantern);
         
-        lantern.setRadius(2);
+        lantern.setRadius(3);
         
         Control control = new Control();
         
@@ -157,8 +157,8 @@ public class Builder {
     private void connectCells() {
         for(int x = 0; x<Space.size; x++)
             for(int y = 0; y<Space.size; y++) {
-                space.getCell(x, y).connect(view .getCell(x, y));
                 view .getCell(x, y).connect(space.getCell(x, y));
+                space.getCell(x, y).connect(view .getCell(x, y));
             }
     }
     

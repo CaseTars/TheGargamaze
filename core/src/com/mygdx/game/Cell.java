@@ -25,6 +25,7 @@ public class Cell implements IVisualCell{
     
     public void connect(IUpdate viewCell) {
         this.viewCell = viewCell;
+        viewCell.update();
     }
     
     public void insert(Element toInsert) {
