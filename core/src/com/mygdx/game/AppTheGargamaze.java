@@ -13,13 +13,14 @@ public class AppTheGargamaze extends ApplicationAdapter {
 	public void create () {
 		
 		 Builder bob = new Builder();
-		 //try {
+		 try {
 			 bob.build();
-		// }
-		 //catch(Exception BuildError){
+		 }
+		 catch(Exception IOException){
 			 //mensagem de erro e acabar o jogp
-			// System.exit(1);
-		// }
+			 System.out.println("deu ruimw");
+			System.exit(1);
+		 }
 		 
 		 view = bob.getView();
 		// Tcase = bob.getCase();
