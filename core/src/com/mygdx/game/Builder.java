@@ -17,28 +17,7 @@ public class Builder {
     private Space space; //n precisa
     
     public void build() throws IOException {
-<<<<<<< HEAD
     	
-=======
-    	Space.size = 31; //receber do arquivo
-    	space = new Space();
-        view = new View();
-        connectCells();
-        // leitura de arquivo
-        
-        
-        
-        //pegar o tamanho do labirinto
-        
-        pCase = new Player(14,15, 'C');
-        pCase.connect(space);
-        space.insert(pCase);
-        
-        pTars = new Player(16,15, 'T');
-        pTars.connect(space);
-        space.insert(pTars);        
-        
->>>>>>> 74a953aaf61d4ff3ea4b93285d32e5453a520efb
         try{
         	String[][] assemblyFile = readAssemblyFile();
     		Space.size = Integer.parseInt(assemblyFile[0][0]); 
@@ -49,13 +28,13 @@ public class Builder {
             connectCells();
 
 
-            pCase = new Player(14,14, 'C');
+            pCase = new Player(14,15, 'C');
             pCase.connect(space);
             space.insert(pCase);
             
-            pTars = new Player(15,15, 'T');
+            pTars = new Player(16,15, 'T');
             pTars.connect(space);
-            space.insert(pTars);   
+            space.insert(pTars);    
 
         	for(int x = 0;x < Space.size;x++) {
     			for(int y = 2;y < Space.size+2;y++) {
