@@ -1,13 +1,14 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.interfaces.ITime;
 
 public class AppTheGargamaze extends ApplicationAdapter {
 	private View view;
-	//private ITime Tcase;
-	//private ITime Ttars;
+	private ITime Tcase;
+	private ITime Ttars;
 	
 	@Override
 	public void create () {
@@ -22,16 +23,16 @@ public class AppTheGargamaze extends ApplicationAdapter {
 			 System.exit(1);
 		 }
 		 
-		 view = bob.getView();
-		// Tcase = bob.getCase();
-		 //Ttars = bob.getTars();
+		 view  = bob.getView();
+		 Tcase = bob.getCase();
+		 Ttars = bob.getTars();
 	}
 
 	@Override
 	public void render () { //chamar o view
 		view.show();
-		//Tcase.timeUpdate(Gdx.graphics.getDeltaTime());
-		//Ttars.timeUpdate(Gdx.graphics.getDeltaTime());
+		Tcase.update(Gdx.graphics.getDeltaTime());
+		Ttars.update(Gdx.graphics.getDeltaTime());
 	}
 	
 	@Override

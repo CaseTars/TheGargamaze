@@ -27,11 +27,11 @@ public class Builder {
         
         //pegar o tamanho do labirinto
         
-        pCase = new Player(1,1, 'C');
+        pCase = new Player(14,15, 'C');
         pCase.connect(space);
         space.insert(pCase);
         
-        pTars = new Player(1,2, 'T');
+        pTars = new Player(16,15, 'T');
         pTars.connect(space);
         space.insert(pTars);        
         
@@ -83,6 +83,8 @@ public class Builder {
         space.addLantern(lantern);
         
         lantern.setRadius(30);
+        
+        view.connect(pCase, pTars);
         
         Control control = new Control();
         
