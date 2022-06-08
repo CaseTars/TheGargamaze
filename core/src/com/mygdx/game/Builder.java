@@ -17,7 +17,28 @@ public class Builder {
     private Space space; //n precisa
     
     public void build() throws IOException {
+<<<<<<< HEAD
     	
+=======
+    	Space.size = 31; //receber do arquivo
+    	space = new Space();
+        view = new View();
+        connectCells();
+        // leitura de arquivo
+        
+        
+        
+        //pegar o tamanho do labirinto
+        
+        pCase = new Player(14,15, 'C');
+        pCase.connect(space);
+        space.insert(pCase);
+        
+        pTars = new Player(16,15, 'T');
+        pTars.connect(space);
+        space.insert(pTars);        
+        
+>>>>>>> 74a953aaf61d4ff3ea4b93285d32e5453a520efb
         try{
         	String[][] assemblyFile = readAssemblyFile();
     		Space.size = Integer.parseInt(assemblyFile[0][0]); 
@@ -87,6 +108,8 @@ public class Builder {
         space.addLantern(lantern);
         
         lantern.setRadius(3);
+        
+        view.connect(pCase, pTars);
         
         Control control = new Control();
         

@@ -9,6 +9,8 @@ public class Player extends Element implements IPlayer{
 	private IMove space;
 	private char variation;
 	private ILantern lantern;
+	double timeRemaining = 30000;
+	double totalTime = timeRemaining;
 	
 	public Player(int x, int y, char variation) {
 		super(x, y);
@@ -23,6 +25,7 @@ public class Player extends Element implements IPlayer{
         this.lantern = lantern;
     }
 	
+    // From ICommand
 	@Override
 	public void moveLeft() {
         move(-1,0);
@@ -57,6 +60,7 @@ public class Player extends Element implements IPlayer{
         }
 	}
 	
+	// From IVisual
 	@Override
 	public char type() {
 		return 'P';
@@ -71,5 +75,26 @@ public class Player extends Element implements IPlayer{
 	public char state() {
 		return 0;
 	}
-
+	
+	// From ITime
+    @Override
+    public void update(float t) {
+        timeRemaining -= t*distanceFactor();
+        // Mandar tempo para habilidades.
+    }
+    
+    private double distanceFactor() {
+        double distToCenter = distance(x,y,15,15);
+        return Math.pow(distToCenter, 2);
+    }
+    
+    private double distance(int x1, int y1, int x2, int y2) {
+        return Math.sqrt(Math.pow(x1-x2, 2) + Math.pow(y1-y2, 2));
+    }
+    // From IVisualPlayer
+    @Override
+    public float timeRemaining() {
+        return (float)(timeRemaining/totalTime);
+    }
+    
 }
