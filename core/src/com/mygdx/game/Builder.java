@@ -17,35 +17,39 @@ public class Builder {
     private Space space; //n precisa
     
     public void build() throws IOException {
-    	Space.size = 31; //receber do arquivo
-    	space = new Space();
-        view = new View();
-        connectCells();
-        // leitura de arquivo
-        
-        
-        
-        //pegar o tamanho do labirinto
-        
-        pCase = new Player(1,1, 'C');
-        pCase.connect(space);
-        space.insert(pCase);
-        
-        pTars = new Player(1,2, 'T');
-        pTars.connect(space);
-        space.insert(pTars);        
-        
+    	
         try{
         	String[][] assemblyFile = readAssemblyFile();
+    		Space.size = Integer.parseInt(assemblyFile[0][0]); 
+    		int nbButtons = Integer.parseInt(assemblyFile[1][0]); 
+    		
+        	space = new Space(assemblyFile);
+        	view = new View();
+            connectCells();
+
+
+            pCase = new Player(14,14, 'C');
+            pCase.connect(space);
+            space.insert(pCase);
+            
+            pTars = new Player(15,15, 'T');
+            pTars.connect(space);
+            space.insert(pTars);   
+
         	for(int x = 0;x < Space.size;x++) {
-    			for(int y = 0;y < Space.size;y++) {
-    				int posY = Space.size-1-y;
+    			for(int y = 2;y < Space.size+2;y++) {
+    				int posY = Space.size+1-y;
             		if(assemblyFile[y][x].charAt(0) == 'W') {
             		Wall wall = new Wall(x,posY);
                     space.insert(wall);
             		}
                 }
             }
+        	
+        	for(int i = Space.size+2;i < Space.size+2+nbButtons;i++) {  // Botoes
+//        			System.out.println(assemblyFile[i][5]);
+        	}
+        	
         	
         	//Impressor de mapa
 //        	for(int i=0;i < 31;i++) {
@@ -82,7 +86,7 @@ public class Builder {
         pTars.connect(lantern);
         space.addLantern(lantern);
         
-        lantern.setRadius(30);
+        lantern.setRadius(3);
         
         Control control = new Control();
         
