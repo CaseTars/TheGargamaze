@@ -58,15 +58,15 @@ public class Builder {
        				int xB = Integer.parseInt(assemblyFile[i][2]);
        				int yB = Integer.parseInt(assemblyFile[i][3]);
        				int nG = Integer.parseInt(assemblyFile[i][5]);
-       				for(int j = 0;j < nG;j++) {
-	       				int xG = Integer.parseInt(assemblyFile[i][7+(3*j)]);
-	       				int yG = Integer.parseInt(assemblyFile[i][8+(3*j)]);
-	       				char allowed = assemblyFile[i][1].charAt(0);
-	
-	       				Button button = new Button(xB, yB, allowed);
-	       				button.connectGate(space.getCell(xG, yG).getElement());
-	       				space.insert(button);
-       				}
+       				char allowed = assemblyFile[i][1].charAt(0);
+       				Button button = new Button(xB, yB, allowed);
+       				
+//       				for(int j = 0;j < nG;j++) {
+//	       				int xG = Integer.parseInt(assemblyFile[i][7+(3*j)]);
+//	       				int yG = Integer.parseInt(assemblyFile[i][8+(3*j)]);
+//	       				button.connectGate(space.getCell(xG, yG).getElement());
+//       				}
+       				space.insert(button);
        			}
         	}
         	
@@ -106,7 +106,7 @@ public class Builder {
         pTars.connect(lantern);
         space.addLantern(lantern);
         
-        lantern.setRadius(3);
+        lantern.setRadius(30);
         
         view.connect(pCase, pTars);
         

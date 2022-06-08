@@ -14,6 +14,8 @@ public class ViewCell implements IUpdate {
     private static Texture imgWall;
     private static Texture imgGround;
     private static Texture imgDark;
+    private static Texture imgGate;
+    private static Texture imgButton;
 
     private Texture current = imgGround;
 
@@ -38,6 +40,8 @@ public class ViewCell implements IUpdate {
         imgGround   = new Texture(Gdx.files.internal("ground.png"));
         imgCaseTars = new Texture(Gdx.files.internal("HappySantache.png"));
         imgDark     = new Texture(Gdx.files.internal("dark.png"));
+        imgGate 	= new Texture(Gdx.files.internal("Minecraft.png"));
+        imgButton   = new Texture(Gdx.files.internal("badlogic.jpg"));
     }
 	
     public static void dispose() {
@@ -47,6 +51,8 @@ public class ViewCell implements IUpdate {
         imgWall.dispose();
         imgGround.dispose();
         imgDark.dispose();
+        imgGate.dispose(); 
+        imgButton.dispose();
     }
     
 	public void update() {
