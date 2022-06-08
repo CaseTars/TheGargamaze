@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
+import com.mygdx.game.elements.Button;
+import com.mygdx.game.elements.Gate;
 import com.mygdx.game.elements.Player;
 import com.mygdx.game.elements.Wall;
 
@@ -39,15 +41,33 @@ public class Builder {
         	for(int x = 0;x < Space.size;x++) {
     			for(int y = 2;y < Space.size+2;y++) {
     				int posY = Space.size+1-y;
-            		if(assemblyFile[y][x].charAt(0) == 'W') {
-            		Wall wall = new Wall(x,posY);
-                    space.insert(wall);
+            		if(assemblyFile[y][x].charAt(0) == 'W' || assemblyFile[y][x].charAt(0) == 'w') {
+	            		Wall wall = new Wall(x,posY);
+	                    space.insert(wall);
             		}
+            		else if(assemblyFile[y][x].charAt(0) == 'g') {
+                		Gate gate = new Gate(x,posY);
+                        space.insert(gate);
+                	}
                 }
             }
         	
         	for(int i = Space.size+2;i < Space.size+2+nbButtons;i++) {  // Botoes
-//        			System.out.println(assemblyFile[i][5]);
+        		//b,c,xb,yb,-,qtdP,-,xp,yp,-,xp2,yp2,-,xp3,yp3
+       			if(assemblyFile[i][0].charAt(0) == 'b') {
+       				int xB = Integer.parseInt(assemblyFile[i][2]);
+       				int yB = Integer.parseInt(assemblyFile[i][3]);
+       				int nG = Integer.parseInt(assemblyFile[i][5]);
+       				for(int j = 0;j < nG;j++) {
+	       				int xG = Integer.parseInt(assemblyFile[i][7+(3*j)]);
+	       				int yG = Integer.parseInt(assemblyFile[i][8+(3*j)]);
+	       				char allowed = assemblyFile[i][1].charAt(0);
+	
+	       				Button button = new Button(xB, yB, allowed);
+	       				button.connectGate(space.getCell(xG, yG).getElement());
+	       				space.insert(button);
+       				}
+       			}
         	}
         	
         	

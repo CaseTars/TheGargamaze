@@ -1,10 +1,13 @@
 package com.mygdx.game.elements;
 
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.interfaces.IGate;
 
 public class Button extends Element{
 	IGate gate;
 	private char allowed;
+    private Array<IGate> gates = new Array<IGate>();
+
 	
 	public Button(int x, int y, char allowed) {
 		super(x, y);
@@ -12,7 +15,7 @@ public class Button extends Element{
 	}
 
 	public void connectGate(IGate gate) {
-		this.gate = gate;
+		gates.add(gate); 
 	}
 	
 	public void openGate(char variation) {

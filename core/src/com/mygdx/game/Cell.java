@@ -5,6 +5,8 @@ import com.mygdx.game.elements.Element;
 import com.mygdx.game.interfaces.IUpdate;
 import com.mygdx.game.interfaces.IVisual;
 import com.mygdx.game.interfaces.IVisualCell;
+import com.mygdx.game.interfaces.IGate;
+
 
 public class Cell implements IVisualCell{
     private Array<Element> elements = new Array<Element>();
@@ -50,6 +52,10 @@ public class Cell implements IVisualCell{
         if(this.visible == visible) return;
         this.visible = visible;
         viewCell.update();
+    }
+    
+    public IGate getElement() {
+    	return (IGate) elements.get(0);
     }
     
     // From IVisualCell

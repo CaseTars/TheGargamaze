@@ -17,9 +17,12 @@ public class Space implements ISpace{
 		cells = new Cell[size][size]; 
 		for(int x = 0;x < size;x++) {
  			for(int y = 0;y < size;y++) {
-//				if(assemblyFile[y+2][x].charAt(0) == 'W') cells[y][x] = new Cell(true);
-				if(x == 0 || x == 30 || y == 0 || y == 30) cells[x][y] = new Cell(true);
-				else cells[x][y] = new Cell(false);
+ 				int posY = Space.size-1-y;
+				if(assemblyFile[y+2][x].charAt(0) == 'W') cells[x][posY] = new Cell(true);
+				else cells[x][posY] = new Cell(false);
+
+//				if(x == 0 || x == 30 || y == 0 || y == 30) cells[x][y] = new Cell(true);
+//				else cells[x][y] = new Cell(false);
 			}
 		}
 	}
