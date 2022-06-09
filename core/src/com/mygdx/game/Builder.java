@@ -54,12 +54,13 @@ public class Builder {
         	
         	for(int i = Space.size+2;i < Space.size+2+nbButtons;i++) {  // Botoes
         		//b,c,xb,yb,-,qtdP,-,xp,yp,-,xp2,yp2,-,xp3,yp3
-       			if(assemblyFile[i][0].charAt(0) == 'b') {
+       			if(assemblyFile[i][0].charAt(0) == 'b' || assemblyFile[i][0].charAt(0) == 'B') {
        				int xB = Integer.parseInt(assemblyFile[i][2]);
        				int yB = Integer.parseInt(assemblyFile[i][3]);
        				int nG = Integer.parseInt(assemblyFile[i][5]);
        				char allowed = assemblyFile[i][1].charAt(0);
-       				Button button = new Button(xB, yB, allowed);
+       				boolean hasSpring = assemblyFile[i][0].charAt(0) == 'b';
+       				Button button = new Button(xB, yB, hasSpring);
        				
        				for(int j = 0;j < nG;j++) {
 	       				int xG = Integer.parseInt(assemblyFile[i][7+(3*j)]);
@@ -106,7 +107,7 @@ public class Builder {
         pTars.connect(lantern);
         space.addLantern(lantern);
         
-        lantern.setRadius(30);
+        lantern.setRadius(1);
         
         view.connect(pCase, pTars);
         

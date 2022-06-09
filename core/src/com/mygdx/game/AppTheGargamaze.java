@@ -29,7 +29,7 @@ public class AppTheGargamaze extends ApplicationAdapter {
 	}
 
 	@Override
-	public void render () { //chamar o view
+	public void render () { 
 		view.show();
 		Tcase.update(Gdx.graphics.getDeltaTime());
 		Ttars.update(Gdx.graphics.getDeltaTime());

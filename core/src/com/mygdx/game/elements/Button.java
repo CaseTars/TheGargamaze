@@ -5,12 +5,18 @@ import com.mygdx.game.interfaces.IGate;
 
 public class Button extends Element{
 	private char allowed;
+	private boolean hasSpring;
     private Array<IGate> gates = new Array<IGate>();
 
 	
-	public Button(int x, int y, char allowed) {
+	public Button(int x, int y, boolean hasSpring, char allowed) {
 		super(x, y);
 		this.allowed = allowed;
+		this.hasSpring = hasSpring;
+	}
+	
+	public Button(int x, int y, boolean hasSpring) {
+		this(x, y, hasSpring, 'A');
 	}
 
 	public void connectGate(IGate gate) {
@@ -18,7 +24,7 @@ public class Button extends Element{
 	}
 	
 	public void action(char variation) {
-		if(variation == allowed) {
+		if(variation == allowed || allowed == 'A') {
 			for(IGate gate: gates)
 				gate.open();     //e se for de segurar?
 		}
@@ -28,8 +34,10 @@ public class Button extends Element{
 	}
     
     public void deaction() {
-    	for(IGate gate: gates)
-			gate.close();
+    	if(hasSpring) {
+    		for(IGate gate: gates)
+    			gate.close();	
+    	}
     }
 
 	@Override
