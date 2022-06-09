@@ -1,8 +1,8 @@
 package com.mygdx.game.elements;
 
-import com.mygdx.game.interfaces.IVisual;
+import com.mygdx.game.interfaces.IElement;
 
-public abstract class Element implements IVisual {
+public abstract class Element implements IElement {
 	protected int x;
 	protected int y;
 	
@@ -22,9 +22,8 @@ public abstract class Element implements IVisual {
     public boolean isObstructed() {
     	return false;
     }
-
-    // From IVisual
-    public abstract char type();
-    public abstract char variation();
-    public abstract char state();
+    
+    public void action(char variation) {}
+    
+    public void deaction() {}
 }

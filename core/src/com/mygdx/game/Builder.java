@@ -28,7 +28,7 @@ public class Builder {
         	space = new Space(assemblyFile);
         	view = new View();
             connectCells();
-
+            
 
             pCase = new Player(14,15, 'C');
             pCase.connect(space);
@@ -61,11 +61,11 @@ public class Builder {
        				char allowed = assemblyFile[i][1].charAt(0);
        				Button button = new Button(xB, yB, allowed);
        				
-//       				for(int j = 0;j < nG;j++) {
-//	       				int xG = Integer.parseInt(assemblyFile[i][7+(3*j)]);
-//	       				int yG = Integer.parseInt(assemblyFile[i][8+(3*j)]);
-//	       				button.connectGate(space.getCell(xG, yG).getElement());
-//       				}
+       				for(int j = 0;j < nG;j++) {
+	       				int xG = Integer.parseInt(assemblyFile[i][7+(3*j)]);
+	       				int yG = Integer.parseInt(assemblyFile[i][8+(3*j)]);
+	       				button.connectGate(space.getCell(xG, yG).getGate());
+       				}
        				space.insert(button);
        			}
         	}
@@ -91,7 +91,7 @@ public class Builder {
         	
         }
         catch(IOException erro) {  //rever esses erros
-        	System.out.println(erro);
+        	System.out.println(erro.fillInStackTrace());
         }  
            
         Lantern lantern = new Lantern();

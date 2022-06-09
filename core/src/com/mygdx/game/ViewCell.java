@@ -40,7 +40,7 @@ public class ViewCell implements IUpdate {
         imgGround   = new Texture(Gdx.files.internal("ground.png"));
         imgCaseTars = new Texture(Gdx.files.internal("HappySantache.png"));
         imgDark     = new Texture(Gdx.files.internal("dark.png"));
-        imgGate 	= new Texture(Gdx.files.internal("Minecraft.png"));
+        imgGate 	= new Texture(Gdx.files.internal("minecraft.png"));
         imgButton   = new Texture(Gdx.files.internal("badlogic.jpg"));
     }
 	

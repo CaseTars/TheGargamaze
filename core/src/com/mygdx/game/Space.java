@@ -20,7 +20,6 @@ public class Space implements ISpace{
  				int posY = Space.size-1-y;
 				if(assemblyFile[y+2][x].charAt(0) == 'W') cells[x][posY] = new Cell(true);
 				else cells[x][posY] = new Cell(false);
-
 //				if(x == 0 || x == 30 || y == 0 || y == 30) cells[x][y] = new Cell(true);
 //				else cells[x][y] = new Cell(false);
 			}
@@ -66,4 +65,14 @@ public class Space implements ISpace{
         if(x < 0 || x >= size || y < 0 || y >= size) return;
         cells[x][y].setVisibility(true);
     }
+
+	@Override
+	public void action(int x, int y,char variation) {
+		cells[x][y].action(variation);
+	}
+
+	@Override
+	public void deaction(int x, int y) {
+		cells[x][y].deaction();
+	}
 }

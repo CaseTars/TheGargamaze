@@ -4,7 +4,6 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.interfaces.IGate;
 
 public class Button extends Element{
-	IGate gate;
 	private char allowed;
     private Array<IGate> gates = new Array<IGate>();
 
@@ -18,15 +17,21 @@ public class Button extends Element{
 		gates.add(gate); 
 	}
 	
-	public void openGate(char variation) {
+	public void action(char variation) {
 		if(variation == allowed) {
-			gate.open();     //e se for de segurar?
+			for(IGate gate: gates)
+				gate.open();     //e se for de segurar?
 		}
 		else {
 			System.out.println("Jogador sem permissao para abrir");
 		}
 	}
-	
+    
+    public void deaction() {
+    	for(IGate gate: gates)
+			gate.close();
+    }
+
 	@Override
 	public char type() {
 		return 0;

@@ -19,7 +19,7 @@ public class AppTheGargamaze extends ApplicationAdapter {
 		 }
 		 catch(Exception IOException){
 			 //mensagem de erro e acabar o jogp
-			 System.out.println("deu ruim");
+			 System.out.println(IOException.fillInStackTrace());
 			 System.exit(1);
 		 }
 		 
