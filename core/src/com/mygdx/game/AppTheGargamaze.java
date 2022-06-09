@@ -38,5 +38,6 @@ public class AppTheGargamaze extends ApplicationAdapter {
 	@Override
 	public void dispose () { //view.dispose
 		view.dispose();
+		SoundManager.disposeSounds();
 	}
 }

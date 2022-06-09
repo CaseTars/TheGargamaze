@@ -95,6 +95,9 @@ public class Builder {
         	System.out.println(erro.fillInStackTrace());
         }  
            
+        SoundManager.loadSounds();
+        SoundManager.playGameMusic();
+        
         Lantern lantern = new Lantern();
         lantern.connect(pCase);
         lantern.connect(space);

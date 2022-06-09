@@ -1,6 +1,7 @@
 package com.mygdx.game.elements;
 
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.SoundManager;
 import com.mygdx.game.interfaces.IGate;
 
 public class Button extends Element{
@@ -25,8 +26,10 @@ public class Button extends Element{
 	
 	public void action(char variation) {
 		if(variation == allowed || allowed == 'A') {
-			for(IGate gate: gates)
-				gate.open();     //e se for de segurar?
+			for(IGate gate: gates) {
+				gate.open();     
+				SoundManager.playDoorOpening();
+			}
 		}
 		else {
 			System.out.println("Jogador sem permissao para abrir");
@@ -35,8 +38,10 @@ public class Button extends Element{
     
     public void deaction() {
     	if(hasSpring) {
-    		for(IGate gate: gates)
+    		for(IGate gate: gates) {
     			gate.close();	
+    			SoundManager.playDoorClosing();
+    		}
     	}
     }
 

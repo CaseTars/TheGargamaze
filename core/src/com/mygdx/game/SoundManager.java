@@ -1,13 +1,49 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 
 public class SoundManager {
-	private Sound dropSound;
-	private Music rainMusic;
+	private static Music gameMusic;
+	private static Sound doorOpening;
+	private static Sound doorClosing;
+	private static Sound wallHit;
+	private static Sound crystalGetting;
+	private static Sound playerDying;
+
+
 	
-	public SoundManager() {
-		
+	public static void loadSounds() {
+	     gameMusic = Gdx.audio.newMusic(Gdx.files.internal(" Interstellar Main Theme, Hans Zimmer - Kalimba Cover..mp3"));
+	     doorOpening = Gdx.audio.newSound(Gdx.files.internal("MC Door Open.mp3"));
+	     doorClosing = Gdx.audio.newSound(Gdx.files.internal("MC Door Close.mp3"));
+//	     wallHit = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
+//	     crystalGetting = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
+	     playerDying = Gdx.audio.newSound(Gdx.files.internal("Mario Death.mp3"));
+	}
+	
+	public static void playGameMusic() {
+		gameMusic.setLooping(true);
+		gameMusic.play();
+	}
+	
+	public static void playDoorOpening() {
+		doorOpening.play();
+	}
+	
+	public static void playDoorClosing() {
+		doorClosing.play();
+	}
+	
+	public static void playPlayerDying() {
+		playerDying.play();	
+	}
+	
+	public static void disposeSounds() {
+		gameMusic.dispose();
+		doorOpening.dispose();
+		doorClosing.dispose();
+		playerDying.dispose();
 	}
 }
