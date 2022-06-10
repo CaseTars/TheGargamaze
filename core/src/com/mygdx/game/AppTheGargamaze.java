@@ -17,9 +17,9 @@ public class AppTheGargamaze extends ApplicationAdapter {
 		 try {
 			 bob.build();
 		 }
-		 catch(Exception IOException){
+		 catch(Exception Exception){
 			 //mensagem de erro e acabar o jogp
-			 System.out.println(IOException.fillInStackTrace());
+			 System.out.println(Exception.getStackTrace());
 			 System.exit(1);
 		 }
 		 

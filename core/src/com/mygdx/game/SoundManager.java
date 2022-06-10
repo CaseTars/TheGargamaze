@@ -15,7 +15,7 @@ public class SoundManager {
 
 	
 	public static void loadSounds() {
-	     gameMusic = Gdx.audio.newMusic(Gdx.files.internal(" Interstellar Main Theme, Hans Zimmer - Kalimba Cover..mp3"));
+	     gameMusic = Gdx.audio.newMusic(Gdx.files.internal("interstellarTheme.mp3"));
 	     doorOpening = Gdx.audio.newSound(Gdx.files.internal("MC Door Open.mp3"));
 	     doorClosing = Gdx.audio.newSound(Gdx.files.internal("MC Door Close.mp3"));
 //	     wallHit = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
