@@ -11,18 +11,13 @@ import com.mygdx.game.interfaces.IGate;
 public class Cell implements IVisualCell{
     private Array<Element> elements = new Array<Element>();
     private IUpdate viewCell;
-    private boolean visible, alwaysVisible;
+    private boolean visible = false, 
+                    alwaysVisible = false;
     Array<IVisual> textures = new Array<IVisual>();
-    
-    public Cell(boolean alwaysVisible) {
-        if(alwaysVisible) {
-            this.visible = true;
-            this.alwaysVisible = true;
-        }
-        else {
-            this.visible = false;
-            this.alwaysVisible = false;
-        }
+
+    public void setAlwaysVisible() {
+        this.visible = true;
+        this.alwaysVisible = true;
     }
     
     public void connect(IUpdate viewCell) {

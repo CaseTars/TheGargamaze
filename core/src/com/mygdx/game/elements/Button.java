@@ -7,14 +7,13 @@ public class Button extends Element{
 	IGate gate;
 	private char allowed;
     private Array<IGate> gates = new Array<IGate>();
-
 	
 	public Button(int x, int y, char allowed) {
 		super(x, y);
 		this.allowed = allowed;
 	}
 
-	public void connectGate(IGate gate) {
+	public void connect(IGate gate) {
 		gates.add(gate); 
 	}
 	
