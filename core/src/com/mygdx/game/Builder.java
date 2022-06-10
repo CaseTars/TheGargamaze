@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Vector;
-
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.elements.Button;
 import com.mygdx.game.elements.Gate;

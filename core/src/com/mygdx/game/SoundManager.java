@@ -31,7 +31,8 @@ public class SoundManager {
 	}
 	
 	public static void playWallHit() {
-		wallHit.play(1);
+		//wallHit.play(1);
+		crystalGetting.play(1f, 1.5f, 0f);
 	}
 	
 	public static void playDoorOpening() {
