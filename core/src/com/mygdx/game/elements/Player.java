@@ -1,5 +1,6 @@
 package com.mygdx.game.elements;
 
+import com.mygdx.game.SoundManager;
 import com.mygdx.game.exceptions.ObstructedCell;
 import com.mygdx.game.interfaces.ILantern;
 import com.mygdx.game.interfaces.IPlayer;
@@ -51,10 +52,10 @@ public class Player extends Element implements IPlayer{
 	    
 	    x += dx;
         y += dy;
-        
         try {
             space.move(this, xi, yi);
         } catch (ObstructedCell e) {
+    	    SoundManager.playWallHit();
             x = xi;
             y = yi;
         }

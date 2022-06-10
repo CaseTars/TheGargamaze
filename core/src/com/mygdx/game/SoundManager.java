@@ -15,17 +15,23 @@ public class SoundManager {
 
 	
 	public static void loadSounds() {
-	     gameMusic = Gdx.audio.newMusic(Gdx.files.internal(" Interstellar Main Theme, Hans Zimmer - Kalimba Cover..mp3"));
-	     doorOpening = Gdx.audio.newSound(Gdx.files.internal("MC Door Open.mp3"));
+	     gameMusic = Gdx.audio.newMusic(Gdx.files.internal("Interstellar Main Theme, Hans Zimmer - Kalimba Cover..mp3"));
+	     doorOpening = Gdx.audio.newSound(Gdx.files.internal("MC Door Open .mp3"));
 	     doorClosing = Gdx.audio.newSound(Gdx.files.internal("MC Door Close.mp3"));
-//	     wallHit = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
-//	     crystalGetting = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
+	     wallHit = Gdx.audio.newSound(Gdx.files.internal("batendo.wav"));
+//	     crystalGetting = Gdx.audio.newSound(Gdx.files.internal("upandoXpMine.wav"));
+	     crystalGetting = Gdx.audio.newSound(Gdx.files.internal("Super-Mario-Bros-1-Up.wav"));
+
 	     playerDying = Gdx.audio.newSound(Gdx.files.internal("Mario Death.mp3"));
 	}
 	
 	public static void playGameMusic() {
 		gameMusic.setLooping(true);
 		gameMusic.play();
+	}
+	
+	public static void playWallHit() {
+		wallHit.play(1);
 	}
 	
 	public static void playDoorOpening() {
@@ -36,14 +42,20 @@ public class SoundManager {
 		doorClosing.play();
 	}
 	
+	public static void playCrystalGetting() {
+		crystalGetting.play();
+	}
+	
 	public static void playPlayerDying() {
 		playerDying.play();	
 	}
+
 	
 	public static void disposeSounds() {
 		gameMusic.dispose();
 		doorOpening.dispose();
 		doorClosing.dispose();
 		playerDying.dispose();
+		wallHit.dispose();
 	}
 }
