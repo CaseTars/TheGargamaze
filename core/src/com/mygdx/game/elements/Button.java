@@ -14,10 +14,6 @@ public class Button extends Element{
 		this.allowed = allowed;
 		this.hasSpring = hasSpring;
 	}
-	
-	public Button(int x, int y, boolean hasSpring) {
-		this(x, y, hasSpring, 'A');
-	}
 
 	public void connect(IGate gate) {
 		gates.add(gate); 
