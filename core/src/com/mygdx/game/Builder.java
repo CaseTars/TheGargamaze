@@ -18,78 +18,60 @@ public class Builder {
     private Player pTars;
     private Space space; //n precisa
     
+    private char[][] mazeMatrix;
+    private boolean[][] visibilityMatrix;
+    
+    private int nButtons;
+    private char[][] buttonsConfigurationMatrix;
+    private Position[] buttonsPositionArray;
+    private Position[][] gatesPositionMatrix;
+    
     public void build() throws IOException {
     	
         try{
-        	String[][] assemblyFile = readAssemblyFile();
-    		Space.size = Integer.parseInt(assemblyFile[0][0]); 
-    		int nbButtons = Integer.parseInt(assemblyFile[1][0]); 
-    		
-        	space = new Space(assemblyFile);
+    		readMaze();
+        	space = new Space();
         	view = new View();
             connectCells();
             
-
-            pCase = new Player(14,15, 'C');
-            pCase.connect(space);
-            space.insert(pCase);
-            
-            pTars = new Player(16,15, 'T');
-            pTars.connect(space);
-            space.insert(pTars);    
+            space.setAlwaysVisibleCells(visibilityMatrix);
 
         	for(int x = 0;x < Space.size;x++) {
-    			for(int y = 2;y < Space.size+2;y++) {
-    				int posY = Space.size+1-y;
-            		if(assemblyFile[y][x].charAt(0) == 'W' || assemblyFile[y][x].charAt(0) == 'w') {
-	            		Wall wall = new Wall(x,posY);
+    			for(int y = 0;y < Space.size;y++) {
+    			    char symbol = mazeMatrix[x][y];
+    			    
+            		if(symbol == 'W') {
+	            		Wall wall = new Wall(x,y);
 	                    space.insert(wall);
             		}
-            		else if(assemblyFile[y][x].charAt(0) == 'g') {
-                		Gate gate = new Gate(x,posY);
-                        space.insert(gate);
+            		else if(symbol == 'C') {
+                        pCase = new Player(x,y,'C');
+                        pCase.connect(space);
+                        space.insert(pCase);
                 	}
+                    else if(symbol == 'T') {
+                        pTars = new Player(x,y,'T');
+                        pTars.connect(space);
+                        space.insert(pTars);
+                    }
                 }
             }
         	
-        	for(int i = Space.size+2;i < Space.size+2+nbButtons;i++) {  // Botoes
-        		//b,c,xb,yb,-,qtdP,-,xp,yp,-,xp2,yp2,-,xp3,yp3
-       			if(assemblyFile[i][0].charAt(0) == 'b' || assemblyFile[i][0].charAt(0) == 'B') {
-       				int xB = Integer.parseInt(assemblyFile[i][2]);
-       				int yB = Integer.parseInt(assemblyFile[i][3]);
-       				int nG = Integer.parseInt(assemblyFile[i][5]);
-       				char allowed = assemblyFile[i][1].charAt(0);
-       				boolean hasSpring = assemblyFile[i][0].charAt(0) == 'b';
-       				Button button = new Button(xB, yB, hasSpring);
-       				
-       				for(int j = 0;j < nG;j++) {
-	       				int xG = Integer.parseInt(assemblyFile[i][7+(3*j)]);
-	       				int yG = Integer.parseInt(assemblyFile[i][8+(3*j)]);
-	       				button.connectGate(space.getCell(xG, yG).getGate());
-       				}
-       				space.insert(button);
+        	for(int i = 0; i<nButtons; i++) {  // Botoes
+   				Position p = buttonsPositionArray[i];
+   				boolean hasSpring = buttonsConfigurationMatrix[i][0] == 'b';
+   				char allowed = buttonsConfigurationMatrix[i][1];
+   				Button button = new Button(p.x, p.y, hasSpring, allowed);
+                space.insert(button);
+   				
+       			for(int j = 0; j<gatesPositionMatrix.length; j++) {
+                    Position gP = gatesPositionMatrix[i][j];
+                    Gate gate = new Gate(gP.x, gP.y);
+                    space.insert(gate);
+       				button.connect(gate);
        			}
         	}
-        	
-        	
-        	//Impressor de mapa
-//        	for(int i=0;i < 31;i++) {
-//        		for(int j= 0;j < 31;j++) {
-//        			if(i==0 || i ==  30 || j == 0 || j == 30) {
-//        				System.out.print("W");
-//            			if(j<30) System.out.print(",");
-//
-//        			}
-//        			else {
-//        				System.out.print("-");
-//            			if(j<30) System.out.print(",");
-//
-//        			}
-//        		}
-//        		System.out.println(" ");
-//        	}
-
-        	
+            
         }
         catch(IOException erro) {  //rever esses erros
         	System.out.println(erro.fillInStackTrace());
@@ -142,19 +124,58 @@ public class Builder {
         return pTars;
     }
     
-    private String[][] readAssemblyFile() throws IOException { 
-    	FileReader file = new FileReader("Maze.txt");
+    private void readMaze() throws IOException {
+        FileReader file = new FileReader("Maze.txt");
         BufferedReader readFile = new BufferedReader(file);
         
-        Vector<String[]> maze = new Vector<String[]>();
+        Space.size = Integer.parseInt(readFile.readLine());
         
-        String line =readFile.readLine(); 
-           while (line != null) {
-	    	   String ln[]  = line.split(",");
-	           maze.add(ln);
-             line = readFile.readLine(); 
-           }        	
+        readMazeMatrix(readFile);
+        readFile.readLine();
+        readVisibilityMatrix(readFile);
+        
+        nButtons  = Integer.parseInt(readFile.readLine());
+        readButtons(readFile);
+        
         file.close();
-        return (String[][])maze.toArray(new String[maze.size()][]); 
+    }
+    
+    private void readMazeMatrix(BufferedReader readFile) throws IOException {
+        mazeMatrix = new char[Space.size][Space.size];
+        for(int y = Space.size-1; y>=0; y--) {
+            String line[] = readFile.readLine().split(",");
+            for(int x = 0; x<Space.size; x++)
+                mazeMatrix[x][y] = line[x].charAt(0);
+        }
+    }
+    
+    private void readVisibilityMatrix(BufferedReader readFile) throws IOException {
+        visibilityMatrix = new boolean[Space.size][Space.size];
+        for(int y = Space.size-1; y>=0; y--) {
+            String line[] = readFile.readLine().split(",");
+            for(int x = 0; x<Space.size; x++)
+                visibilityMatrix[x][y] = line[x].charAt(0) == '+';
+        }
+    }
+    
+    private void readButtons(BufferedReader readFile) throws IOException {
+        buttonsConfigurationMatrix = new char[nButtons][2];
+        buttonsPositionArray = new Position[nButtons];
+        gatesPositionMatrix = new Position[nButtons][];
+        for(int i = 0; i<nButtons; i++)
+            readButton(i, readFile);
+    }
+    
+    private void readButton(int index, BufferedReader readFile) throws IOException {
+        String line[] = readFile.readLine().split(",");
+        buttonsConfigurationMatrix[index][0] = line[0].charAt(0);
+        buttonsConfigurationMatrix[index][1] = line[1].charAt(0);
+        buttonsPositionArray[index] = new Position(Integer.parseInt(line[2]), Integer.parseInt(line[3]));
+        
+        int nGates = Integer.parseInt(line[5]);
+        Position gates[] = new Position[nGates];
+        for(int i = 0; i<nGates; i++)
+            gates[i] = new Position(Integer.parseInt(line[7+3*i]), Integer.parseInt(line[8+3*i]));
+        gatesPositionMatrix[index] = gates;
     }
 }

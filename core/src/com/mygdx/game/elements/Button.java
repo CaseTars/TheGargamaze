@@ -8,7 +8,6 @@ public class Button extends Element{
 	private char allowed;
 	private boolean hasSpring;
     private Array<IGate> gates = new Array<IGate>();
-
 	
 	public Button(int x, int y, boolean hasSpring, char allowed) {
 		super(x, y);
@@ -20,7 +19,7 @@ public class Button extends Element{
 		this(x, y, hasSpring, 'A');
 	}
 
-	public void connectGate(IGate gate) {
+	public void connect(IGate gate) {
 		gates.add(gate); 
 	}
 	
