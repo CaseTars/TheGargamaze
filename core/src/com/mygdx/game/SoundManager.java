@@ -44,7 +44,7 @@ public class SoundManager {
 	}
 	
 	public static void playCrystalGetting() {
-		crystalGetting.play();
+		crystalGetting.play(1f, 1.5f, 0f);
 	}
 	
 	public static void playPlayerDying() {
