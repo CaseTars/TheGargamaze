@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.elements.Element;
+import com.mygdx.game.elements.Player;
 import com.mygdx.game.elements.Wall;
 import com.mygdx.game.exceptions.ObstructedCell;
 import com.mygdx.game.interfaces.ISpace;
@@ -36,12 +37,13 @@ public class Space implements ISpace{
         updateVisibility();
 	}
 	
-	public void move(Element toMove, int xi, int yi) throws ObstructedCell {
-		if(cells[toMove.getX()][toMove.getY()].isObstructed())
+	public void move(Player toMove, int xi, int yi,  int xf, int yf) throws ObstructedCell {
+		if(cells[xf][yf].isObstructed())
 		    throw new ObstructedCell("This cell is obstructed!");
 		
 		cells[xi][yi].remove(toMove);
-		cells[toMove.getX()][toMove.getY()].insert(toMove);
+		cells[xf][yf].insert(toMove);
+        cells[xf][yf].interact(toMove);
         updateVisibility();
 	}
 	
@@ -49,7 +51,7 @@ public class Space implements ISpace{
         return cells[x][y];
     }
 	
-	private void updateVisibility() {
+	public void updateVisibility() {
 	    setDark();
 	    for(ILantern lantern : lanterns)
 	        lantern.iluminate();

@@ -35,15 +35,29 @@ public class Control implements InputProcessor {
         else if(keycode == Input.Keys.S)
         	pTars.moveDown();
         
-        else if(keycode == Input.Keys.ENTER)
+        else if(keycode == Input.Keys.NUMPAD_0)
         	pCase.commandAction();
         else if(keycode == Input.Keys.E)
         	pTars.commandAction();
+
+        else if(keycode == Input.Keys.NUMPAD_1)
+            pCase.useHability(0);
+        else if(keycode == Input.Keys.NUMPAD_2)
+            pCase.useHability(1);
+        else if(keycode == Input.Keys.NUMPAD_3)
+            pCase.useHability(2);
+        else if(keycode == Input.Keys.NUM_1)
+            pTars.useHability(0);
+        else if(keycode == Input.Keys.NUM_2)
+            pTars.useHability(1);
+        else if(keycode == Input.Keys.NUM_3)
+            pTars.useHability(2);
+        
         return false;
     }
 
     public boolean keyUp(int keycode) {
-    	if(keycode == Input.Keys.ENTER)
+    	if(keycode == Input.Keys.NUMPAD_0)
         	pCase.commandDeaction();
         else if(keycode == Input.Keys.E)
         	pTars.commandDeaction();
