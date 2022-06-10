@@ -19,8 +19,8 @@ public class SoundManager {
 	     gameMusic = Gdx.audio.newMusic(Gdx.files.internal("interstellarTheme.mp3"));
 	     doorClosing = Gdx.audio.newSound(Gdx.files.internal("MC Door Close.mp3"));
 	     wallHit = Gdx.audio.newSound(Gdx.files.internal("batendo.wav"));
-//	     crystalGetting = Gdx.audio.newSound(Gdx.files.internal("upandoXpMine.wav"));
-	     crystalGetting = Gdx.audio.newSound(Gdx.files.internal("Super-Mario-Bros-1-Up.wav"));
+	     crystalGetting = Gdx.audio.newSound(Gdx.files.internal("upandoXpMine.wav"));
+//	     crystalGetting = Gdx.audio.newSound(Gdx.files.internal("Super-Mario-Bros-1-Up.wav"));
 
 	     playerDying = Gdx.audio.newSound(Gdx.files.internal("Mario Death.mp3"));
 	}
@@ -43,7 +43,7 @@ public class SoundManager {
 	}
 	
 	public static void playCrystalGetting() {
-		crystalGetting.play();
+		crystalGetting.play(1f, 1.5f, 0f);
 	}
 	
 	public static void playPlayerDying() {
