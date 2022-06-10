@@ -74,27 +74,12 @@ public class Builder {
             
         }
         catch(IOException erro) {  //rever esses erros
-            System.out.println(erro);
+        	System.out.println(erro.fillInStackTrace());
         }  
-        	
-        	
-        	//Impressor de mapa
-//        	for(int i=0;i < 31;i++) {
-//        		for(int j= 0;j < 31;j++) {
-//        			if(i==0 || i ==  30 || j == 0 || j == 30) {
-//        				System.out.print("W");
-//            			if(j<30) System.out.print(",");
-//
-//        			}
-//        			else {
-//        				System.out.print("-");
-//            			if(j<30) System.out.print(",");
-//
-//        			}
-//        		}
-//        		System.out.println(" ");
-//        	}
-
+           
+        SoundManager.loadSounds();
+        SoundManager.playGameMusic();
+        
         Lantern lantern = new Lantern();
         lantern.connect(pCase);
         lantern.connect(space);
@@ -107,7 +92,7 @@ public class Builder {
         pTars.connect(lantern);
         space.addLantern(lantern);
         
-        lantern.setRadius(30);
+        lantern.setRadius(1);
         
         view.connect(pCase, pTars);
         
@@ -151,6 +136,8 @@ public class Builder {
         
         nButtons  = Integer.parseInt(readFile.readLine());
         readButtons(readFile);
+        
+        file.close();
     }
     
     private void readMazeMatrix(BufferedReader readFile) throws IOException {
@@ -190,19 +177,5 @@ public class Builder {
         for(int i = 0; i<nGates; i++)
             gates[i] = new Position(Integer.parseInt(line[7+3*i]), Integer.parseInt(line[8+3*i]));
         gatesPositionMatrix[index] = gates;
-    }
-    
-    private String[][] readAssemblyFile() throws IOException {
-        
-        Vector<String[]> maze = new Vector<String[]>();
-        
-        String line =
-           while (line != null) {
-	    	   String ln[]  = line.split(",");
-	           maze.add(ln);
-             line = readFile.readLine(); 
-           }        	
-        file.close();
-        return (String[][])maze.toArray(new String[maze.size()][]); 
     }
 }

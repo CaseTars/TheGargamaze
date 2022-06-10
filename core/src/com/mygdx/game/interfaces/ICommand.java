@@ -5,4 +5,6 @@ public interface ICommand {
 	public void moveRight();
 	public void moveUp();
 	public void moveDown();
+	public void commandAction();
+	public void commandDeaction();
 }

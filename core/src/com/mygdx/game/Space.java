@@ -68,4 +68,14 @@ public class Space implements ISpace{
         if(x < 0 || x >= size || y < 0 || y >= size) return;
         cells[x][y].setVisibility(true);
     }
+
+	@Override
+	public void action(int x, int y,char variation) {
+		cells[x][y].action(variation);
+	}
+
+	@Override
+	public void deaction(int x, int y) {
+		cells[x][y].deaction();
+	}
 }

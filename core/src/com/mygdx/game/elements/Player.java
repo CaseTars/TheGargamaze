@@ -2,11 +2,11 @@ package com.mygdx.game.elements;
 
 import com.mygdx.game.exceptions.ObstructedCell;
 import com.mygdx.game.interfaces.ILantern;
-import com.mygdx.game.interfaces.IMove;
 import com.mygdx.game.interfaces.IPlayer;
+import com.mygdx.game.interfaces.ISpaceCommand;
 
 public class Player extends Element implements IPlayer{
-	private IMove space;
+	private ISpaceCommand space;
 	private char variation;
 	private ILantern lantern;
 	double timeRemaining = 30000;
@@ -17,7 +17,7 @@ public class Player extends Element implements IPlayer{
 		this.variation = variation;
 	}
 	
-	public void connect(IMove space) {
+	public void connect(ISpaceCommand space) {
 		this.space = space;
 	}
 	
@@ -96,5 +96,15 @@ public class Player extends Element implements IPlayer{
     public float timeRemaining() {
         return (float)(timeRemaining/totalTime);
     }
+
+	@Override
+	public void commandAction() {
+		space.action(x, y, variation);
+	}
+
+	@Override
+	public void commandDeaction() {
+		space.deaction(x, y);
+	}
     
 }
