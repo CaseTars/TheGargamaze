@@ -28,55 +28,49 @@ public class Builder {
     
     public void build() throws IOException {
     	
-        try{
-    		readMaze();
-        	space = new Space();
-        	view = new View();
-            connectCells();
-            
-            space.setAlwaysVisibleCells(visibilityMatrix);
+		readFile();
+		
+    	space = new Space();
+        space.setAlwaysVisibleCells(visibilityMatrix);
+    	view = new View();
+        connectCells();
+        
 
-        	for(int x = 0;x < Space.size;x++) {
-    			for(int y = 0;y < Space.size;y++) {
-    			    char symbol = mazeMatrix[x][y];
-    			    
-            		if(symbol == 'W') {
-	            		Wall wall = new Wall(x,y);
-	                    space.insert(wall);
-            		}
-            		else if(symbol == 'C') {
-                        pCase = new Player(x,y,'C');
-                        pCase.connect(space);
-                        space.insert(pCase);
-                	}
-                    else if(symbol == 'T') {
-                        pTars = new Player(x,y,'T');
-                        pTars.connect(space);
-                        space.insert(pTars);
-                    }
+    	for(int x = 0;x < Space.size;x++) {
+			for(int y = 0;y < Space.size;y++) {
+			    char symbol = mazeMatrix[x][y];
+			    
+        		if(symbol == 'W') {
+            		Wall wall = new Wall(x,y);
+                    space.insert(wall);
+        		}
+        		else if(symbol == 'C') {
+                    pCase = new Player(x,y,'C');
+                    pCase.connect(space);
+                    space.insert(pCase);
+            	}
+                else if(symbol == 'T') {
+                    pTars = new Player(x,y,'T');
+                    pTars.connect(space);
+                    space.insert(pTars);
                 }
             }
-        	
-        	for(int i = 0; i<nButtons; i++) {  // Botoes
-   				Position p = buttonsPositionArray[i];
-   				boolean hasSpring = buttonsConfigurationMatrix[i][0] == 'b';
-   				char allowed = buttonsConfigurationMatrix[i][1];
-   				Button button = new Button(p.x, p.y, hasSpring, allowed);
-                space.insert(button);
-   				
-       			for(int j = 0; j<gatesPositionMatrix.length; j++) {
-                    Position gP = gatesPositionMatrix[i][j];
-                    Gate gate = new Gate(gP.x, gP.y);
-                    space.insert(gate);
-       				button.connect(gate);
-       			}
-        	}
-            
         }
-        catch(IOException erro) {  //rever esses erros
-        	System.out.println(erro.fillInStackTrace());
-        }  
-           
+
+    	for(int i = 0; i<nButtons; i++) {  // Botoes
+			Position p = buttonsPositionArray[i];
+			boolean hasSpring = buttonsConfigurationMatrix[i][0] == 'b';
+			char allowed = buttonsConfigurationMatrix[i][1];
+			Button button = new Button(p.x, p.y, hasSpring, allowed);
+            space.insert(button);
+   			for(int j = 0; j<gatesPositionMatrix[i].length; j++) {
+                Position gP = gatesPositionMatrix[i][j];
+                Gate gate = new Gate(gP.x, gP.y);
+                space.insert(gate);
+   				button.connect(gate);
+   			}
+    	}
+        	
         SoundManager.loadSounds();
         SoundManager.playGameMusic();
         
@@ -124,7 +118,7 @@ public class Builder {
         return pTars;
     }
     
-    private void readMaze() throws IOException {
+    private void readFile() throws IOException {
         FileReader file = new FileReader("Maze.txt");
         BufferedReader readFile = new BufferedReader(file);
         
