@@ -42,7 +42,7 @@ public class Lantern implements ILantern{
     @Override
     public void setRadius(int newRadius) {
         radius = newRadius;
-        iluminate();
+        space.updateVisibility();
     }
 
     @Override

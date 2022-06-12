@@ -2,11 +2,13 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.elements.Element;
+import com.mygdx.game.elements.Player;
 import com.mygdx.game.interfaces.IUpdate;
 import com.mygdx.game.interfaces.IVisual;
 import com.mygdx.game.interfaces.IVisualCell;
 import com.mygdx.game.interfaces.ICell;
 import com.mygdx.game.interfaces.IGate;
+import com.mygdx.game.interfaces.IPlayerEffect;
 
 
 public class Cell implements ICell{
@@ -84,5 +86,11 @@ public class Cell implements ICell{
 		}
 		
 	}
+
+    public void interact(IPlayerEffect player) {
+        for(Element element: elements) {
+            element.interact(player);
+        }
+    }
     
 }

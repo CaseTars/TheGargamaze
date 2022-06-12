@@ -1,6 +1,7 @@
 package com.mygdx.game.elements;
 
 import com.mygdx.game.interfaces.IElement;
+import com.mygdx.game.interfaces.IPlayerEffect;
 
 public abstract class Element implements IElement {
 	protected int x;
@@ -26,4 +27,6 @@ public abstract class Element implements IElement {
     public void action(char variation) {}
     
     public void deaction() {}
+    
+    public void interact(IPlayerEffect player) {}
 }

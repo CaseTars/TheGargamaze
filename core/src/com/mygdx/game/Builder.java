@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Vector;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.elements.Button;
+import com.mygdx.game.elements.Darkness;
 import com.mygdx.game.elements.Gate;
 import com.mygdx.game.elements.Player;
 import com.mygdx.game.elements.Wall;
@@ -37,22 +38,31 @@ public class Builder {
 
     	for(int x = 0;x < Space.size;x++) {
 			for(int y = 0;y < Space.size;y++) {
-			    char symbol = mazeMatrix[x][y];
-			    
-        		if(symbol == 'W') {
-            		Wall wall = new Wall(x,y);
+			    switch(mazeMatrix[x][y]) {
+			    case 'W':
+                    Wall wall = new Wall(x,y);
                     space.insert(wall);
-        		}
-        		else if(symbol == 'C') {
+                    break;
+			    case 'C':
                     pCase = new Player(x,y,'C');
                     pCase.connect(space);
                     space.insert(pCase);
-            	}
-                else if(symbol == 'T') {
+                    break;
+			    case 'T':
                     pTars = new Player(x,y,'T');
                     pTars.connect(space);
                     space.insert(pTars);
-                }
+                    break;
+			    case 'D':
+                    Darkness darkness = new Darkness(x,y);
+                    space.insert(darkness);
+                    break;
+			    case '-':
+			        break;
+                default:
+                    System.out.println("Error - bloco nao existe"); // FAZER COMO EXCECAO?
+                    break;
+			    }
             }
         }
 

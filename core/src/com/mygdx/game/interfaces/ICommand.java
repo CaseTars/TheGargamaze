@@ -7,4 +7,5 @@ public interface ICommand {
 	public void moveDown();
 	public void commandAction();
 	public void commandDeaction();
+	public void useHability(int i);
 }
