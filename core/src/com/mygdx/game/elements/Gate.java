@@ -24,7 +24,7 @@ public class Gate extends Element implements IGate{
 	
 	@Override
 	public char type() {
-		return 0;
+		return 'g';
 	}
 
 	@Override
@@ -34,7 +34,8 @@ public class Gate extends Element implements IGate{
 
 	@Override
 	public char state() {
-		return 0;
+		if(closed) return 'c';
+		else return 'o';
 	}
 
 }

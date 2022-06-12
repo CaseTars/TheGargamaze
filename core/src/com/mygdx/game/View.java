@@ -58,15 +58,18 @@ public class View {
     }
     
     private void drawMap() {
+//    	drawBaseMap();
         batch.begin();
         for(int x = 0;x < size;x++) {
             for(int y = 0;y < size;y++) {
                 ViewCell aux = cells[x][y];
+                batch.draw(aux.getDefaultTexture(), aux.getX(), aux.getY(), ViewCell.size, ViewCell.size);
                 batch.draw(aux.getTexture(), aux.getX(), aux.getY(), ViewCell.size, ViewCell.size);
             }
         }
         batch.end();
     }
+    
     
     private void drawStatus(IVisualPlayer player, int xRef) {
         shapeRenderer.begin(ShapeType.Filled);

@@ -6,6 +6,7 @@ import com.mygdx.game.interfaces.IGate;
 
 public class Button extends Element{
 	private char allowed;
+	private char state;
 	private boolean hasSpring;
     private Array<IGate> gates = new Array<IGate>();
 	
@@ -13,6 +14,7 @@ public class Button extends Element{
 		super(x, y);
 		this.allowed = allowed;
 		this.hasSpring = hasSpring;
+		this.state = 'f';
 	}
 
 	public void connect(IGate gate) {
@@ -21,6 +23,7 @@ public class Button extends Element{
 	
 	public void action(char variation) {
 		if(variation == allowed || allowed == 'A') {
+			state = 'p';
 			for(IGate gate: gates) {
 				gate.open();     
 				SoundManager.playDoorOpening();
@@ -33,6 +36,7 @@ public class Button extends Element{
     
     public void deaction() {
     	if(hasSpring) {
+    		state = 'f';
     		for(IGate gate: gates) {
     			gate.close();	
     			SoundManager.playDoorClosing();
@@ -42,7 +46,7 @@ public class Button extends Element{
 
 	@Override
 	public char type() {
-		return 0;
+		return 'b';
 	}
 
 	@Override
@@ -51,8 +55,8 @@ public class Button extends Element{
 	}
 
 	@Override
-	public char state() {
-		return 0;
+	public char state() { 
+		return state;
 	}
 
 }

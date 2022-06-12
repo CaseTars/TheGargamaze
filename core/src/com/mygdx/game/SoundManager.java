@@ -17,8 +17,8 @@ public class SoundManager {
 	public static void loadSounds() {
 	     doorOpening = Gdx.audio.newSound(Gdx.files.internal("MC Door Open .mp3"));
 	     gameMusic = Gdx.audio.newMusic(Gdx.files.internal("interstellarTheme.mp3"));
-	     doorClosing = Gdx.audio.newSound(Gdx.files.internal("MC Door Close.mp3"));
-	     wallHit = Gdx.audio.newSound(Gdx.files.internal("batendo.wav"));
+	     doorClosing = Gdx.audio.newSound(Gdx.files.internal("MC Door Close2.mp3"));
+	     wallHit = Gdx.audio.newSound(Gdx.files.internal("batendo2.wav"));
 	     crystalGetting = Gdx.audio.newSound(Gdx.files.internal("upandoXpMine.wav"));
 //	     crystalGetting = Gdx.audio.newSound(Gdx.files.internal("Super-Mario-Bros-1-Up.wav"));
 
@@ -31,8 +31,7 @@ public class SoundManager {
 	}
 	
 	public static void playWallHit() {
-		//wallHit.play(1);
-		crystalGetting.play(1f, 1.5f, 0f);
+		wallHit.play(1);
 	}
 	
 	public static void playDoorOpening() {
