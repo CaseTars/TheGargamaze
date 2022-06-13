@@ -24,24 +24,22 @@ public class Button extends Element{
 	public void action(char variation) {
 		if(variation == allowed || allowed == 'A') {
 			state = 'p';
-			for(IGate gate: gates) {
-				gate.open();     
-				SoundManager.playDoorOpening();
-			}
+			for(IGate gate: gates)
+				gate.open();
 		}
 		else {
 			System.out.println("Jogador sem permissao para abrir");
 		}
+        cell.update();
 	}
     
     public void deaction() {
     	if(hasSpring) {
     		state = 'f';
-    		for(IGate gate: gates) {
-    			gate.close();	
-    			SoundManager.playDoorClosing();
-    		}
+    		for(IGate gate: gates)
+    			gate.close();
     	}
+        cell.update();
     }
 
 	@Override

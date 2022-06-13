@@ -42,6 +42,7 @@ public class Space implements ISpace{
 		    throw new ObstructedCell("This cell is obstructed!");
 		
 		cells[xi][yi].remove(toMove);
+        cells[xi][yi].deaction();
 		cells[xf][yf].insert(toMove);
         cells[xf][yf].interact(toMove);
         updateVisibility();

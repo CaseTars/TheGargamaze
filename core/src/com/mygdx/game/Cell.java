@@ -30,11 +30,13 @@ public class Cell implements ICell{
     
     public void insert(Element toInsert) {
     	elements.add(toInsert);
+    	toInsert.setCell(this);
     	viewCell.update();
     }
     
     public void remove(Element toRemove) {
     	elements.removeValue(toRemove, true);
+    	toRemove.setCell(null);
         viewCell.update();
     }
     
@@ -91,6 +93,10 @@ public class Cell implements ICell{
         for(Element element: elements) {
             element.interact(player);
         }
+    }
+    
+    public void update() {
+        viewCell.update();
     }
     
 }

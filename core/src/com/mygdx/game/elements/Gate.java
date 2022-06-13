@@ -1,5 +1,6 @@
 package com.mygdx.game.elements;
 
+import com.mygdx.game.SoundManager;
 import com.mygdx.game.interfaces.IGate;
 
 public class Gate extends Element implements IGate{
@@ -15,11 +16,19 @@ public class Gate extends Element implements IGate{
 	}
 	
 	public void close() {
+	    if(closed == true) return;
+	    
 		closed = true;
+		cell.update();
+        SoundManager.playDoorClosing();
 	}
 	
 	public void open() {
+        if(closed == false) return;
+        
 		closed = false;
+        cell.update();
+        SoundManager.playDoorOpening();
 	}
 	
 	@Override
