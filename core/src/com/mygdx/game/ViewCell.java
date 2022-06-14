@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.mygdx.game.interfaces.IUpdate;
 import com.mygdx.game.interfaces.IVisualCell;
 
@@ -49,7 +50,8 @@ public class ViewCell implements IUpdate {
     }
     
     public static void loadImages() {  //falta isso só
-        imgCase     			  = new Texture(Gdx.files.internal("case2blue2.png"));	//check
+        imgCase     			  = new Texture(Gdx.files.internal("case2blue2.png"), true);	//check
+        imgCase.setFilter(TextureFilter.Linear, TextureFilter.Linear);
         imgTars     			  = new Texture(Gdx.files.internal("case2red2.png"));   //check
         imgCaseTars 			  = new Texture(Gdx.files.internal("case2BlueRed.png"));
         imgWall        			  = new Texture(Gdx.files.internal("muro.png"));     //check

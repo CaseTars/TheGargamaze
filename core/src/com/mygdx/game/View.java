@@ -55,9 +55,9 @@ public class View implements IViewSwitchHability {
     public void show() {
         ScreenUtils.clear(0, 0, 0, 1); //cor do fundo
         camera.update();
-        shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
         
         batch.setProjectionMatrix(camera.combined);
+        shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
         
         drawMap();
         drawStatus(Vtars, 0);

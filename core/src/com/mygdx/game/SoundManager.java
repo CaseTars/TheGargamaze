@@ -51,7 +51,7 @@ public class SoundManager {
 	}
 	
 	public static void playPlayerTeleport() {
-		playerTeleport.play(1, 0.5f, 0);
+		playerTeleport.play(1, 1, 0);
 	}
 
 	
