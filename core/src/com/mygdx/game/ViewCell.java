@@ -49,9 +49,9 @@ public class ViewCell implements IUpdate {
     }
     
     public static void loadImages() {  //falta isso só
-        imgCase     			  = new Texture(Gdx.files.internal("case2blue.png"));
-        imgTars     			  = new Texture(Gdx.files.internal("case2red.png"));
-        //imgCaseTars 			  = new Texture(Gdx.files.internal("case+tars.png"));
+        imgCase     			  = new Texture(Gdx.files.internal("case2blue2.png"));	//check
+        imgTars     			  = new Texture(Gdx.files.internal("case2red2.png"));   //check
+        imgCaseTars 			  = new Texture(Gdx.files.internal("case2BlueRed.png"));
         imgWall        			  = new Texture(Gdx.files.internal("muro.png"));     //check
         imgGround   			  = new Texture(Gdx.files.internal("ground.png"));   //check
         imgDark	        		  = new Texture(Gdx.files.internal("dark.png"));	//check
@@ -59,15 +59,15 @@ public class ViewCell implements IUpdate {
         imgGateOpen 	          = new Texture(Gdx.files.internal("gateOpen.png"));   //check
         imgButtonFree 			  = new Texture(Gdx.files.internal("buttonFree.png")); //check
         imgButtonPressed		  = new Texture(Gdx.files.internal("buttonPressed.png"));  //check    
-        imgGateOpenCase     	  = new Texture(Gdx.files.internal("case2blue.png"));  
-        imgGateOpenTars           = new Texture(Gdx.files.internal("case2blue.png"));
-        imgGateOpenCaseTars 	  = new Texture(Gdx.files.internal("case2blue.png"));
-        imgButtonPressedCaseTars  = new Texture(Gdx.files.internal("case2blue.png"));
-        imgButtonFreeCaseTars	  = new Texture(Gdx.files.internal("case2blue.png"));
-        imgButtonFreeCase		  = new Texture(Gdx.files.internal("case2blue.png"));
-        imgButtonFreeTars         = new Texture(Gdx.files.internal("case2blue.png"));
-        imgButtonPressedCase 	  = new Texture(Gdx.files.internal("case2blue.png"));
-        imgButtonPressedTars      = new Texture(Gdx.files.internal("case2blue.png")); 
+        imgGateOpenCase     	  = new Texture(Gdx.files.internal("gateOpenBlue1.png"));  //check
+        imgGateOpenTars           = new Texture(Gdx.files.internal("gateOpenRed1.png"));	//check
+        imgGateOpenCaseTars 	  = new Texture(Gdx.files.internal("gateOpenBlueRed.png"));	//check
+        imgButtonPressedCaseTars  = new Texture(Gdx.files.internal("buttonPressedBlueRed.png"));	//check
+        imgButtonFreeCaseTars	  = new Texture(Gdx.files.internal("buttonFreeBlueRed.png"));	//check
+        imgButtonFreeCase		  = new Texture(Gdx.files.internal("buttonFreeBlue.png"));	//check
+        imgButtonFreeTars         = new Texture(Gdx.files.internal("buttonFreeRed1.png"));	//check
+        imgButtonPressedCase 	  = new Texture(Gdx.files.internal("buttonPressedBlue.png"));	//check
+        imgButtonPressedTars      = new Texture(Gdx.files.internal("buttonPressedRed1.png")); 	//check
         imgCrystal    			  = new Texture(Gdx.files.internal("case2blue.png"));
         imgCrystalCase			  = new Texture(Gdx.files.internal("case2blue.png"));
         imgCrystalTars			  = new Texture(Gdx.files.internal("case2blue.png"));
@@ -101,8 +101,14 @@ public class ViewCell implements IUpdate {
     }
     
 	public void update() {
-	   if(!cell.visible())
-	       current = imgDark;
+	   if(!cell.visible()) {  
+		   if(cell.nElements() > 1) {
+			   if(cell.visual(1).variation() == 'C') current = imgCase;
+			   if(cell.visual(1).variation() == 'T') current = imgTars;
+		   }
+		   else
+			   current = imgDark;
+	   }
 	   else {
 	       int n = cell.nElements();
 	       if(n == 0)
