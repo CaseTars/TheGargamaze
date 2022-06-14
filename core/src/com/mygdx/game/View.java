@@ -2,16 +2,21 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Vector;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.interfaces.IViewSwitchHability;
 import com.mygdx.game.interfaces.IVisualPlayer;
 
-public class View {
+public class View implements IViewSwitchHability {
     public static final int size = Space.size;
 
     private ShapeRenderer shapeRenderer;
@@ -19,6 +24,10 @@ public class View {
     private OrthographicCamera camera;
     private Viewport viewport;
     private SpriteBatch batch;
+    
+    private float thX1, thY1, thX2, thY2, thopacity;
+    private Texture th1, th2;
+    private boolean thAnimating = false;
     
     private IVisualPlayer Vcase;
     private IVisualPlayer Vtars;
@@ -53,6 +62,7 @@ public class View {
         drawMap();
         drawStatus(Vtars, 0);
         drawStatus(Vcase, 160+480);
+        drawTeleportHiders();
         
         viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true); // Restore viewport.
     }
@@ -60,6 +70,7 @@ public class View {
     private void drawMap() {
 //    	drawBaseMap();
         batch.begin();
+        batch.setColor(1f,1f,1f,1f);
         for(int x = 0;x < size;x++) {
             for(int y = 0;y < size;y++) {
                 ViewCell aux = cells[x][y];
@@ -68,6 +79,8 @@ public class View {
             }
         }
         batch.end();
+        
+
     }
     
     
@@ -93,5 +106,42 @@ public class View {
     
     public void resize(int width, int height) {
         viewport.update(width, height);
+    }
+
+    private void drawTeleportHiders() {
+        if(!thAnimating) return;
+        
+        batch.begin();
+        batch.setColor(1f,1f,1f,thopacity);
+        batch.draw(ViewCell.getDefaultTexture(), thX1, thY1, ViewCell.size, ViewCell.size);
+        batch.draw(ViewCell.getDefaultTexture(), thX2, thY2, ViewCell.size, ViewCell.size);
+        batch.draw(th1, thX1, thY1, ViewCell.size, ViewCell.size);
+        batch.draw(th2, thX2, thY2, ViewCell.size, ViewCell.size);
+        batch.end();
+    }
+
+    @Override
+    public void startAnimation(int x1, int y1, int x2, int y2) {
+        thAnimating = true;
+        
+        thX1 = x1*ViewCell.size + 160;
+        thY1 = y1*ViewCell.size;
+        thX2 = x2*ViewCell.size + 160;
+        thY2 = y2*ViewCell.size;
+        
+        th1 = cells[x1][y1].getTexture();
+        th2 = cells[x2][y2].getTexture();
+        
+        thopacity = 0;
+    }
+
+    @Override
+    public void setOpacity(float opacity) {
+        thopacity = opacity;
+    }
+
+    @Override
+    public void stopAnimation() {
+        thAnimating = false;
     }
 }

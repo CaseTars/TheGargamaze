@@ -3,10 +3,12 @@ package com.mygdx.game;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.mygdx.game.interfaces.ICommand;
+import com.mygdx.game.interfaces.IControl;
 
-public class Control implements InputProcessor {
+public class Control implements InputProcessor, IControl {
     private ICommand pCase;
     private ICommand pTars;
+    private float timeOut = 0;
     
     public void conectCase(ICommand pCase) {
     	this.pCase = pCase;
@@ -17,6 +19,7 @@ public class Control implements InputProcessor {
     }
     
     public boolean keyDown(int keycode) {
+        if(timeOut != 0) return false;
         if(keycode == Input.Keys.LEFT)
             pCase.moveLeft();
         else if(keycode == Input.Keys.RIGHT)
@@ -87,4 +90,18 @@ public class Control implements InputProcessor {
     public boolean scrolled(float amountX, float amountY) {
         return false;
     }
+
+    @Override
+    public void setTimeOut(float t) {
+        timeOut = t;
+    }
+
+    @Override
+    public void update(float t) {
+        if(timeOut == 0) return;
+        timeOut -= t;
+        if(timeOut < 0)
+            timeOut = 0;
+    }
+
 }

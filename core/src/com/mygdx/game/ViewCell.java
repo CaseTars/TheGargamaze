@@ -51,7 +51,7 @@ public class ViewCell implements IUpdate {
     public static void loadImages() {  //falta isso só
         imgCase     			  = new Texture(Gdx.files.internal("case2blue.png"));
         imgTars     			  = new Texture(Gdx.files.internal("case2red.png"));
-        //imgCaseTars 			  = new Texture(Gdx.files.internal("case+tars.png"));
+        imgCaseTars 			  = new Texture(Gdx.files.internal("case2red.png"));
         imgWall        			  = new Texture(Gdx.files.internal("muro.png"));     //check
         imgGround   			  = new Texture(Gdx.files.internal("ground.png"));   //check
         imgDark	        		  = new Texture(Gdx.files.internal("dark.png"));	//check
@@ -183,7 +183,7 @@ public class ViewCell implements IUpdate {
 	    return nP == P;
 	}
 	
-	public Texture getDefaultTexture() {
+	public static Texture getDefaultTexture() {
 	    return imgGround;
 	}
 	

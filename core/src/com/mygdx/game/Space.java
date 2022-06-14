@@ -32,6 +32,16 @@ public class Space implements ISpace{
 		cells[toInsert.getX()][toInsert.getY()].insert(toInsert);
 	}
 	
+	public void insert(Player toInsert) {
+        cells[toInsert.getX()][toInsert.getY()].insert(toInsert);
+        cells[toInsert.getX()][toInsert.getX()].interact(toInsert);
+    }
+	
+	public void remove(Player toRemove) {
+        cells[toRemove.getX()][toRemove.getY()].remove(toRemove);
+        cells[toRemove.getX()][toRemove.getY()].deaction();
+    }
+	
 	public void addLantern(ILantern lantern) {
 	    lanterns.add(lantern);
         updateVisibility();
@@ -79,4 +89,9 @@ public class Space implements ISpace{
 	public void deaction(int x, int y) {
 		cells[x][y].deaction();
 	}
+
+    @Override
+    public boolean isObstructed(int x, int y) {
+        return cells[x][y].isObstructed();
+    }
 }

@@ -3,9 +3,9 @@ package com.mygdx.game.elements;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.SoundManager;
 import com.mygdx.game.exceptions.ObstructedCell;
-import com.mygdx.game.habilities.Hability;
 import com.mygdx.game.habilities.VisionRadiusHability;
 import com.mygdx.game.habilities.VisualEffect;
+import com.mygdx.game.interfaces.IHability;
 import com.mygdx.game.interfaces.ILantern;
 import com.mygdx.game.interfaces.IPlayer;
 import com.mygdx.game.interfaces.IPosition;
@@ -19,19 +19,11 @@ public class Player extends Element implements IPlayer{
 	private double timeRemaining = 30000;
 	private double totalTime = timeRemaining;
 	private Array<IVisualEffect> effects = new Array<IVisualEffect>();
-	private Hability[] habilities = new Hability[3];
+	private IHability[] habilities = new IHability[3];
 	
 	public Player(int x, int y, char variation) {
 		super(x, y);
 		this.variation = variation;
-		
-		VisionRadiusHability hability1 = new VisionRadiusHability(10, 5, 2);
-		hability1.connect(this);
-		hability1.unlock();
-		this.habilities[0] = hability1;
-		
-        //this.habilities[1] = new 
-        //this.habilities[2] = new 
 	}
 	
 	public void connect(ISpaceCommand space) {
@@ -40,6 +32,10 @@ public class Player extends Element implements IPlayer{
 	
     public void connect(ILantern lantern) {
         this.lantern = lantern;
+    }
+    
+    public void connect(IHability h, int i) {
+        this.habilities[i] = h;
     }
 	
     // From ICommand
@@ -62,6 +58,11 @@ public class Player extends Element implements IPlayer{
 	public void moveDown() {
         move(0,-1);
 	}
+	
+	@Override
+    public void moveTo(int x, int y) {
+        move(x - this.x, y - this.y);
+    }
 	
 	private void move(int dx, int dy) {
 	    int xi = x, yi = y;
@@ -163,10 +164,20 @@ public class Player extends Element implements IPlayer{
     }
     
     private void updateHabilities(float t) {
-        for(Hability hability : habilities) {
+        for(IHability hability : habilities) {
             if(hability == null) break;
             hability.update(t);
         }
+    }
+
+    @Override
+    public void leave() {
+        space.remove(this);
+    }
+
+    @Override
+    public void enter() {
+        space.insert(this);
     }
 
 }

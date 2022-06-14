@@ -11,12 +11,15 @@ import com.mygdx.game.elements.Darkness;
 import com.mygdx.game.elements.Gate;
 import com.mygdx.game.elements.Player;
 import com.mygdx.game.elements.Wall;
+import com.mygdx.game.habilities.SwitchPlacesHability;
+import com.mygdx.game.habilities.VisionRadiusHability;
 
 public class Builder {
     private View view;
     private Player pCase;
     private Player pTars;
     private Space space; //n precisa
+    private Control control;
     
     private char[][] mazeMatrix;
     private boolean[][] visibilityMatrix;
@@ -34,6 +37,7 @@ public class Builder {
         space.setAlwaysVisibleCells(visibilityMatrix);
     	view = new View();
         connectCells();
+        control = new Control();
         
 
     	for(int x = 0;x < Space.size;x++) {
@@ -66,7 +70,7 @@ public class Builder {
             }
         }
 
-    	for(int i = 0; i<nButtons; i++) {  // Botoes
+    	for(int i = 0; i<nButtons; i++) {  // Cria Botoes e Portoes
 			Position p = buttonsPositionArray[i];
 			boolean hasSpring = buttonsConfigurationMatrix[i][0] == 'b';
 			char allowed = buttonsConfigurationMatrix[i][1];
@@ -79,7 +83,33 @@ public class Builder {
    				button.connect(gate);
    			}
     	}
-        	
+    	
+    	// Cria Habilidades
+    	
+    	// Habilidade Visual
+        VisionRadiusHability hability1 = new VisionRadiusHability(10, 5, 2);
+        hability1.connect(pCase);
+        pCase.connect(hability1, 0);
+        hability1.unlock();
+        
+        hability1 = new VisionRadiusHability(10, 5, 2);
+        hability1.connect(pTars);
+        pTars.connect(hability1, 0);
+        hability1.unlock();
+        
+        // Habilidade troca de lugar.
+        SwitchPlacesHability hability2 = new SwitchPlacesHability(1, 5);
+        hability2.connect(pCase, pTars);
+        hability2.connect(control);
+        hability2.connect(view);
+        hability2.connect(space);
+        pCase.connect(hability2, 1);
+        pTars.connect(hability2, 1);
+        hability2.unlock();
+
+        
+        
+        
         SoundManager.loadSounds();
         SoundManager.playGameMusic();
         
@@ -99,11 +129,8 @@ public class Builder {
         
         view.connect(pCase, pTars);
         
-        Control control = new Control();
-        
         control.conectCase(pCase);
         control.conectTars(pTars);
-        
         Gdx.input.setInputProcessor(control);
     }
     
@@ -125,6 +152,10 @@ public class Builder {
     
     Player getTars() {
         return pTars;
+    }
+    
+    Control getControl() {
+        return control;
     }
     
     private void readFile() throws IOException {

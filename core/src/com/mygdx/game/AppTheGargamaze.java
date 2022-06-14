@@ -9,6 +9,8 @@ public class AppTheGargamaze extends ApplicationAdapter {
 	private View view;
 	private ITime Tcase;
 	private ITime Ttars;
+    private ITime control;
+    private float t;
 	
 	@Override
 	public void create () {
@@ -26,13 +28,17 @@ public class AppTheGargamaze extends ApplicationAdapter {
 		 view  = bob.getView();
 		 Tcase = bob.getCase();
 		 Ttars = bob.getTars();
+		 control = bob.getControl();
 	}
 
 	@Override
 	public void render () { 
 		view.show();
-		Tcase.update(Gdx.graphics.getDeltaTime());
-		Ttars.update(Gdx.graphics.getDeltaTime());
+		
+		t = Gdx.graphics.getDeltaTime();
+		Tcase.update(t);
+		Ttars.update(t);
+		control.update(t);
 	}
 	
 	@Override

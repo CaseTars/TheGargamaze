@@ -4,11 +4,11 @@ import com.mygdx.game.interfaces.IHability;
 
 public abstract class Hability implements IHability{
     private boolean isUnlocked = false;
-    private boolean onCooldown = false;
-    private boolean isRunning  = false;
+    protected boolean onCooldown = false;
+    protected boolean isRunning  = false;
     protected float duration;
     private float cooldownDuration;
-    private float time;
+    protected float time;
     
     public Hability(float duration, float cooldownDuration) {
         this.duration = duration;
