@@ -11,9 +11,8 @@ public class SoundManager {
 	private static Sound wallHit;
 	private static Sound crystalGetting;
 	private static Sound playerDying;
+	private static Sound playerTeleport;
 
-
-	
 	public static void loadSounds() {
 	     doorOpening = Gdx.audio.newSound(Gdx.files.internal("MC Door Open .mp3"));
 	     gameMusic = Gdx.audio.newMusic(Gdx.files.internal("interstellarTheme.mp3"));
@@ -21,8 +20,9 @@ public class SoundManager {
 	     wallHit = Gdx.audio.newSound(Gdx.files.internal("batendo2.wav"));
 	     crystalGetting = Gdx.audio.newSound(Gdx.files.internal("upandoXpMine.wav"));
 //	     crystalGetting = Gdx.audio.newSound(Gdx.files.internal("Super-Mario-Bros-1-Up.wav"));
-
 	     playerDying = Gdx.audio.newSound(Gdx.files.internal("Mario Death.mp3"));
+	     playerTeleport = Gdx.audio.newSound(Gdx.files.internal("EndermansTeleport .mp3"));
+
 	}
 	
 	public static void playGameMusic() {
@@ -49,6 +49,10 @@ public class SoundManager {
 	public static void playPlayerDying() {
 		playerDying.play();	
 	}
+	
+	public static void playPlayerTeleport() {
+		playerTeleport.play(1, 0.5f, 0);
+	}
 
 	
 	public static void disposeSounds() {
@@ -57,5 +61,6 @@ public class SoundManager {
 		doorClosing.dispose();
 		playerDying.dispose();
 		wallHit.dispose();
+		playerTeleport.dispose();
 	}
 }
