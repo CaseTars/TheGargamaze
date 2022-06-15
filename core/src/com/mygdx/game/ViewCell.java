@@ -50,8 +50,7 @@ public class ViewCell implements IUpdate {
     }
     
     public static void loadImages() {  //falta isso só
-        imgCase     			  = new Texture(Gdx.files.internal("case2blue2.png"), true);	//check
-        imgCase.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+        imgCase     			  = new Texture(Gdx.files.internal("case2blue2.png"));	//check
         imgTars     			  = new Texture(Gdx.files.internal("case2red2.png"));   //check
         imgCaseTars 			  = new Texture(Gdx.files.internal("case2BlueRed.png"));
         imgWall        			  = new Texture(Gdx.files.internal("muro.png"));     //check
@@ -75,6 +74,7 @@ public class ViewCell implements IUpdate {
         imgCrystalTars			  = new Texture(Gdx.files.internal("case2blue.png"));
         imgCrystalCaseTars		  = new Texture(Gdx.files.internal("case2blue.png"));
         imgHappySantanche		  = new Texture(Gdx.files.internal("HappySantache.png"));  //check
+        //falta
     }
 	
     public static void dispose() {
@@ -104,9 +104,13 @@ public class ViewCell implements IUpdate {
     
 	public void update() {
 	   if(!cell.visible()) {  
-		   if(cell.nElements() > 1) {
+		   if(cell.nElements() == 2) {
 			   if(cell.visual(1).variation() == 'C') current = imgCase;
 			   if(cell.visual(1).variation() == 'T') current = imgTars;
+		   }
+		   else if(cell.nElements() == 3) {
+			   if(cell.visual(2).variation() == 'C') current = imgCase;
+			   if(cell.visual(2).variation() == 'T') current = imgTars;
 		   }
 		   else
 			   current = imgDark;
@@ -135,10 +139,14 @@ public class ViewCell implements IUpdate {
 	          else if(cell.visual(0).type() == 'c') {
 	        	  current = imgCrystal;
 	          }
+	          else if(cell.visual(0).type() == 'D') {
+	        	  current = imgGround;
+	          }
 	       }
 	       else if(n == 2) {
 	           if(contains(2)) //nbPlayers
-	               current = imgCaseTars;
+	        	   if(cell.visual(1).variation() == 'C') current = imgCase;
+	           	   if(cell.visual(1).variation() == 'T') current = imgTars;
 	           else if(cell.visual(0).type() == 'b') { //assumir q a primeira eh smp p objeto
 	        	   if(cell.visual(1).variation() == 'C') {
 	        		   if(cell.visual(0).state() == 'p') current = imgButtonPressedCase;
