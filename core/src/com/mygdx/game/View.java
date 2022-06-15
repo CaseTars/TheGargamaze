@@ -64,6 +64,10 @@ public class View implements IViewSwitchHability {
         drawStatus(Vcase, 160+480);
         drawTeleportHiders();
         
+        batch.begin();
+        batch.draw(ViewCell.imgDarkness, 160,0,480/2,480);
+        batch.end();
+        
         viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true); // Restore viewport.
     }
     

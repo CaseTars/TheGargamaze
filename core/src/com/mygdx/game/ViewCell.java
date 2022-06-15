@@ -32,6 +32,7 @@ public class ViewCell implements IUpdate {
     private static Texture imgCrystalCase;
     private static Texture imgCrystalTars;
     private static Texture imgCrystalCaseTars;
+    public static Texture imgDarkness;
     private static Texture imgHappySantanche;
     
     private Texture current = imgGround;
@@ -73,6 +74,7 @@ public class ViewCell implements IUpdate {
         imgCrystalCase			  = new Texture(Gdx.files.internal("case2blue.png"));
         imgCrystalTars			  = new Texture(Gdx.files.internal("case2blue.png"));
         imgCrystalCaseTars		  = new Texture(Gdx.files.internal("case2blue.png"));
+        imgDarkness               = new Texture(Gdx.files.internal("darkness.png"));
         imgHappySantanche		  = new Texture(Gdx.files.internal("HappySantache.png"));  //check
         //falta
     }
