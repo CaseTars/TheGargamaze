@@ -12,9 +12,7 @@ public class ViewCell implements IUpdate {
     public static final float size = 480f/Space.size;
     
 	private static Texture imgCase; 
-	private static Texture imgLittleCase; 
 	private static Texture imgTars;	
-	private static Texture imgLittleTars;	
     private static Texture imgWall;
     private static Texture imgGround;
     private static Texture imgDark;
@@ -65,10 +63,10 @@ public class ViewCell implements IUpdate {
         imgCrystalGreen			  = new Texture(Gdx.files.internal("case2blue.png"));
         imgDarkness               = new Texture(Gdx.files.internal("darkness.png"));
         imgHappySantanche		  = new Texture(Gdx.files.internal("HappySantache.png"));  //check
-        imgBlueBG	= new Texture(Gdx.files.internal("fundoAzul1.png"));
-        imgRedBG	= new Texture(Gdx.files.internal("fundoVermelho1.png"));
-        imgButtonFreeFrame	= new Texture(Gdx.files.internal("molduraApagada.png"));
-        imgButtonPressedFrame	= new Texture(Gdx.files.internal("molduraAcesa.png"));
+        imgBlueBG				  = new Texture(Gdx.files.internal("fundoAzul1.png"));
+        imgRedBG				  = new Texture(Gdx.files.internal("fundoVermelho1.png"));
+        imgButtonFreeFrame		  = new Texture(Gdx.files.internal("molduraApagada.png"));
+        imgButtonPressedFrame	  = new Texture(Gdx.files.internal("molduraAcesa.png"));
     }
 	
     public static void dispose() {
