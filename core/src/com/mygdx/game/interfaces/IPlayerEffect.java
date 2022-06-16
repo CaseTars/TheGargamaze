@@ -4,4 +4,5 @@ public interface IPlayerEffect {
     public void addEffect(IVisualEffect effect);
     public void changeRadius(int change);
     public IPosition getIPosition();
+    public void setPhantom(boolean phantom);
 }

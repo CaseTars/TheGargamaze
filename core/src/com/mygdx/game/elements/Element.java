@@ -22,8 +22,8 @@ public abstract class Element implements IElement {
     	return y;
     }
     
-    public boolean isObstructed() {
-    	return false;
+    public int obstructionLevel() {
+    	return 0;
     }
     
     public void setCell(IUpdate cell) {

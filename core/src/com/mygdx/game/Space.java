@@ -47,8 +47,9 @@ public class Space implements ISpace{
         updateVisibility();
 	}
 	
-	public void move(Player toMove, int xi, int yi,  int xf, int yf) throws ObstructedCell {
-		if(cells[xf][yf].isObstructed())
+	public void move(Player toMove, int xi, int yi,  int xf, int yf, boolean forced) throws ObstructedCell {
+		int obsLevel = cells[xf][yf].obstructionLevel();
+	    if(obsLevel == 2 || (!forced && obsLevel == 1))
 		    throw new ObstructedCell("This cell is obstructed!");
 		
 		cells[xi][yi].remove(toMove);
@@ -92,6 +93,6 @@ public class Space implements ISpace{
 
     @Override
     public boolean isObstructed(int x, int y) {
-        return cells[x][y].isObstructed();
+        return cells[x][y].obstructionLevel() > 0;
     }
 }

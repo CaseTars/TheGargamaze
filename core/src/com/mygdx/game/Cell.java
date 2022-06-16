@@ -40,11 +40,9 @@ public class Cell implements ICell{
         viewCell.update();
     }
     
-    public boolean isObstructed() {
-    	for(Element element: elements) {
-    		if(element.isObstructed()) return true;
-    	}
-    	return false;
+    public int obstructionLevel() {
+        if(elements.size == 0) return 0;
+    	return elements.get(0).obstructionLevel();
     }
     
     public void setVisibility(boolean visible) {

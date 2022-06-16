@@ -11,6 +11,7 @@ import com.mygdx.game.elements.Darkness;
 import com.mygdx.game.elements.Gate;
 import com.mygdx.game.elements.Player;
 import com.mygdx.game.elements.Wall;
+import com.mygdx.game.habilities.PhantomHability;
 import com.mygdx.game.habilities.SwitchPlacesHability;
 import com.mygdx.game.habilities.VisionRadiusHability;
 
@@ -109,6 +110,15 @@ public class Builder {
 
         
         // Habilidade atravessar paredes
+        PhantomHability hability3 = new PhantomHability(10, 5);
+        hability3.connect(pCase);
+        pCase.connect(hability3, 2);
+        hability3.unlock();
+        
+        hability3 = new PhantomHability(10, 5);
+        hability3.connect(pTars);
+        pTars.connect(hability3, 2);
+        hability3.unlock();
         
         
         // cria lanternas

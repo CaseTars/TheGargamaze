@@ -6,8 +6,8 @@ public class Wall extends Element{
     }
     
     @Override
-    public boolean isObstructed() {
-        return true;
+    public int obstructionLevel() {
+        return 1;
     }
 
     @Override

@@ -20,6 +20,7 @@ public class Player extends Element implements IPlayer{
 	private double totalTime = timeRemaining;
 	private Array<IVisualEffect> effects = new Array<IVisualEffect>();
 	private IHability[] habilities = new IHability[3];
+	private boolean phantom = false;
 	
 	public Player(int x, int y, char variation) {
 		super(x, y);
@@ -70,7 +71,7 @@ public class Player extends Element implements IPlayer{
 	    x += dx;
         y += dy;
         try {
-            space.move(this, xi, yi, x, y);
+            space.move(this, xi, yi, x, y, phantom);
             checkEffects();
         } catch (ObstructedCell e) {
     	    SoundManager.playWallHit();
@@ -107,7 +108,7 @@ public class Player extends Element implements IPlayer{
 
 	@Override
 	public char state() {
-		return 0;
+		return phantom ? 'P' : 'N';
 	}
 	
 	// From ITime
@@ -178,6 +179,11 @@ public class Player extends Element implements IPlayer{
     @Override
     public void enter() {
         space.insert(this);
+    }
+
+    @Override
+    public void setPhantom(boolean phantom) {
+        this.phantom = phantom;
     }
 
 }

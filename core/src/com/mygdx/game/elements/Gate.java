@@ -11,8 +11,8 @@ public class Gate extends Element implements IGate{
 		closed = true;
 	}
 
-	public boolean isObstructed() {
-		return closed;
+	public int obstructionLevel() {
+		return closed ? 1 : 0;
 	}
 	
 	public void close() {

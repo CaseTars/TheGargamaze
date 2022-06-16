@@ -35,7 +35,8 @@ public class SwitchPlacesHability extends Hability {
     @Override
     public void update(float t) {
         super.update(t);
-        if(!isRunning) view.stopAnimation(); 
+        if(!isRunning) return;
+        
         if(time < (0.45f)*duration) {
             view.setOpacity(time/(0.45f * duration));
         }
@@ -72,6 +73,10 @@ public class SwitchPlacesHability extends Hability {
         
         pCase.enter();
         pTars.enter();
+    }
+    
+    protected void removeEffect() {
+        view.stopAnimation();
     }
     
     private void switchPlaces() {
