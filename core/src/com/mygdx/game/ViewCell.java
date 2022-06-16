@@ -30,6 +30,10 @@ public class ViewCell implements IUpdate {
     private static Texture imgCrystalBlue;
     private static Texture imgCrystalRed;
     private static Texture imgCrystalGreen;
+    private static Texture imgBlueBG;
+    private static Texture imgRedBG;
+    private static Texture imgButtonFreeFrame;
+    private static Texture imgButtonPressedFrame;
 
     public static Texture imgDarkness;
     private static Texture imgHappySantanche;
@@ -71,6 +75,10 @@ public class ViewCell implements IUpdate {
         imgCrystalGreen			  = new Texture(Gdx.files.internal("case2blue.png"));
         imgDarkness               = new Texture(Gdx.files.internal("darkness.png"));
         imgHappySantanche		  = new Texture(Gdx.files.internal("HappySantache.png"));  //check
+        imgBlueBG	= new Texture(Gdx.files.internal("fundoAzul1.png"));
+        imgRedBG	= new Texture(Gdx.files.internal("fundoVermelho1.png"));
+        imgButtonFreeFrame	= new Texture(Gdx.files.internal("molduraApagada.png"));
+        imgButtonPressedFrame	= new Texture(Gdx.files.internal("molduraAcesa.png"));
     }
 	
     public static void dispose() {
@@ -92,12 +100,17 @@ public class ViewCell implements IUpdate {
         imgCrystalRed.dispose();
         imgCrystalGreen.dispose();
         imgHappySantanche.dispose();
+        imgBlueBG.dispose();
+        imgRedBG.dispose();
+        imgButtonFreeFrame.dispose();
+        imgButtonPressedFrame.dispose();
     }
     
 	public void update() {
 			   
 	   int nbElements = cell.nElements();
 	   
+	   textures.clear();
 	   textures.add(imgGround); 
 	   if(!cell.visible()) {  
 		   if(nbElements <= 1) textures.add(imgDark);  //talvez de BO 
@@ -113,12 +126,30 @@ public class ViewCell implements IUpdate {
 		   for(int i = 0;i < nbElements;i++) {
 			   if(cell.visual(i).type() == 'B') {
 				   if(cell.visual(i).variation() == 'c') {
-					   if(cell.visual(i).state() == 'p') textures.add(imgButtonPressedCase); 
-			           else if(cell.visual(i).state() == 'f') textures.add(imgButtonFreeCase);
+					   if(cell.visual(i).state() == 'p') {
+						   textures.add(imgButtonPressedFrame);
+						   textures.add(imgButtonPressedCase); 
+					   }
+			           else if(cell.visual(i).state() == 'f') {
+			        	   textures.add(imgButtonFreeFrame);
+			        	   textures.add(imgButtonFreeCase);
+			           }
 				   }
-				   else {
+				   else if(cell.visual(i).type() == 't') {
 					   if(cell.visual(i).state() == 'p') textures.add(imgButtonPressedTars); 
 			           else if(cell.visual(i).state() == 'f') textures.add(imgButtonFreeTars);
+				   }
+				   else {
+					   if(cell.visual(i).state() == 'p') {
+						   textures.add(imgButtonPressedFrame);
+						   textures.add(imgRedBG);
+						   textures.add(imgButtonPressed); 
+					   }
+			           else if(cell.visual(i).state() == 'f') {
+			        	   textures.add(imgButtonFreeFrame);
+						   textures.add(imgBlueBG);
+			        	   textures.add(imgButtonFree);
+			           }
 				   }
 			   }
 			   else if(cell.visual(i).type() == 'G') {

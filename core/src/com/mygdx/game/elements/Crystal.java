@@ -3,7 +3,7 @@ package com.mygdx.game.elements;
 public class Crystal extends Element{
 	char variation;
 
-	public Crystal(int x, int y, char var) {
+	public Crystal(int x, int y, char variation) {
 		super(x, y);
 		this.variation = variation;
 	}
