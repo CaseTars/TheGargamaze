@@ -108,11 +108,10 @@ public class Builder {
         hability2.unlock();
 
         
+        // Habilidade atravessar paredes
         
         
-        SoundManager.loadSounds();
-        SoundManager.playGameMusic();
-        
+        // cria lanternas
         Lantern lantern = new Lantern();
         lantern.connect(pCase);
         lantern.connect(space);
@@ -125,13 +124,15 @@ public class Builder {
         pTars.connect(lantern);
         space.addLantern(lantern);
         
-        lantern.setRadius(1);
         
         view.connect(pCase, pTars);
         
         control.conectCase(pCase);
         control.conectTars(pTars);
         Gdx.input.setInputProcessor(control);
+        
+        SoundManager.loadSounds();
+        SoundManager.playGameMusic();
     }
     
     private void connectCells() {

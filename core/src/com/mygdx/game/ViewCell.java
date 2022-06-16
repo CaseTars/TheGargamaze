@@ -98,16 +98,10 @@ public class ViewCell implements IUpdate {
 			   
 	   int nbElements = cell.nElements();
 	   
-	   textures.add(imgGround); 
-	   if(!cell.visible()) {  
-		   if(nbElements <= 1) textures.add(imgDark);  //talvez de BO 
-		   else {
-			   for(int i = 1;i < nbElements;i++) {
-				   if(cell.visual(i).variation() == 'C') textures.add(imgCase); 
-				   if(cell.visual(i).variation() == 'T') textures.add(imgTars);
-			   }
-			   textures.add(imgDarkness);
-		   }  
+	   textures.clear();
+	   textures.add(imgGround);
+	   if(!cell.visible()) {
+		   textures.add(imgDark);
 	   }
 	   else {
 		   for(int i = 0;i < nbElements;i++) {
@@ -126,7 +120,7 @@ public class ViewCell implements IUpdate {
 				   else if(cell.visual(0).state() == 'o') textures.add(imgGateOpen);
 			   }
 			   else if(cell.visual(i).type() == 'W') textures.add(imgWall);
-			   else if(cell.visual(i).type() == 'D') textures.add(imgGround);
+               else if(cell.visual(i).type() == 'D') textures.add(imgGround);
 			   else if(cell.visual(i).type() == 'C') {
 				   if(cell.visual(i).variation() == 'b')textures.add(imgCrystalBlue); 
 				   else if(cell.visual(i).variation() == 'r')textures.add(imgCrystalRed);
@@ -151,6 +145,9 @@ public class ViewCell implements IUpdate {
 		    	   textures.add(imgHappySantanche);
 		       }
 		   }
+		   
+		   if(nbElements > 0 && cell.visual(0).type() == 'D')
+               textures.add(imgDarkness);
 	   }
 	}
 	

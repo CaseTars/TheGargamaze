@@ -74,7 +74,7 @@ public class View implements IViewSwitchHability {
         for(int x = 0;x < size;x++) {
             for(int y = 0;y < size;y++) {
                 ViewCell aux = cells[x][y];
-         	   	for(Texture texture: aux.getTexture()) {  
+         	   	for(Texture texture: aux.getTexture()) {
          	   		batch.draw(texture, aux.getX(), aux.getY(), ViewCell.size, ViewCell.size);
          	   	} 
             }
@@ -112,16 +112,13 @@ public class View implements IViewSwitchHability {
         
         batch.begin();
         batch.setColor(1f,1f,1f,thopacity);
-        batch.draw(ViewCell.getDefaultTexture(), thX1, thY1, ViewCell.size, ViewCell.size);
-        batch.draw(ViewCell.getDefaultTexture(), thX2, thY2, ViewCell.size, ViewCell.size);
-     	for(Texture texture: th1) {  
+        
+     	for(Texture texture: th1)
  	   		batch.draw(texture, thX1, thY1, ViewCell.size, ViewCell.size);
- 	   	}  
-//        batch.draw(th1, thX1, thY1, ViewCell.size, ViewCell.size);
-     	for(Texture texture: th2) {  
+ 	   		
+     	for(Texture texture: th2)
  	   		batch.draw(texture, thX2, thY2, ViewCell.size, ViewCell.size);
- 	   	} 
-//        batch.draw(th2, thX2, thY2, ViewCell.size, ViewCell.size);
+
         batch.end();
     }
 
