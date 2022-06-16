@@ -33,7 +33,7 @@ public class Gate extends Element implements IGate{
 	
 	@Override
 	public char type() {
-		return 'g';
+		return 'G';
 	}
 
 	@Override

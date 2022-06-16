@@ -44,7 +44,7 @@ public class Button extends Element{
 
 	@Override
 	public char type() {
-		return 'b';
+		return 'B';
 	}
 
 	@Override

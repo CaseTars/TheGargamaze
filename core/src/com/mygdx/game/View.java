@@ -26,7 +26,7 @@ public class View implements IViewSwitchHability {
     private SpriteBatch batch;
     
     private float thX1, thY1, thX2, thY2, thopacity;
-    private Texture th1, th2;
+    private Array<Texture>  th1, th2;
     private boolean thAnimating = false;
     
     private IVisualPlayer Vcase;
@@ -63,11 +63,7 @@ public class View implements IViewSwitchHability {
         drawStatus(Vtars, 0);
         drawStatus(Vcase, 160+480);
         drawTeleportHiders();
-        
-        batch.begin();
-        batch.draw(ViewCell.imgDarkness, 160,0,480/2,480);
-        batch.end();
-        
+    
         viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true); // Restore viewport.
     }
     
@@ -78,13 +74,12 @@ public class View implements IViewSwitchHability {
         for(int x = 0;x < size;x++) {
             for(int y = 0;y < size;y++) {
                 ViewCell aux = cells[x][y];
-                batch.draw(aux.getDefaultTexture(), aux.getX(), aux.getY(), ViewCell.size, ViewCell.size);
-                batch.draw(aux.getTexture(), aux.getX(), aux.getY(), ViewCell.size, ViewCell.size);
+         	   	for(Texture texture: aux.getTexture()) {  
+         	   		batch.draw(texture, aux.getX(), aux.getY(), ViewCell.size, ViewCell.size);
+         	   	} 
             }
         }
         batch.end();
-        
-
     }
     
     
@@ -119,8 +114,14 @@ public class View implements IViewSwitchHability {
         batch.setColor(1f,1f,1f,thopacity);
         batch.draw(ViewCell.getDefaultTexture(), thX1, thY1, ViewCell.size, ViewCell.size);
         batch.draw(ViewCell.getDefaultTexture(), thX2, thY2, ViewCell.size, ViewCell.size);
-        batch.draw(th1, thX1, thY1, ViewCell.size, ViewCell.size);
-        batch.draw(th2, thX2, thY2, ViewCell.size, ViewCell.size);
+     	for(Texture texture: th1) {  
+ 	   		batch.draw(texture, thX1, thY1, ViewCell.size, ViewCell.size);
+ 	   	}  
+//        batch.draw(th1, thX1, thY1, ViewCell.size, ViewCell.size);
+     	for(Texture texture: th2) {  
+ 	   		batch.draw(texture, thX2, thY2, ViewCell.size, ViewCell.size);
+ 	   	} 
+//        batch.draw(th2, thX2, thY2, ViewCell.size, ViewCell.size);
         batch.end();
     }
 
