@@ -74,6 +74,12 @@ public class Builder {
                     Crystal crystal = new Crystal(x,y,mazeMatrix[x][y]);
                     crystal.connect(space);
                     space.insert(crystal);
+                    // cria lanterna do cristal
+                    Lantern lantern = new Lantern();
+                    lantern.connect(crystal);
+                    lantern.connect(space);
+                    crystal.connect(lantern);
+                    space.addLantern(lantern);
                     break;
 			    case '-':
 			        break;

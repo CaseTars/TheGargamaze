@@ -1,12 +1,14 @@
 package com.mygdx.game.elements;
 
 import com.mygdx.game.interfaces.ISpaceCrystal;
+import com.mygdx.game.interfaces.ILantern;
 import com.mygdx.game.interfaces.IPlayerInteraction;
 
-public class Crystal extends Element{
-    ISpaceCrystal space;
-	char variation;
-
+public class Crystal extends Element {
+    private ISpaceCrystal space;
+	private char variation;
+	private ILantern lantern;
+	
 	public Crystal(int x, int y, char var) {
 		super(x, y);
 		this.variation = var;
@@ -16,6 +18,11 @@ public class Crystal extends Element{
 	    this.space = space;
 	}
 	
+    public void connect(ILantern lantern) {
+        this.lantern = lantern;
+        lantern.setRadius(0);
+    }
+    
 	@Override
 	public void action(IPlayerInteraction player) {
 	    player.addCrystal(this);
@@ -31,10 +38,12 @@ public class Crystal extends Element{
     }
 	
 	public void enter() {
+	    lantern.turnOn();
 	    space.insert(this);
 	}
 	
 	public void leave() {
+        lantern.turnOff();
         space.remove(this);
     }
 	

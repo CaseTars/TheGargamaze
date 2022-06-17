@@ -38,16 +38,17 @@ public class Control implements InputProcessor, IControl {
         else if(keycode == Input.Keys.S)
         	pTars.moveDown();
         
-        else if(keycode == Input.Keys.NUMPAD_0)
+        //else if(keycode == Input.Keys.NUMPAD_0)
+        else if(keycode == Input.Keys.PAGE_DOWN)
         	pCase.commandAction();
         else if(keycode == Input.Keys.E)
         	pTars.commandAction();
 
-        else if(keycode == Input.Keys.NUMPAD_1)
+        else if(keycode == Input.Keys.INSERT)
             pCase.useHability(0);
-        else if(keycode == Input.Keys.NUMPAD_2)
+        else if(keycode == Input.Keys.HOME)
             pCase.useHability(1);
-        else if(keycode == Input.Keys.NUMPAD_3)
+        else if(keycode == Input.Keys.PAGE_UP)
             pCase.useHability(2);
         else if(keycode == Input.Keys.NUM_1)
             pTars.useHability(0);
@@ -56,7 +57,7 @@ public class Control implements InputProcessor, IControl {
         else if(keycode == Input.Keys.NUM_3)
             pTars.useHability(2);
         
-        else if(keycode == Input.Keys.NUMPAD_COMMA)
+        else if(keycode == Input.Keys.END)
             pCase.dropCrystal();
         else if(keycode == Input.Keys.Q)
             pTars.dropCrystal();
@@ -65,7 +66,7 @@ public class Control implements InputProcessor, IControl {
     }
 
     public boolean keyUp(int keycode) {
-    	if(keycode == Input.Keys.NUMPAD_0)
+    	if(keycode == Input.Keys.PAGE_DOWN)
         	pCase.commandDeaction();
         else if(keycode == Input.Keys.E)
         	pTars.commandDeaction();
