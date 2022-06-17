@@ -21,6 +21,7 @@ public class Player extends Element implements IPlayer{
 	private Array<IVisualEffect> effects = new Array<IVisualEffect>();
 	private IHability[] habilities = new IHability[3];
 	private boolean phantom = false;
+	private Array<Crystal> crystals = new Array<Crystal>();
 	
 	public Player(int x, int y, char variation) {
 		super(x, y);
@@ -82,7 +83,7 @@ public class Player extends Element implements IPlayer{
 
     @Override
     public void commandAction() {
-        space.action(x, y, variation);
+        space.action(x, y, this);
     }
 
     @Override
@@ -184,6 +185,38 @@ public class Player extends Element implements IPlayer{
     @Override
     public void setPhantom(boolean phantom) {
         this.phantom = phantom;
+    }
+
+    public void addCrystal(Crystal c) {
+        crystals.add(c);
+        updateHabilities();
+    }
+    
+    public void dropCrystal() {
+        if(crystals.size == 0) return;
+        Crystal removed = crystals.removeIndex(crystals.size - 1);
+        removed.setX(x);
+        removed.setY(y);
+        if(removed.canEnter()) {
+            removed.enter();
+            updateHabilities();
+        }
+        else {
+            crystals.add(removed);
+        }
+    }
+
+    private void updateHabilities() {
+        for(IHability hability : habilities)
+            hability.update();
+    }
+
+    @Override
+    public boolean hasCrystal(char variation) {
+        for(Crystal crystal : crystals)
+            if(crystal.variation() == variation)
+                return true;
+        return false;
     }
 
 }

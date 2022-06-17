@@ -1,7 +1,7 @@
 package com.mygdx.game.elements;
 
 import com.mygdx.game.interfaces.IElement;
-import com.mygdx.game.interfaces.IPlayerEffect;
+import com.mygdx.game.interfaces.IPlayerInteraction;
 import com.mygdx.game.interfaces.IUpdate;
 
 public abstract class Element implements IElement {
@@ -30,9 +30,9 @@ public abstract class Element implements IElement {
         this.cell = cell;
     }
     
-    public void action(char variation) {}
+    public void action(IPlayerInteraction player) {}
     
     public void deaction() {}
     
-    public void interact(IPlayerEffect player) {}
+    public void interact(IPlayerInteraction player) {}
 }

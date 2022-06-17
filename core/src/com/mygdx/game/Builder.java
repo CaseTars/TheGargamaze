@@ -4,13 +4,14 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Vector;
 import com.badlogic.gdx.Gdx;
-import com.mygdx.game.elements.Button;
+import com.mygdx.game.elements.Crystal;
 import com.mygdx.game.elements.Darkness;
 import com.mygdx.game.elements.Gate;
+import com.mygdx.game.elements.HardWall;
 import com.mygdx.game.elements.Player;
 import com.mygdx.game.elements.Wall;
+import com.mygdx.game.elements.buttons.Button;
 import com.mygdx.game.habilities.PhantomHability;
 import com.mygdx.game.habilities.SwitchPlacesHability;
 import com.mygdx.game.habilities.VisionRadiusHability;
@@ -19,7 +20,7 @@ public class Builder {
     private View view;
     private Player pCase;
     private Player pTars;
-    private Space space; //n precisa
+    private Space space;
     private Control control;
     
     private char[][] mazeMatrix;
@@ -28,6 +29,7 @@ public class Builder {
     private int nButtons;
     private char[][] buttonsConfigurationMatrix;
     private Position[] buttonsPositionArray;
+    private char[][] gatesConfigurationMatrix;
     private Position[][] gatesPositionMatrix;
     
     public void build() throws IOException {
@@ -62,6 +64,17 @@ public class Builder {
                     Darkness darkness = new Darkness(x,y);
                     space.insert(darkness);
                     break;
+                case 'H':
+                    HardWall hardWall = new HardWall(x,y);
+                    space.insert(hardWall);
+                    break;
+                case '0':
+                case '1':
+                case '2':
+                    Crystal crystal = new Crystal(x,y,mazeMatrix[x][y]);
+                    crystal.connect(space);
+                    space.insert(crystal);
+                    break;
 			    case '-':
 			        break;
                 default:
@@ -75,11 +88,11 @@ public class Builder {
 			Position p = buttonsPositionArray[i];
 			boolean hasSpring = buttonsConfigurationMatrix[i][0] == 'b';
 			char allowed = buttonsConfigurationMatrix[i][1];
-			Button button = new Button(p.x, p.y, hasSpring, allowed);
+			Button button = Button.create(p.x, p.y, hasSpring, allowed);
             space.insert(button);
    			for(int j = 0; j<gatesPositionMatrix[i].length; j++) {
                 Position gP = gatesPositionMatrix[i][j];
-                Gate gate = new Gate(gP.x, gP.y);
+                Gate gate = Gate.create(gP.x, gP.y, gatesConfigurationMatrix[i][j]);
                 space.insert(gate);
    				button.connect(gate);
    			}
@@ -91,12 +104,11 @@ public class Builder {
         VisionRadiusHability hability1 = new VisionRadiusHability(10, 5, 2);
         hability1.connect(pCase);
         pCase.connect(hability1, 0);
-        hability1.unlock();
         
         hability1 = new VisionRadiusHability(10, 5, 2);
         hability1.connect(pTars);
         pTars.connect(hability1, 0);
-        hability1.unlock();
+        
         
         // Habilidade troca de lugar.
         SwitchPlacesHability hability2 = new SwitchPlacesHability(1, 5);
@@ -106,19 +118,15 @@ public class Builder {
         hability2.connect(space);
         pCase.connect(hability2, 1);
         pTars.connect(hability2, 1);
-        hability2.unlock();
-
         
         // Habilidade atravessar paredes
         PhantomHability hability3 = new PhantomHability(10, 5);
         hability3.connect(pCase);
         pCase.connect(hability3, 2);
-        hability3.unlock();
         
         hability3 = new PhantomHability(10, 5);
         hability3.connect(pTars);
         pTars.connect(hability3, 2);
-        hability3.unlock();
         
         
         // cria lanternas
@@ -207,6 +215,7 @@ public class Builder {
         buttonsConfigurationMatrix = new char[nButtons][2];
         buttonsPositionArray = new Position[nButtons];
         gatesPositionMatrix = new Position[nButtons][];
+        gatesConfigurationMatrix = new char[nButtons][];
         for(int i = 0; i<nButtons; i++)
             readButton(i, readFile);
     }
@@ -219,8 +228,12 @@ public class Builder {
         
         int nGates = Integer.parseInt(line[5]);
         Position gates[] = new Position[nGates];
-        for(int i = 0; i<nGates; i++)
-            gates[i] = new Position(Integer.parseInt(line[7+3*i]), Integer.parseInt(line[8+3*i]));
+        char gatesConfig[] = new char[nGates];
+        for(int i = 0; i<nGates; i++) {
+            gates[i] = new Position(Integer.parseInt(line[7+4*i]), Integer.parseInt(line[8+4*i]));
+            gatesConfig[i] = line[9+4*i].charAt(0);
+        }
         gatesPositionMatrix[index] = gates;
+        gatesConfigurationMatrix[index] = gatesConfig;
     }
 }

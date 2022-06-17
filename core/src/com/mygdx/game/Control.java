@@ -56,6 +56,11 @@ public class Control implements InputProcessor, IControl {
         else if(keycode == Input.Keys.NUM_3)
             pTars.useHability(2);
         
+        else if(keycode == Input.Keys.NUMPAD_COMMA)
+            pCase.dropCrystal();
+        else if(keycode == Input.Keys.Q)
+            pTars.dropCrystal();
+        
         return false;
     }
 

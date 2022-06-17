@@ -1,15 +1,15 @@
 package com.mygdx.game.habilities;
 
-import com.mygdx.game.interfaces.IPlayerEffect;
+import com.mygdx.game.interfaces.IPlayerInteraction;
 
 public class PhantomHability extends Hability {
-    IPlayerEffect player;
+    IPlayerInteraction player;
 
     public PhantomHability(float duration, float cooldownDuration) {
         super(duration, cooldownDuration);
     }
     
-    public void connect(IPlayerEffect player) {
+    public void connect(IPlayerInteraction player) {
         this.player = player;
     }
 
@@ -20,5 +20,13 @@ public class PhantomHability extends Hability {
     
     protected void removeEffect() {
         player.setPhantom(false);
+    }
+
+    @Override
+    public void update() {
+        if(player.hasCrystal('2'))
+            unlock();
+        else
+            lock();
     }
 }

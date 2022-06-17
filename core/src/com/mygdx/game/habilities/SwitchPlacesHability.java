@@ -59,7 +59,7 @@ public class SwitchPlacesHability extends Hability {
         pCase.leave();
         pTars.leave();
         
-        if(space.isObstructed(cX, cY) || space.isObstructed(tX, tY)) { // cancelar
+        if(space.obstructionLevel(cX, cY) > 1 || space.obstructionLevel(tX, tY) > 1) { // cancelar
             time = 0;
             isRunning = false;
             onCooldown = false;
@@ -90,5 +90,12 @@ public class SwitchPlacesHability extends Hability {
         this.control = control;
     }
 
+    @Override
+    public void update() {
+        if(pCase.hasCrystal('1') && pTars.hasCrystal('1'))
+            unlock();
+        else
+            lock();
+    }
 
 }

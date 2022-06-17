@@ -9,4 +9,5 @@ public interface ICommand {
 	public void commandAction();
 	public void commandDeaction();
 	public void useHability(int i);
+	public void dropCrystal();
 }

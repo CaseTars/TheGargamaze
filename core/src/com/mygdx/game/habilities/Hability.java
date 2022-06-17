@@ -57,7 +57,11 @@ public abstract class Hability implements IHability{
         return time/cooldownDuration;
     }
     
-    public void unlock() {
+    protected void unlock() {
         isUnlocked = true;
+    }
+    
+    protected void lock() {
+        isUnlocked = false;
     }
 }
