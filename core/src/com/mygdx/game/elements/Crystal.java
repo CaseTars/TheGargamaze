@@ -9,9 +9,9 @@ public class Crystal extends Element {
 	private char variation;
 	private ILantern lantern;
 	
-	public Crystal(int x, int y, char var) {
+	public Crystal(int x, int y, char variation) {
 		super(x, y);
-		this.variation = var;
+		this.variation = variation;
 	}
 	
 	public void connect(ISpaceCrystal space) {
