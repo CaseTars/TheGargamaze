@@ -125,14 +125,14 @@ public class Builder {
         space.addLantern(lantern);
         
         
-        view.connect(pCase, pTars);
+        view.connect(pCase, pTars, control);
         
         control.conectCase(pCase);
         control.conectTars(pTars);
         Gdx.input.setInputProcessor(control);
         
-        SoundManager.loadSounds();
-        SoundManager.playGameMusic();
+//        SoundManager.loadSounds();
+//        SoundManager.playGameMusic();
     }
     
     private void connectCells() {

@@ -12,6 +12,7 @@ public class SoundManager {
 	private static Sound crystalGetting;
 	private static Sound playerDying;
 	private static Sound playerTeleport;
+	private static boolean musicOn;
 
 	public static void loadSounds() {
 	     doorOpening = Gdx.audio.newSound(Gdx.files.internal("MC Door Open .mp3"));
@@ -22,12 +23,19 @@ public class SoundManager {
 //	     crystalGetting = Gdx.audio.newSound(Gdx.files.internal("Super-Mario-Bros-1-Up.wav"));
 	     playerDying = Gdx.audio.newSound(Gdx.files.internal("Mario Death.mp3"));
 	     playerTeleport = Gdx.audio.newSound(Gdx.files.internal("EndermansTeleport .mp3"));
-
+	     musicOn = true;
 	}
 	
 	public static void playGameMusic() {
-		gameMusic.setLooping(true);
-		//gameMusic.play();
+		if(musicOn) {
+			gameMusic.setLooping(true);
+//			wwgameMusic.play();
+		}
+	}
+	
+	public static void stopGameMusic() {
+		musicOn = false;
+		gameMusic.stop();
 	}
 	
 	public static void playWallHit() {
@@ -54,6 +62,13 @@ public class SoundManager {
 		playerTeleport.play(1, 1, 0);
 	}
 
+	public static void setMusic(boolean turnOn) {
+		musicOn = turnOn;
+	}
+	
+	public static boolean getMusic() {
+		return musicOn;
+	}
 	
 	public static void disposeSounds() {
 		gameMusic.dispose();
