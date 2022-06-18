@@ -50,7 +50,7 @@ public class ViewCell implements IUpdate {
     public static void loadImages() {  
         imgCase     			  = new Texture(Gdx.files.internal("case2blue2.png"));	//check
         imgTars     			  = new Texture(Gdx.files.internal("case2red2.png"));   //check
-        imgWall        			  = new Texture(Gdx.files.internal("muro.png"));     //check
+        imgWall        			  = new Texture(Gdx.files.internal("wall.png"));     //check
         imgGround   			  = new Texture(Gdx.files.internal("ground.png"));   //check
         imgDark	        		  = new Texture(Gdx.files.internal("dark.png"));	//check
         imgGateClosed 		      = new Texture(Gdx.files.internal("gate.png"));	//check
@@ -146,16 +146,13 @@ public class ViewCell implements IUpdate {
 				   else if(cell.visual(0).state() == 'o') textures.add(imgGateOpen);
 			   }
 			   else if(cell.visual(i).type() == 'W') textures.add(imgWall);
-               else if(cell.visual(i).type() == 'D') {
-            	   textures.add(imgGround);
-                   textures.add(imgDarkness);
-               }
-			   else if(cell.visual(i).type() == 'C') {
-				   if(cell.visual(i).variation() == 'b')textures.add(imgCrystalBlue); 
-				   else if(cell.visual(i).variation() == 'r')textures.add(imgCrystalRed);
-				   else if(cell.visual(i).variation() == 'y')textures.add(imgCrystalYellow);
-				   else if(cell.visual(i).variation() == 'g')textures.add(imgCrystalGreen);
-			   }
+               else if(cell.visual(i).type() == 'D') textures.add(imgGround);
+//			   else if(cell.visual(i).type() == 'C') {
+//				   if(cell.visual(i).variation() == 'b')textures.add(imgCrystalBlue); 
+//				   else if(cell.visual(i).variation() == 'r')textures.add(imgCrystalRed);
+//				   else if(cell.visual(i).variation() == 'y')textures.add(imgCrystalYellow);
+//				   else if(cell.visual(i).variation() == 'g')textures.add(imgCrystalGreen);
+//			   }
 			   else if(cell.visual(i).type() == 'P') {
 				   if(cell.visual(i).variation() == 'C') textures.add(imgCase); //normal
 				   if(cell.visual(i).variation() == 'T') textures.add(imgTars);
@@ -164,8 +161,8 @@ public class ViewCell implements IUpdate {
 		    	   textures.add(imgHappySantanche);
 		       }
 		   }
-//		   if(nbElements > 0 && cell.visual(0).type() == 'D')
-//               textures.add(imgDarkness);
+		   if(nbElements > 0 && cell.visual(0).type() == 'D')
+               textures.add(imgDarkness);
 	   }
 	}
 	

@@ -7,6 +7,7 @@ import com.mygdx.game.elements.Wall;
 import com.mygdx.game.exceptions.ObstructedCell;
 import com.mygdx.game.interfaces.ISpace;
 import com.mygdx.game.interfaces.ILantern;
+import com.mygdx.game.interfaces.IPlayerInteraction;
 
 public class Space implements ISpace{
 	public static int size;
@@ -31,7 +32,11 @@ public class Space implements ISpace{
 	public void insert(Element toInsert) {
 		cells[toInsert.getX()][toInsert.getY()].insert(toInsert);
 	}
-	
+
+    public void remove(Element toRemove) {
+        cells[toRemove.getX()][toRemove.getY()].remove(toRemove);
+    }
+    
 	public void insert(Player toInsert) {
         cells[toInsert.getX()][toInsert.getY()].insert(toInsert);
         cells[toInsert.getX()][toInsert.getX()].interact(toInsert);
@@ -47,8 +52,9 @@ public class Space implements ISpace{
         updateVisibility();
 	}
 	
-	public void move(Player toMove, int xi, int yi,  int xf, int yf) throws ObstructedCell {
-		if(cells[xf][yf].isObstructed())
+	public void move(Player toMove, int xi, int yi,  int xf, int yf, boolean forced) throws ObstructedCell {
+		int obsLevel = cells[xf][yf].obstructionLevel();
+	    if(obsLevel == 3 || (!forced && obsLevel == 2))
 		    throw new ObstructedCell("This cell is obstructed!");
 		
 		cells[xi][yi].remove(toMove);
@@ -81,8 +87,8 @@ public class Space implements ISpace{
     }
 
 	@Override
-	public void action(int x, int y,char variation) {
-		cells[x][y].action(variation);
+	public void action(int x, int y, IPlayerInteraction player) {
+		cells[x][y].action(player);
 	}
 
 	@Override
@@ -91,7 +97,7 @@ public class Space implements ISpace{
 	}
 
     @Override
-    public boolean isObstructed(int x, int y) {
-        return cells[x][y].isObstructed();
+    public int obstructionLevel(int x, int y) {
+        return cells[x][y].obstructionLevel();
     }
 }

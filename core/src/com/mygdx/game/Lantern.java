@@ -7,10 +7,11 @@ import com.mygdx.game.interfaces.ISpaceIluminate;
 public class Lantern implements ILantern{
     private int x, y, radius = 1;
     private ISpaceIluminate space;
-    private IPosition player;
+    private IPosition element;
+    private boolean on = true;
     
-    void connect(IPosition player) {
-        this.player = player;
+    void connect(IPosition element) {
+        this.element = element;
     }
     
     void connect(ISpaceIluminate space) {
@@ -18,17 +19,18 @@ public class Lantern implements ILantern{
     }
     
     private int getX() {
-        if(player == null) return x;
-        return player.getX();
+        if(element == null) return x;
+        return element.getX();
     }
     
     private int getY() {
-        if(player == null) return y;
-        return player.getY();
+        if(element == null) return y;
+        return element.getY();
     }
     
     @Override
     public void iluminate() {
+        if(!on) return;
         for(int dx = -radius; dx<=radius; dx++)
             for(int dy = -radius; dy<=radius; dy++)
                 space.iluminate(getX() + dx, getY() + dy);
@@ -48,6 +50,16 @@ public class Lantern implements ILantern{
     @Override
     public void changeRadius(int change) {
         setRadius(radius + change);
+    }
+
+    @Override
+    public void turnOff() {
+        on = false;
+    }
+
+    @Override
+    public void turnOn() {
+        on = true;
     }
 
 }

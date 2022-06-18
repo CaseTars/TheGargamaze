@@ -1,18 +1,18 @@
 package com.mygdx.game.habilities;
 
 import com.mygdx.game.Position;
-import com.mygdx.game.interfaces.IPlayerEffect;
+import com.mygdx.game.interfaces.IPlayerInteraction;
 import com.mygdx.game.interfaces.IPosition;
 import com.mygdx.game.interfaces.IVisualEffect;
 
 public class VisualEffect implements IVisualEffect {
-    IPlayerEffect player;
+    IPlayerInteraction player;
     int radiusGain;
     float time;
     IPosition playerPos;
     Position pos;
     
-    public VisualEffect(IPlayerEffect player, int radiusGain, float duration) {
+    public VisualEffect(IPlayerInteraction player, int radiusGain, float duration) {
         this.player = player;
         this.radiusGain = radiusGain;
         this.time = duration;
@@ -20,7 +20,7 @@ public class VisualEffect implements IVisualEffect {
         this.playerPos = null;
     }
     
-    public VisualEffect(IPlayerEffect player, int radiusGain, IPosition playerPos) {
+    public VisualEffect(IPlayerInteraction player, int radiusGain, IPosition playerPos) {
         this.player = player;
         this.radiusGain = radiusGain;
         this.time = 0;
