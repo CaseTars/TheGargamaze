@@ -148,8 +148,7 @@ public class Builder {
         pTars.connect(lantern);
         space.addLantern(lantern);
         
-        
-        view.connect(pCase, pTars, control);
+        view.connect(pCase, pTars);
         
         control.conectCase(pCase);
         control.conectTars(pTars);

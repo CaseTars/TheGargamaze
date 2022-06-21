@@ -20,7 +20,7 @@ public class Crystal extends Element {
 	
     public void connect(ILantern lantern) {
         this.lantern = lantern;
-        lantern.setRadius(0);
+        lantern.setRadius(1);
     }
     
 	@Override

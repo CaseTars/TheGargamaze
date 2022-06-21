@@ -14,7 +14,6 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.interfaces.IControlUpdateTimeOut;
 import com.mygdx.game.interfaces.IViewSwitchHability;
 import com.mygdx.game.interfaces.IVisualPlayer;
 
@@ -33,7 +32,6 @@ public class View implements IViewSwitchHability, Screen {
     
     private IVisualPlayer Vcase;
     private IVisualPlayer Vtars;
-    private IControlUpdateTimeOut control;
 
     public View() {
         camera = new OrthographicCamera();
@@ -50,10 +48,9 @@ public class View implements IViewSwitchHability, Screen {
                 cells[x][y] = new ViewCell(x,y);
     }
     
-    public void connect(IVisualPlayer Vcase, IVisualPlayer Vtars, IControlUpdateTimeOut control) {
+    public void connect(IVisualPlayer Vcase, IVisualPlayer Vtars) {
         this.Vcase = Vcase;
         this.Vtars = Vtars;
-        this.control = control;
     }
 
     public void show() {
@@ -152,10 +149,6 @@ public class View implements IViewSwitchHability, Screen {
 
 	@Override
 	public void render(float delta) {
-//		float t = Gdx.graphics.getDeltaTime();
-		Vcase.update(delta);
-		Vtars.update(delta);
-		control.update(delta);
 		show();		
 	}
 

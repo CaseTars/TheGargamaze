@@ -5,15 +5,21 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class MenuViewScreen implements Screen{
 
-	  	AppTheGargamaze game;
-		OrthographicCamera camera;
+		private AppTheGargamaze game;
+		private OrthographicCamera camera;
+	    private Viewport viewport;
+	    private SpriteBatch batch;
+
 	    private static Texture imgHappySantanche;
 	    private static Texture imgTittle;
 	    private static Texture imgPlay;
@@ -22,12 +28,18 @@ public class MenuViewScreen implements Screen{
 	    private static Texture imgMusicOff;
 	    private static Texture imgBackGround;
 
-
 		public MenuViewScreen(AppTheGargamaze gam) {
 			game = gam;
+			
+			batch = new SpriteBatch();
 
 			camera = new OrthographicCamera();
-			camera.setToOrtho(false, 800, 480);
+	        camera.position.set(0, 0, 0);
+	        camera.update();
+
+//			camera.setToOrtho(false, 800, 480);
+	        viewport = new FitViewport(800, 480, camera);
+	        
 			imgHappySantanche = new Texture(Gdx.files.internal("HappySantache.png"));  //check
 			imgTittle = new Texture(Gdx.files.internal("Tittle.png")); 
 			imgPlay = new Texture(Gdx.files.internal("Play.png")); 
@@ -41,20 +53,19 @@ public class MenuViewScreen implements Screen{
 
 		@Override
 		public void render(float delta) {
-			ScreenUtils.clear(0, 0, 0.5f, 1);
+			ScreenUtils.clear(0, 0, 0, 1);
 			camera.update();
-			game.batch.setProjectionMatrix(camera.combined);
+			batch.setProjectionMatrix(camera.combined);
 
-			game.batch.begin();
+			batch.begin();
 			
-			game.batch.draw(imgBackGround, 0, 0, 800, 480);
-			game.batch.draw(imgTittle, 200, 250, 400, 200);
-			game.batch.draw(imgPlay, 300, 150, 200, 150);
-			game.batch.draw(imgTutorial, 300, 100, 200, 150);
-			game.batch.draw(imgMusicOn, 300, 50, 200, 150);
-			//game.batch.draw(imgMusicOff, 300, 50, 200, 150);
+			batch.draw(imgBackGround, 0, 0, 960, 480);
+			batch.draw(imgTittle, 200, 250, 400, 200);
+			batch.draw(imgPlay, 300, 150, 200, 150);
+			batch.draw(imgTutorial, 300, 100, 200, 150);
+			if(SoundManager.getMusic()) batch.draw(imgMusicOn, 300, 50, 200, 150);
+			else if(!SoundManager.getMusic()) batch.draw(imgMusicOff, 300, 50, 200, 150);
 
-			
 
 			if (Gdx.input.isTouched()) {
 				
@@ -69,22 +80,22 @@ public class MenuViewScreen implements Screen{
 					game.create2();
 					dispose();
 				}
-				if(posX > 300 && posX < 500 && posY > 150 && posY < 200)  //tutorial
-					game.batch.draw(imgHappySantanche, 0, 0, 500, 280);
-				if(posX > 300 && posX < 500 && posY > 100 && posY < 140 && SoundManager.getMusic()) { 
+				else if(posX > 300 && posX < 500 && posY > 150 && posY < 200)  //tutorial
+					batch.draw(imgHappySantanche, 0, 0, 500, 280);
+				else if(posX > 300 && posX < 500 && posY > 100 && posY < 140 && SoundManager.getMusic()) { 
 					SoundManager.setMusic(false);
 					SoundManager.stopGameMusic();
-					game.batch.draw(imgMusicOff, 300, 50, 200, 147);
+					batch.draw(imgMusicOff, 300, 50, 200, 150);
 				}
-				if(posX > 300 && posX < 500 && posY > 100 && posY < 140 && !SoundManager.getMusic()) {
-					game.batch.draw(imgMusicOn, 300, 50, 200, 147);
+				else if(posX > 300 && posX < 500 && posY > 100 && posY < 140 && !SoundManager.getMusic()) {
 					SoundManager.setMusic(true);
 					SoundManager.playGameMusic();
+					batch.draw(imgMusicOn, 300, 50, 200, 150);
 				}
-
-				
 			}
-			game.batch.end();
+			batch.end();
+	        viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true); // Restore viewport.
+
 		}
 
 
@@ -121,6 +132,7 @@ public class MenuViewScreen implements Screen{
         imgMusicOn.dispose();
         imgMusicOff.dispose();
         imgBackGround.dispose();
+        batch.dispose();
 	}
 
 	@Override

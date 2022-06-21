@@ -38,7 +38,7 @@ public class Gate extends Element implements IGate{
 
 	@Override
 	public char variation() {
-		return 0;
+		return 'N';
 	}
 
 	@Override

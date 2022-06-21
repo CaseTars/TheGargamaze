@@ -9,5 +9,9 @@ public class HardGate extends Gate {
     public int obstructionLevel() {
         return closed ? 3 : 0;
     }
+    
+    public char variation() {
+    	return 'H';
+    }
 
 }

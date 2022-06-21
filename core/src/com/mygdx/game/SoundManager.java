@@ -27,16 +27,17 @@ public class SoundManager {
 	}
 	
 	public static void playGameMusic() {
-
 		if(musicOn) {
 			gameMusic.setLooping(true);
-//			gameMusic.play();
+			gameMusic.play();
 		}
 	}
 	
 	public static void stopGameMusic() {
 		musicOn = false;
 		gameMusic.stop();
+		gameMusic.setLooping(false);
+
 	}
 	
 	public static void playWallHit() {

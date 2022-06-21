@@ -185,11 +185,13 @@ public class Player extends Element implements IPlayer{
     @Override
     public void setPhantom(boolean phantom) {
         this.phantom = phantom;
+		cell.update();
     }
 
     public void addCrystal(Crystal c) {
         crystals.add(c);
         updateHabilities();
+        SoundManager.playCrystalGetting();
     }
     
     public void dropCrystal() {

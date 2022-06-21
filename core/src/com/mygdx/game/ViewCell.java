@@ -13,11 +13,16 @@ public class ViewCell implements IUpdate {
     
 	private static Texture imgCase; 
 	private static Texture imgTars;	
+	private static Texture imgCasePhantom; 
+	private static Texture imgTarsPhantom; 
     private static Texture imgWall;
+    private static Texture imgHardWall;
     private static Texture imgGround;
     private static Texture imgDark;
     private static Texture imgGateClosed; 
     private static Texture imgGateOpen;  
+    private static Texture imgGateHardClosed;
+    private static Texture imgGateHardOpen; 
     private static Texture imgButtonFree; 
     private static Texture imgButtonPressed;
     private static Texture imgCrystalYellow;
@@ -50,33 +55,45 @@ public class ViewCell implements IUpdate {
     public static void loadImages() {  
         imgCase     			  = new Texture(Gdx.files.internal("case2blue2.png"));	//check
         imgTars     			  = new Texture(Gdx.files.internal("case2red2.png"));   //check
+        imgCasePhantom			  = new Texture(Gdx.files.internal("case2blue2phantom.png"));   //check
+        imgTarsPhantom     		  = new Texture(Gdx.files.internal("case2red2phantom.png"));   //check
         imgWall        			  = new Texture(Gdx.files.internal("wall.png"));     //check
+        imgHardWall        		  = new Texture(Gdx.files.internal("hardWall.png"));    //check
         imgGround   			  = new Texture(Gdx.files.internal("ground.png"));   //check
         imgDark	        		  = new Texture(Gdx.files.internal("dark.png"));	//check
         imgGateClosed 		      = new Texture(Gdx.files.internal("gate.png"));	//check
         imgGateOpen 	          = new Texture(Gdx.files.internal("gateOpen.png"));   //check
+        imgGateHardClosed 		  = new Texture(Gdx.files.internal("hardGate.png"));	//check
+        imgGateHardOpen 	      = new Texture(Gdx.files.internal("gateOpen.png"));   
         imgButtonFree 			  = new Texture(Gdx.files.internal("buttonFree.png")); //check
         imgButtonPressed		  = new Texture(Gdx.files.internal("buttonPressed.png"));  //check      
-        imgCrystalYellow		  = new Texture(Gdx.files.internal("case2blue.png"));
+        imgCrystalYellow		  = new Texture(Gdx.files.internal("esmeraldas.png"));
         imgCrystalBlue 			  = new Texture(Gdx.files.internal("case2blue.png"));
         imgCrystalRed  			  = new Texture(Gdx.files.internal("case2blue.png"));
         imgCrystalGreen			  = new Texture(Gdx.files.internal("case2blue.png"));
-        imgDarkness               = new Texture(Gdx.files.internal("darkness.png"));
+        imgDarkness               = new Texture(Gdx.files.internal("darkness.png"));	//check
         imgHappySantanche		  = new Texture(Gdx.files.internal("HappySantache.png"));  //check
-        imgBlueBG				  = new Texture(Gdx.files.internal("fundoAzul1.png"));
-        imgRedBG				  = new Texture(Gdx.files.internal("fundoVermelho1.png"));
-        imgButtonFreeFrame		  = new Texture(Gdx.files.internal("molduraApagada.png"));
-        imgButtonPressedFrame	  = new Texture(Gdx.files.internal("molduraAcesa.png"));
+        imgBlueBG				  = new Texture(Gdx.files.internal("fundoAzul1.png"));	//check
+        imgRedBG				  = new Texture(Gdx.files.internal("fundoVermelho1.png"));	//check
+        imgButtonFreeFrame		  = new Texture(Gdx.files.internal("molduraApagada.png"));	//check
+        imgButtonPressedFrame	  = new Texture(Gdx.files.internal("molduraAcesa.png"));	//check
     }
 	
     public static void dispose() {
     	imgCase.dispose();
         imgTars.dispose();
+        imgCasePhantom.dispose();
+        imgTarsPhantom.dispose();
         imgWall.dispose();
+        imgHardWall.dispose();
         imgGround.dispose();
         imgDark.dispose();
         imgButtonPressed.dispose();
         imgButtonFree.dispose();
+        imgGateClosed.dispose();
+        imgGateOpen.dispose();
+        imgGateHardClosed.dispose();
+        imgGateHardOpen.dispose();
         imgCrystalYellow.dispose();
         imgCrystalBlue.dispose();
         imgCrystalRed.dispose();
@@ -142,20 +159,35 @@ public class ViewCell implements IUpdate {
 				   }
 			   }
 			   else if(cell.visual(i).type() == 'G') {
-				   if(cell.visual(0).state() == 'c') textures.add(imgGateClosed);
-				   else if(cell.visual(0).state() == 'o') textures.add(imgGateOpen);
+				   if(cell.visual(i).variation() == 'H') { //hard
+					   if(cell.visual(0).state() == 'c') textures.add(imgGateHardClosed); 
+					   else if(cell.visual(0).state() == 'o') textures.add(imgGateOpen);  //falta
+				   }
+				   else {  //normal
+					   if(cell.visual(0).state() == 'c') textures.add(imgGateClosed);  
+					   else if(cell.visual(0).state() == 'o') textures.add(imgGateOpen); 
+				   }
 			   }
-			   else if(cell.visual(i).type() == 'W') textures.add(imgWall);
+			   else if(cell.visual(i).type() == 'W')
+			   		if(cell.visual(i).variation() == 'H') textures.add(imgHardWall);
+			   		else  textures.add(imgWall);
                else if(cell.visual(i).type() == 'D') textures.add(imgGround);
-//			   else if(cell.visual(i).type() == 'C') {
+			   else if(cell.visual(i).type() == 'C') {
+				   textures.add(imgCrystalYellow);
 //				   if(cell.visual(i).variation() == 'b')textures.add(imgCrystalBlue); 
 //				   else if(cell.visual(i).variation() == 'r')textures.add(imgCrystalRed);
 //				   else if(cell.visual(i).variation() == 'y')textures.add(imgCrystalYellow);
 //				   else if(cell.visual(i).variation() == 'g')textures.add(imgCrystalGreen);
-//			   }
+			   }
 			   else if(cell.visual(i).type() == 'P') {
-				   if(cell.visual(i).variation() == 'C') textures.add(imgCase); //normal
-				   if(cell.visual(i).variation() == 'T') textures.add(imgTars);
+				   if(cell.visual(i).variation() == 'C') {
+					   if(cell.visual(i).state() == 'P') textures.add(imgCasePhantom);
+					   else textures.add(imgCase);
+				   }
+				   if(cell.visual(i).variation() == 'T') {
+					   if(cell.visual(i).state() == 'P') textures.add(imgTarsPhantom);
+					   else textures.add(imgTars);
+				   }
 			   }
 			   else {
 		    	   textures.add(imgHappySantanche);

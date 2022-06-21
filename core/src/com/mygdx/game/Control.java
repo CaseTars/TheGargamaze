@@ -4,9 +4,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.mygdx.game.interfaces.ICommand;
 import com.mygdx.game.interfaces.IControl;
-import com.mygdx.game.interfaces.IControlUpdateTimeOut;
 
-public class Control implements InputProcessor, IControl, IControlUpdateTimeOut {
+public class Control implements InputProcessor, IControl {
     private ICommand pCase;
     private ICommand pTars;
     private float timeOut = 0;
