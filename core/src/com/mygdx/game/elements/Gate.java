@@ -4,15 +4,15 @@ import com.mygdx.game.SoundManager;
 import com.mygdx.game.interfaces.IGate;
 
 public class Gate extends Element implements IGate{
-	private boolean closed;
+	protected boolean closed;
 	
 	public Gate(int x, int y) {
 		super(x, y);
 		closed = true;
 	}
 
-	public boolean isObstructed() {
-		return closed;
+	public int obstructionLevel() {
+		return closed ? 2 : 0;
 	}
 	
 	public void close() {
@@ -33,7 +33,7 @@ public class Gate extends Element implements IGate{
 	
 	@Override
 	public char type() {
-		return 'g';
+		return 'G';
 	}
 
 	@Override
@@ -43,8 +43,13 @@ public class Gate extends Element implements IGate{
 
 	@Override
 	public char state() {
-		if(closed) return 'c';
-		else return 'o';
+		return closed ? 'c' : 'o';
 	}
-
+	
+	public static Gate create(int x, int y, char variation) {
+	    if(variation == 'N')
+	        return new Gate(x, y);
+	    else
+            return new HardGate(x, y);
+	}
 }

@@ -3,38 +3,36 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.interfaces.IUpdate;
 import com.mygdx.game.interfaces.IVisualCell;
+import com.mygdx.game.interfaces.IVisualEffect;
 
 public class ViewCell implements IUpdate {
     public static final float size = 480f/Space.size;
     
 	private static Texture imgCase; 
 	private static Texture imgTars;	
-    private static Texture imgCaseTars; 
     private static Texture imgWall;
     private static Texture imgGround;
     private static Texture imgDark;
     private static Texture imgGateClosed; 
     private static Texture imgGateOpen;  
-    private static Texture imgGateOpenCase;  
-    private static Texture imgGateOpenTars; 
-    private static Texture imgGateOpenCaseTars;
-    private static Texture imgButtonPressedCaseTars;
-    private static Texture imgButtonFreeCaseTars;
     private static Texture imgButtonFree; 
-    private static Texture imgButtonFreeCase;
-    private static Texture imgButtonFreeTars; 
     private static Texture imgButtonPressed;
-    private static Texture imgButtonPressedCase;
-    private static Texture imgButtonPressedTars;
-    private static Texture imgCrystal;
-    private static Texture imgCrystalCase;
-    private static Texture imgCrystalTars;
-    private static Texture imgCrystalCaseTars;
+    private static Texture imgCrystalYellow;
+    private static Texture imgCrystalBlue;
+    private static Texture imgCrystalRed;
+    private static Texture imgCrystalGreen;
+    private static Texture imgBlueBG;
+    private static Texture imgRedBG;
+    private static Texture imgButtonFreeFrame;
+    private static Texture imgButtonPressedFrame;
+
+    public static Texture imgDarkness;
     private static Texture imgHappySantanche;
-    
-    private Texture current = imgGround;
+        
+    private Array<Texture> textures = new Array<Texture>();
 
     private float x;
     private float y;
@@ -49,154 +47,140 @@ public class ViewCell implements IUpdate {
         this.cell = cell;
     }
     
-    public static void loadImages() {  //falta isso só
-        imgCase     			  = new Texture(Gdx.files.internal("case2blue2.png"), true);	//check
-        imgCase.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+    public static void loadImages() {  
+        imgCase     			  = new Texture(Gdx.files.internal("case2blue2.png"));	//check
         imgTars     			  = new Texture(Gdx.files.internal("case2red2.png"));   //check
-        imgCaseTars 			  = new Texture(Gdx.files.internal("case2BlueRed.png"));
-        imgWall        			  = new Texture(Gdx.files.internal("muro.png"));     //check
+        imgWall        			  = new Texture(Gdx.files.internal("wall.png"));     //check
         imgGround   			  = new Texture(Gdx.files.internal("ground.png"));   //check
         imgDark	        		  = new Texture(Gdx.files.internal("dark.png"));	//check
         imgGateClosed 		      = new Texture(Gdx.files.internal("gate.png"));	//check
         imgGateOpen 	          = new Texture(Gdx.files.internal("gateOpen.png"));   //check
         imgButtonFree 			  = new Texture(Gdx.files.internal("buttonFree.png")); //check
-        imgButtonPressed		  = new Texture(Gdx.files.internal("buttonPressed.png"));  //check    
-        imgGateOpenCase     	  = new Texture(Gdx.files.internal("gateOpenBlue1.png"));  //check
-        imgGateOpenTars           = new Texture(Gdx.files.internal("gateOpenRed1.png"));	//check
-        imgGateOpenCaseTars 	  = new Texture(Gdx.files.internal("gateOpenBlueRed.png"));	//check
-        imgButtonPressedCaseTars  = new Texture(Gdx.files.internal("buttonPressedBlueRed.png"));	//check
-        imgButtonFreeCaseTars	  = new Texture(Gdx.files.internal("buttonFreeBlueRed.png"));	//check
-        imgButtonFreeCase		  = new Texture(Gdx.files.internal("buttonFreeBlue.png"));	//check
-        imgButtonFreeTars         = new Texture(Gdx.files.internal("buttonFreeRed1.png"));	//check
-        imgButtonPressedCase 	  = new Texture(Gdx.files.internal("buttonPressedBlue.png"));	//check
-        imgButtonPressedTars      = new Texture(Gdx.files.internal("buttonPressedRed1.png")); 	//check
-        imgCrystal    			  = new Texture(Gdx.files.internal("case2blue.png"));
-        imgCrystalCase			  = new Texture(Gdx.files.internal("case2blue.png"));
-        imgCrystalTars			  = new Texture(Gdx.files.internal("case2blue.png"));
-        imgCrystalCaseTars		  = new Texture(Gdx.files.internal("case2blue.png"));
+        imgButtonPressed		  = new Texture(Gdx.files.internal("buttonPressed.png"));  //check      
+        imgCrystalYellow		  = new Texture(Gdx.files.internal("case2blue.png"));
+        imgCrystalBlue 			  = new Texture(Gdx.files.internal("case2blue.png"));
+        imgCrystalRed  			  = new Texture(Gdx.files.internal("case2blue.png"));
+        imgCrystalGreen			  = new Texture(Gdx.files.internal("case2blue.png"));
+        imgDarkness               = new Texture(Gdx.files.internal("darkness.png"));
         imgHappySantanche		  = new Texture(Gdx.files.internal("HappySantache.png"));  //check
+        imgBlueBG				  = new Texture(Gdx.files.internal("fundoAzul1.png"));
+        imgRedBG				  = new Texture(Gdx.files.internal("fundoVermelho1.png"));
+        imgButtonFreeFrame		  = new Texture(Gdx.files.internal("molduraApagada.png"));
+        imgButtonPressedFrame	  = new Texture(Gdx.files.internal("molduraAcesa.png"));
     }
 	
     public static void dispose() {
     	imgCase.dispose();
         imgTars.dispose();
-        imgCaseTars.dispose();
         imgWall.dispose();
         imgGround.dispose();
         imgDark.dispose();
         imgButtonPressed.dispose();
         imgButtonFree.dispose();
-        imgGateOpenCase.dispose();
-        imgGateOpenTars.dispose();
-        imgGateOpenCaseTars.dispose();
-        imgButtonPressedCaseTars.dispose();
-        imgButtonFreeCaseTars.dispose();
-        imgButtonFreeCase.dispose();
-        imgButtonFreeTars.dispose();
-        imgButtonPressedCase.dispose();
-        imgButtonPressedTars.dispose();
-        imgCrystal.dispose();
-        imgCrystalCase.dispose();
-        imgCrystalTars.dispose();
-        imgCrystalCaseTars.dispose();
+        imgCrystalYellow.dispose();
+        imgCrystalBlue.dispose();
+        imgCrystalRed.dispose();
+        imgCrystalGreen.dispose();
         imgHappySantanche.dispose();
+        imgBlueBG.dispose();
+        imgRedBG.dispose();
+        imgButtonFreeFrame.dispose();
+        imgButtonPressedFrame.dispose();
     }
     
 	public void update() {
+			   
+	   int nbElements = cell.nElements();
+	   
+	   textures.clear();
+	   textures.add(imgGround); 
 	   if(!cell.visible()) {  
-		   if(cell.nElements() > 1) {
-			   if(cell.visual(1).variation() == 'C') current = imgCase;
-			   if(cell.visual(1).variation() == 'T') current = imgTars;
-		   }
-		   else
-			   current = imgDark;
+		   if(nbElements <= 1) textures.add(imgDark);  //talvez de BO 
+		   else {
+			   for(int i = 1;i < nbElements;i++) {
+				   if(cell.visual(i).variation() == 'C') textures.add(imgCase); 
+				   if(cell.visual(i).variation() == 'T') textures.add(imgTars);
+			   }
+		   }  
 	   }
 	   else {
-	       int n = cell.nElements();
-	       if(n == 0)
-	           current = imgGround;
-	       else if(n == 1) {
-	          if (cell.visual(0).type() == 'P') {
-	              if (cell.visual(0).variation() == 'C')  //colocar aqui a troca de passos se for ter
-	                  current = imgCase;
-	              if (cell.visual(0).variation() == 'T')
-	                  current = imgTars;
-	          }
-	          else if (cell.visual(0).type() == 'W')
-	              current = imgWall;
-	          else if (cell.visual(0).type() == 'g') {
-	        	  if(cell.visual(0).state() == 'c') current = imgGateClosed;
-	        	  else if(cell.visual(0).state() == 'o') current = imgGateOpen;
-	          }
-	          else if (cell.visual(0).type() == 'b') {
-	        	  if(cell.visual(0).state() == 'p') current = imgButtonPressed;
-	        	  else if(cell.visual(0).state() == 'f') current = imgButtonFree;
-	          }
-	          else if(cell.visual(0).type() == 'c') {
-	        	  current = imgCrystal;
-	          }
-	       }
-	       else if(n == 2) {
-	           if(contains(2)) //nbPlayers
-	               current = imgCaseTars;
-	           else if(cell.visual(0).type() == 'b') { //assumir q a primeira eh smp p objeto
-	        	   if(cell.visual(1).variation() == 'C') {
-	        		   if(cell.visual(0).state() == 'p') current = imgButtonPressedCase;
-	        		   else if(cell.visual(0).state() == 'f') current = imgButtonFreeCase;
-	        	   }
-	        	   if(cell.visual(1).variation() == 'T') {
-	        		   if(cell.visual(0).state() == 'p') current = imgButtonPressedTars;
-	        		   else if(cell.visual(0).state() == 'f') current = imgButtonFreeTars;
-	        	   }
-	           }
-	           else if(cell.visual(0).type() == 'g') { 
-	        	   if(cell.visual(1).variation() == 'C') {
-	        		   current = imgGateOpenCase;
-	        	   }
-	        	   if(cell.visual(1).variation() == 'T') {
-	        		   current = imgGateOpenTars;
-	        	   }
-	           }
-	           else if(cell.visual(0).type() == 'c') {
-	        	   if(cell.visual(1).variation() == 'C') {
-	        		   current = imgCrystalCase;
-	        	   }
-	        	   if(cell.visual(1).variation() == 'T') {
-	        		   current = imgCrystalTars;
-	        	   }
-	           }
-	       }
-	       else if(n == 3) {
-	    	   if(cell.visual(0).type() == 'b') {
-	    		   if(cell.visual(0).state() == 'p') current = imgButtonPressedCaseTars;
-        		   else if(cell.visual(0).state() == 'f') current = imgButtonFreeCaseTars;
-	    	   }
-	    	   else if(cell.visual(0).type() == 'g') 
-	    		   current = imgGateOpenCaseTars;
-	    	   else if(cell.visual(0).type() == 'c')
-	    		   current = imgCrystalCaseTars;
-	       }
-	       else {
-	    	   current = imgHappySantanche;
-	       }
+		   for(int i = 0;i < nbElements;i++) {
+			   if(cell.visual(i).type() == 'B') {
+				   if(cell.visual(i).variation() == 'c') { //case
+					   if(cell.visual(i).state() == 'p') {
+						   textures.add(imgButtonPressedFrame);
+						   textures.add(imgBlueBG);
+						   textures.add(imgButtonPressed); 
+					   }
+			           else if(cell.visual(i).state() == 'f') {
+			        	   textures.add(imgButtonFreeFrame);
+						   textures.add(imgBlueBG);
+			        	   textures.add(imgButtonFree);
+			           }
+				   }
+				   else if(cell.visual(i).type() == 't') { //tars
+					   if(cell.visual(i).state() == 'p') {
+						   textures.add(imgButtonPressedFrame);
+						   textures.add(imgRedBG);
+						   textures.add(imgButtonPressed); 
+					   }
+			           else if(cell.visual(i).state() == 'f') {
+			        	   textures.add(imgButtonFreeFrame);
+						   textures.add(imgRedBG);
+			        	   textures.add(imgButtonFree);
+			           }
+				   }
+				   else {
+					   if(cell.visual(i).state() == 'p') {
+						   textures.add(imgButtonPressedFrame);
+						   textures.add(imgButtonPressed); 
+					   }
+			           else if(cell.visual(i).state() == 'f') {
+			        	   textures.add(imgButtonFreeFrame);
+			        	   textures.add(imgButtonFree);
+			           }
+				   }
+			   }
+			   else if(cell.visual(i).type() == 'G') {
+				   if(cell.visual(0).state() == 'c') textures.add(imgGateClosed);
+				   else if(cell.visual(0).state() == 'o') textures.add(imgGateOpen);
+			   }
+			   else if(cell.visual(i).type() == 'W') textures.add(imgWall);
+               else if(cell.visual(i).type() == 'D') textures.add(imgGround);
+//			   else if(cell.visual(i).type() == 'C') {
+//				   if(cell.visual(i).variation() == 'b')textures.add(imgCrystalBlue); 
+//				   else if(cell.visual(i).variation() == 'r')textures.add(imgCrystalRed);
+//				   else if(cell.visual(i).variation() == 'y')textures.add(imgCrystalYellow);
+//				   else if(cell.visual(i).variation() == 'g')textures.add(imgCrystalGreen);
+//			   }
+			   else if(cell.visual(i).type() == 'P') {
+				   if(cell.visual(i).variation() == 'C') textures.add(imgCase); //normal
+				   if(cell.visual(i).variation() == 'T') textures.add(imgTars);
+			   }
+			   else {
+		    	   textures.add(imgHappySantanche);
+		       }
+		   }
+		   if(nbElements > 0 && cell.visual(0).type() == 'D')
+               textures.add(imgDarkness);
 	   }
 	}
 	
-	private boolean contains(int P) {
-	    int nP = 0;
-	    for(int i = 0; i<cell.nElements(); i++) {
-	        if(cell.visual(i).type() == 'P')
-	            nP++;
-	    }
-	    return nP == P;
-	}
+//	private boolean contains(int P) {
+//	    int nP = 0;
+//	    for(int i = 0; i<cell.nElements(); i++) {
+//	        if(cell.visual(i).type() == 'P')
+//	            nP++;
+//	    }
+//	    return nP == P;
+//	}
 	
 	public static Texture getDefaultTexture() {
 	    return imgGround;
 	}
 	
-	public Texture getTexture() {
-	    return current;
+	public Array<Texture> getTexture() {
+	    return textures;
 	}
 	
 	public float getX() {

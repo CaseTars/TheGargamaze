@@ -2,14 +2,11 @@ package com.mygdx.game.habilities;
 
 import com.mygdx.game.interfaces.IPlayerInteraction;
 
-public class VisionRadiusHability extends Hability {
-    int radiusGain;
+public class PhantomHability extends Hability {
     IPlayerInteraction player;
-    
-    public VisionRadiusHability(float duration, float cooldownDuration,
-                                int radiusGain) {
+
+    public PhantomHability(float duration, float cooldownDuration) {
         super(duration, cooldownDuration);
-        this.radiusGain = radiusGain;
     }
     
     public void connect(IPlayerInteraction player) {
@@ -18,13 +15,16 @@ public class VisionRadiusHability extends Hability {
 
     @Override
     protected void applyEffect() {
-        VisualEffect effect = new VisualEffect(player, radiusGain, duration);
-        player.addEffect(effect);
+        player.setPhantom(true);
+    }
+    
+    protected void removeEffect() {
+        player.setPhantom(false);
     }
 
     @Override
     public void update() {
-        if(player.hasCrystal('0'))
+        if(player.hasCrystal('2'))
             unlock();
         else
             lock();

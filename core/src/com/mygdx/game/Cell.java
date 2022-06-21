@@ -8,7 +8,7 @@ import com.mygdx.game.interfaces.IVisual;
 import com.mygdx.game.interfaces.IVisualCell;
 import com.mygdx.game.interfaces.ICell;
 import com.mygdx.game.interfaces.IGate;
-import com.mygdx.game.interfaces.IPlayerEffect;
+import com.mygdx.game.interfaces.IPlayerInteraction;
 
 
 public class Cell implements ICell{
@@ -40,11 +40,12 @@ public class Cell implements ICell{
         viewCell.update();
     }
     
-    public boolean isObstructed() {
-    	for(Element element: elements) {
-    		if(element.isObstructed()) return true;
-    	}
-    	return false;
+    public int obstructionLevel() {
+        int maior = 0;
+        for(Element element : elements)
+            if(element.obstructionLevel() > maior)
+                maior = element.obstructionLevel();
+        return maior;
     }
     
     public void setVisibility(boolean visible) {
@@ -75,9 +76,9 @@ public class Cell implements ICell{
     }
 
 	@Override
-	public void action(char variation) {
+	public void action(IPlayerInteraction player) {
 		for(Element element: elements) {
-			element.action(variation);
+			element.action(player);
 		}
 	}
 
@@ -89,7 +90,7 @@ public class Cell implements ICell{
 		
 	}
 
-    public void interact(IPlayerEffect player) {
+    public void interact(IPlayerInteraction player) {
         for(Element element: elements) {
             element.interact(player);
         }

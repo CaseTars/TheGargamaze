@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -13,10 +14,11 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.interfaces.IControlUpdateTimeOut;
 import com.mygdx.game.interfaces.IViewSwitchHability;
 import com.mygdx.game.interfaces.IVisualPlayer;
 
-public class View implements IViewSwitchHability {
+public class View implements IViewSwitchHability, Screen {
     public static final int size = Space.size;
 
     private ShapeRenderer shapeRenderer;
@@ -26,11 +28,12 @@ public class View implements IViewSwitchHability {
     private SpriteBatch batch;
     
     private float thX1, thY1, thX2, thY2, thopacity;
-    private Texture th1, th2;
+    private Array<Texture>  th1, th2;
     private boolean thAnimating = false;
     
     private IVisualPlayer Vcase;
     private IVisualPlayer Vtars;
+    private IControlUpdateTimeOut control;
 
     public View() {
         camera = new OrthographicCamera();
@@ -47,23 +50,23 @@ public class View implements IViewSwitchHability {
                 cells[x][y] = new ViewCell(x,y);
     }
     
-    public void connect(IVisualPlayer Vcase, IVisualPlayer Vtars) {
+    public void connect(IVisualPlayer Vcase, IVisualPlayer Vtars, IControlUpdateTimeOut control) {
         this.Vcase = Vcase;
         this.Vtars = Vtars;
+        this.control = control;
     }
 
     public void show() {
         ScreenUtils.clear(0, 0, 0, 1); //cor do fundo
         camera.update();
-        
+
         batch.setProjectionMatrix(camera.combined);
         shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
-        
         drawMap();
         drawStatus(Vtars, 0);
         drawStatus(Vcase, 160+480);
         drawTeleportHiders();
-        
+    
         viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true); // Restore viewport.
     }
     
@@ -74,13 +77,12 @@ public class View implements IViewSwitchHability {
         for(int x = 0;x < size;x++) {
             for(int y = 0;y < size;y++) {
                 ViewCell aux = cells[x][y];
-                batch.draw(aux.getDefaultTexture(), aux.getX(), aux.getY(), ViewCell.size, ViewCell.size);
-                batch.draw(aux.getTexture(), aux.getX(), aux.getY(), ViewCell.size, ViewCell.size);
+         	   	for(Texture texture: aux.getTexture()) {
+         	   		batch.draw(texture, aux.getX(), aux.getY(), ViewCell.size, ViewCell.size);
+         	   	} 
             }
         }
         batch.end();
-        
-
     }
     
     
@@ -113,10 +115,13 @@ public class View implements IViewSwitchHability {
         
         batch.begin();
         batch.setColor(1f,1f,1f,thopacity);
-        batch.draw(ViewCell.getDefaultTexture(), thX1, thY1, ViewCell.size, ViewCell.size);
-        batch.draw(ViewCell.getDefaultTexture(), thX2, thY2, ViewCell.size, ViewCell.size);
-        batch.draw(th1, thX1, thY1, ViewCell.size, ViewCell.size);
-        batch.draw(th2, thX2, thY2, ViewCell.size, ViewCell.size);
+        
+     	for(Texture texture: th1)
+ 	   		batch.draw(texture, thX1, thY1, ViewCell.size, ViewCell.size);
+ 	   		
+     	for(Texture texture: th2)
+ 	   		batch.draw(texture, thX2, thY2, ViewCell.size, ViewCell.size);
+
         batch.end();
     }
 
@@ -144,4 +149,31 @@ public class View implements IViewSwitchHability {
     public void stopAnimation() {
         thAnimating = false;
     }
+
+	@Override
+	public void render(float delta) {
+//		float t = Gdx.graphics.getDeltaTime();
+		Vcase.update(delta);
+		Vtars.update(delta);
+		control.update(delta);
+		show();		
+	}
+
+	@Override
+	public void pause() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void resume() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void hide() {
+		// TODO Auto-generated method stub
+		
+	}
 }

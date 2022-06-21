@@ -27,6 +27,7 @@ public abstract class Hability implements IHability{
                 isRunning = false;
                 onCooldown = true;
                 time = cooldownDuration;
+                removeEffect();
             }
                 
         }
@@ -40,6 +41,7 @@ public abstract class Hability implements IHability{
     }
     
     protected abstract void applyEffect();
+    protected void removeEffect() {}
     
     public boolean isRunning() {
         return isRunning;
@@ -55,7 +57,11 @@ public abstract class Hability implements IHability{
         return time/cooldownDuration;
     }
     
-    public void unlock() {
+    protected void unlock() {
         isUnlocked = true;
+    }
+    
+    protected void lock() {
+        isUnlocked = false;
     }
 }

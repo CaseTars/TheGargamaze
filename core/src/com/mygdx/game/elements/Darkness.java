@@ -1,7 +1,7 @@
 package com.mygdx.game.elements;
 
 import com.mygdx.game.habilities.VisualEffect;
-import com.mygdx.game.interfaces.IPlayerEffect;
+import com.mygdx.game.interfaces.IPlayerInteraction;
 
 public class Darkness extends Element {
 
@@ -9,7 +9,7 @@ public class Darkness extends Element {
         super(x,y);
     }
 
-    public void interact(IPlayerEffect player) {
+    public void interact(IPlayerInteraction player) {
         VisualEffect effect = new VisualEffect(player, -1, player.getIPosition());
         player.addEffect(effect);
     }
