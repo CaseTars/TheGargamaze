@@ -27,7 +27,7 @@ public class SoundManager {
 	
 	public static void playGameMusic() {
 		gameMusic.setLooping(true);
-		//gameMusic.play();
+		gameMusic.play();
 	}
 	
 	public static void playWallHit() {
