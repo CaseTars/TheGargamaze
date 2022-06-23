@@ -29,6 +29,8 @@ public class ViewCell implements IUpdate {
     private static Texture imgCrystalBlue;
     private static Texture imgCrystalRed;
     private static Texture imgCrystalGreen;
+    private static Texture imgCrystalViolet;
+    private static Texture imgCrystalOrange;
     private static Texture imgBlueBG;
     private static Texture imgRedBG;
     private static Texture imgButtonFreeFrame;
@@ -67,10 +69,12 @@ public class ViewCell implements IUpdate {
         imgGateHardOpen 	      = new Texture(Gdx.files.internal("hardGateOpen1.png"));   
         imgButtonFree 			  = new Texture(Gdx.files.internal("buttonFree.png")); //check
         imgButtonPressed		  = new Texture(Gdx.files.internal("buttonPressed.png"));  //check      
-        imgCrystalYellow		  = new Texture(Gdx.files.internal("cristal.png"));
-        imgCrystalBlue 			  = new Texture(Gdx.files.internal("case2blue.png"));
-        imgCrystalRed  			  = new Texture(Gdx.files.internal("case2blue.png"));
-        imgCrystalGreen			  = new Texture(Gdx.files.internal("case2blue.png"));
+        imgCrystalYellow		  = new Texture(Gdx.files.internal("crystalYellow1.png"));
+        imgCrystalBlue 			  = new Texture(Gdx.files.internal("crystalBlue.png"));
+        imgCrystalRed  			  = new Texture(Gdx.files.internal("crystalRed1.png"));
+        imgCrystalGreen			  = new Texture(Gdx.files.internal("crystalGreen1.png"));
+        imgCrystalViolet    	  = new Texture(Gdx.files.internal("crystalViolet1.png"));
+        imgCrystalOrange		  = new Texture(Gdx.files.internal("crystalOrange1.png"));
         imgDarkness               = new Texture(Gdx.files.internal("darkness.png"));	//check
         imgHappySantanche		  = new Texture(Gdx.files.internal("HappySantache.png"));  //check
         imgBlueBG				  = new Texture(Gdx.files.internal("fundoAzul1.png"));	//check 
@@ -98,6 +102,8 @@ public class ViewCell implements IUpdate {
         imgCrystalBlue.dispose();
         imgCrystalRed.dispose();
         imgCrystalGreen.dispose();
+        imgCrystalViolet.dispose();
+        imgCrystalOrange.dispose();
         imgHappySantanche.dispose();
         imgBlueBG.dispose();
         imgRedBG.dispose();
@@ -173,11 +179,13 @@ public class ViewCell implements IUpdate {
 			   		else  textures.add(imgWall);
                else if(cell.visual(i).type() == 'D') textures.add(imgGround);
 			   else if(cell.visual(i).type() == 'C') {
-				   textures.add(imgCrystalYellow);
-//				   if(cell.visual(i).variation() == 'b')textures.add(imgCrystalBlue); 
-//				   else if(cell.visual(i).variation() == 'r')textures.add(imgCrystalRed);
-//				   else if(cell.visual(i).variation() == 'y')textures.add(imgCrystalYellow);
-//				   else if(cell.visual(i).variation() == 'g')textures.add(imgCrystalGreen);
+				   textures.add(imgCrystalViolet); //teste
+				   if(cell.visual(i).variation() == 'b')textures.add(imgCrystalBlue); 
+				   else if(cell.visual(i).variation() == 'r')textures.add(imgCrystalRed);
+				   else if(cell.visual(i).variation() == '3')textures.add(imgCrystalViolet);
+				   else if(cell.visual(i).variation() == '0')textures.add(imgCrystalOrange);
+				   else if(cell.visual(i).variation() == '2')textures.add(imgCrystalGreen);
+				   else if(cell.visual(i).variation() == '1')textures.add(imgCrystalYellow);
 			   }
 			   else if(cell.visual(i).type() == 'P') {
 				   if(cell.visual(i).variation() == 'C') {

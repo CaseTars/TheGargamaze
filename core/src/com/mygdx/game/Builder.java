@@ -154,9 +154,7 @@ public class Builder {
         control.conectCase(pCase);
         control.conectTars(pTars);
         Gdx.input.setInputProcessor(control);
-        
-//        SoundManager.loadSounds();
-//        SoundManager.playGameMusic();
+       
     }
     
     private void connectCells() {
