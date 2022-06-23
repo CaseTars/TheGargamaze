@@ -17,8 +17,10 @@ public class PhantomHability extends Hability {
     protected void applyEffect() {
         player.setPhantom(true);
     }
-    
+
+    @Override
     protected void removeEffect() {
+    	super.removeEffect();
         player.setPhantom(false);
     }
 
@@ -26,7 +28,9 @@ public class PhantomHability extends Hability {
     public void update() {
         if(player.hasCrystal('2'))
             unlock();
-        else
+        else {
             lock();
+        	removeEffect();
+        }
     }
 }

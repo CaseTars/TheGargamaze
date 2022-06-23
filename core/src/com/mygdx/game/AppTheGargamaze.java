@@ -17,13 +17,11 @@ public class AppTheGargamaze extends Game {
 	    
 	@Override
 	public void create () {
-		
 		running = false;
 		this.setScreen(new MenuViewScreen(this));
 	}
 	
 	public void create2() {
-		
 		 Builder bob = new Builder();
 		 try {
 			 bob.build();
@@ -43,8 +41,10 @@ public class AppTheGargamaze extends Game {
 		 this.setScreen(view);
 	}
 
-	public void render (float delta) { 
+	public void render () {
 		super.render();
+		
+		float delta = Gdx.graphics.getDeltaTime();
 		if(running) {
 			Tcase.update(delta);
 			Ttars.update(delta);
