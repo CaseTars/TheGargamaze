@@ -39,22 +39,18 @@ public class MenuControl implements InputProcessor {
 			float posX = touchPos.x;
 			float posY = touchPos.y;
 						
-			if(posX > 300 && posX < 500 && posY > 200 && posY < 350) { //play
-				menu.play();
-			}
-			else if(posX > 300 && posX < 500 && posY > 150 && posY < 200) { //tutorial
-				menu.showTutorial();
-			}
-			else if(posX > 300 && posX < 500 && posY > 100 && posY < 140 && SoundManager.getMusic()) {  //setmusicOff
+			if(menu.playContains(posX, posY)) menu.play();
+			else if(menu.tutorialContains(posX, posY)) menu.showTutorial();
+		
+			else if(menu.musicContains(posX, posY) && SoundManager.getMusic()) {  //setmusicOff
 				SoundManager.setMusic(false);
 				SoundManager.stopGameMusic();
-				menu.showMusicOff();
-
+				menu.showMusic(false);
 			}
-			else if(posX > 300 && posX < 500 && posY > 100 && posY < 140 && !SoundManager.getMusic()) {  //setMusicOn
+			else if(menu.musicContains(posX, posY)  && posY < 140 && !SoundManager.getMusic()) {  //setMusicOn
 				SoundManager.setMusic(true);
 				SoundManager.playGameMusic();
-				menu.showMusicOn();
+				menu.showMusic(true);
 			}
 		
 		return false;

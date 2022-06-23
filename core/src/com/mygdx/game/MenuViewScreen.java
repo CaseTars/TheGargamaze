@@ -99,8 +99,16 @@ public class MenuViewScreen implements Screen{
 			viewport.unproject(touchPos);
 		}
 		
-		public boolean contains() {  //avisar o controle se deu bom
-			
+		public boolean playContains(float posX, float posY) { 
+			return play.contains(posX, posY);
+		}
+		
+		public boolean tutorialContains(float posX, float posY) { 
+			return tutorial.contains(posX, posY);
+		}
+		
+		public boolean musicContains(float posX, float posY) { 
+			return music.contains(posX, posY);
 		}
 
 		public void play() {
@@ -112,12 +120,8 @@ public class MenuViewScreen implements Screen{
 			showTutorial = true;
 		}
 		
-		public void showMusicOn() {
-			showMusicOn = true;
-		}
-		
-		public void showMusicOff() {
-			showMusicOn = false;
+		public void showMusic(boolean musicOn) {
+			showMusicOn = musicOn;
 		}
 		
 		@Override

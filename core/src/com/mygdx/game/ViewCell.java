@@ -57,7 +57,7 @@ public class ViewCell implements IUpdate {
         imgTars     			  = new Texture(Gdx.files.internal("case2red2.png"));   //check
         imgCasePhantom			  = new Texture(Gdx.files.internal("case2blue2phantom.png"));   //check
         imgTarsPhantom     		  = new Texture(Gdx.files.internal("case2red2phantom.png"));   //check
-        imgWall        			  = new Texture(Gdx.files.internal("wall.png"));     //check
+        imgWall        			  = new Texture(Gdx.files.internal("wall1.png"));     //check
         imgHardWall        		  = new Texture(Gdx.files.internal("hardWall.png"));    //check
         imgGround   			  = new Texture(Gdx.files.internal("ground.png"));   //check
         imgDark	        		  = new Texture(Gdx.files.internal("dark.png"));	//check
@@ -112,7 +112,7 @@ public class ViewCell implements IUpdate {
 	   textures.clear();
 	   textures.add(imgGround); 
 	   if(!cell.visible()) {  
-		   if(nbElements <= 1) textures.add(imgDark);  //talvez de BO 
+		   if(nbElements <= 1) textures.add(imgDark);  
 		   else {
 			   for(int i = 1;i < nbElements;i++) {
 				   if(cell.visual(i).variation() == 'C') textures.add(imgCase); 
@@ -123,7 +123,7 @@ public class ViewCell implements IUpdate {
 	   else {
 		   for(int i = 0;i < nbElements;i++) {
 			   if(cell.visual(i).type() == 'B') {
-				   if(cell.visual(i).variation() == 'c') { //case
+				   if(cell.visual(i).variation() == 'C') { //case
 					   if(cell.visual(i).state() == 'p') {
 						   textures.add(imgButtonPressedFrame);
 						   textures.add(imgBlueBG);
@@ -135,7 +135,7 @@ public class ViewCell implements IUpdate {
 			        	   textures.add(imgButtonFree);
 			           }
 				   }
-				   else if(cell.visual(i).type() == 't') { //tars
+				   else if(cell.visual(i).variation() == 'T') { //tars
 					   if(cell.visual(i).state() == 'p') {
 						   textures.add(imgButtonPressedFrame);
 						   textures.add(imgRedBG);
@@ -143,7 +143,7 @@ public class ViewCell implements IUpdate {
 					   }
 			           else if(cell.visual(i).state() == 'f') {
 			        	   textures.add(imgButtonFreeFrame);
-						   textures.add(imgRedBG);
+			        	   textures.add(imgRedBG);
 			        	   textures.add(imgButtonFree);
 			           }
 				   }
@@ -161,7 +161,7 @@ public class ViewCell implements IUpdate {
 			   else if(cell.visual(i).type() == 'G') {
 				   if(cell.visual(i).variation() == 'H') { //hard
 					   if(cell.visual(0).state() == 'c') textures.add(imgGateHardClosed); 
-					   else if(cell.visual(0).state() == 'o') textures.add(imgGateHardOpen);  //falta
+					   else if(cell.visual(0).state() == 'o') textures.add(imgGateHardOpen);  
 				   }
 				   else {  //normal
 					   if(cell.visual(0).state() == 'c') textures.add(imgGateClosed);  
@@ -197,15 +197,6 @@ public class ViewCell implements IUpdate {
                textures.add(imgDarkness);
 	   }
 	}
-	
-//	private boolean contains(int P) {
-//	    int nP = 0;
-//	    for(int i = 0; i<cell.nElements(); i++) {
-//	        if(cell.visual(i).type() == 'P')
-//	            nP++;
-//	    }
-//	    return nP == P;
-//	}
 	
 	public static Texture getDefaultTexture() {
 	    return imgGround;
