@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -19,6 +20,9 @@ public class MenuViewScreen implements Screen{
 	    private MenuControl menuControl;
 	    private boolean showTutorial;
 	    private boolean showMusicOn;
+	    private Rectangle play;
+	    private Rectangle tutorial;
+	    private Rectangle music;
 
 	    private static Texture imgHappySantanche;
 	    private static Texture imgTittle;
@@ -55,6 +59,14 @@ public class MenuViewScreen implements Screen{
 			menuControl = new MenuControl();
 			menuControl.connectMenu(this);
 			
+			float width = 115;
+			float height = width*115f/366f;
+			float posX = (800f/2)-width/2;
+			
+			play = new Rectangle(posX,160,width, height);
+			tutorial = new Rectangle(posX, 160-5-height,width, height);
+			music = new Rectangle(posX,160-10-(2*height),width, height);
+			
 	        Gdx.input.setInputProcessor(menuControl);
 		}
 
@@ -66,33 +78,29 @@ public class MenuViewScreen implements Screen{
 
 			batch.begin();
 			
-			float bSize = 115;
 			batch.draw(imgBackGround, 0, 0, 960, 480);
 			batch.draw(imgTittle, 200, 250, 400, 200);
-			batch.draw(imgPlay, (800f/2)-bSize/2, 210, bSize, bSize*115f/336f);
-			batch.draw(imgTutorial, (800f/2)-bSize/2, 210-bSize*115f/336f, bSize, bSize*115f/336f);
+			batch.draw(imgPlay, play.x, play.y, play.width, play.height);
+			batch.draw(imgTutorial, tutorial.x, tutorial.y, tutorial.width, tutorial.height);
 			
-			if(showMusicOn) batch.draw(imgMusicOn, 300, 50, 200, 150);
-			else if(!showMusicOn) batch.draw(imgMusicOff, 300, 50, 200, 150);
+			if(showMusicOn) batch.draw(imgMusicOn, music.x, music.y, music.width, music.height);
+			else if(!showMusicOn) batch.draw(imgMusicOff, music.x, music.y, music.width, music.height);
 			
 			if(showTutorial) { //tutorial
 				batch.draw(imgHappySantanche, 0, 0, 500, 280); 
 				showTutorial = false;
 			}
 
-			
-			
-//				\
-//				Vector3 touchPos = new Vector3();
-//				touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-//				camera.unproject(touchPos);
-//				
 			batch.end();
 	        viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true); 
 		}
 		
 		public void camera(Vector3 touchPos) {
 			viewport.unproject(touchPos);
+		}
+		
+		public boolean contains() {  //avisar o controle se deu bom
+			
 		}
 
 		public void play() {
