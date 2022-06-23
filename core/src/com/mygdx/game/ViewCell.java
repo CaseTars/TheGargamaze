@@ -64,16 +64,16 @@ public class ViewCell implements IUpdate {
         imgGateClosed 		      = new Texture(Gdx.files.internal("gate.png"));	//check
         imgGateOpen 	          = new Texture(Gdx.files.internal("gateOpen.png"));   //check
         imgGateHardClosed 		  = new Texture(Gdx.files.internal("hardGate.png"));	//check
-        imgGateHardOpen 	      = new Texture(Gdx.files.internal("gateOpen.png"));   
+        imgGateHardOpen 	      = new Texture(Gdx.files.internal("hardGateOpen1.png"));   
         imgButtonFree 			  = new Texture(Gdx.files.internal("buttonFree.png")); //check
         imgButtonPressed		  = new Texture(Gdx.files.internal("buttonPressed.png"));  //check      
-        imgCrystalYellow		  = new Texture(Gdx.files.internal("esmeraldas.png"));
+        imgCrystalYellow		  = new Texture(Gdx.files.internal("cristal.png"));
         imgCrystalBlue 			  = new Texture(Gdx.files.internal("case2blue.png"));
         imgCrystalRed  			  = new Texture(Gdx.files.internal("case2blue.png"));
         imgCrystalGreen			  = new Texture(Gdx.files.internal("case2blue.png"));
         imgDarkness               = new Texture(Gdx.files.internal("darkness.png"));	//check
         imgHappySantanche		  = new Texture(Gdx.files.internal("HappySantache.png"));  //check
-        imgBlueBG				  = new Texture(Gdx.files.internal("fundoAzul1.png"));	//check
+        imgBlueBG				  = new Texture(Gdx.files.internal("fundoAzul1.png"));	//check 
         imgRedBG				  = new Texture(Gdx.files.internal("fundoVermelho1.png"));	//check
         imgButtonFreeFrame		  = new Texture(Gdx.files.internal("molduraApagada.png"));	//check
         imgButtonPressedFrame	  = new Texture(Gdx.files.internal("molduraAcesa.png"));	//check
@@ -161,7 +161,7 @@ public class ViewCell implements IUpdate {
 			   else if(cell.visual(i).type() == 'G') {
 				   if(cell.visual(i).variation() == 'H') { //hard
 					   if(cell.visual(0).state() == 'c') textures.add(imgGateHardClosed); 
-					   else if(cell.visual(0).state() == 'o') textures.add(imgGateOpen);  //falta
+					   else if(cell.visual(0).state() == 'o') textures.add(imgGateHardOpen);  //falta
 				   }
 				   else {  //normal
 					   if(cell.visual(0).state() == 'c') textures.add(imgGateClosed);  
