@@ -41,7 +41,7 @@ public class Builder {
     	view = new View();
         connectCells();
         control = new Control();
-        
+        control.conectView(view);
 
     	for(int x = 0;x < Space.size;x++) {
 			for(int y = 0;y < Space.size;y++) {
