@@ -35,8 +35,7 @@ public class ViewCell implements IUpdate {
     private static Texture imgRedBG;
     private static Texture imgButtonFreeFrame;
     private static Texture imgButtonPressedFrame;
-
-    public static Texture imgDarkness;
+    private static Texture imgDarkness;
     private static Texture imgHappySantanche;
         
     private Array<Texture> textures = new Array<Texture>();
@@ -55,7 +54,7 @@ public class ViewCell implements IUpdate {
         this.cell = cell;
     }
     
-    public static void loadImages() {  
+    public static void loadImages() {
         imgCase     			  = new Texture(Gdx.files.internal("case2blue2.png"));	//check
         imgTars     			  = new Texture(Gdx.files.internal("case2red2.png"));   //check
         imgCasePhantom			  = new Texture(Gdx.files.internal("case2blue2phantom.png"));   //check

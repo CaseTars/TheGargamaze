@@ -3,8 +3,7 @@ package com.mygdx.game.elements;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.SoundManager;
 import com.mygdx.game.exceptions.ObstructedCell;
-import com.mygdx.game.habilities.VisionRadiusHability;
-import com.mygdx.game.habilities.VisualEffect;
+import com.mygdx.game.interfaces.IGameEnd;
 import com.mygdx.game.interfaces.IHability;
 import com.mygdx.game.interfaces.ILantern;
 import com.mygdx.game.interfaces.IPlayer;
@@ -16,12 +15,18 @@ public class Player extends Element implements IPlayer{
 	private ISpaceCommand space;
 	private char variation;
 	private ILantern lantern;
-	private double timeRemaining = 30000;
+	private boolean dead = false;
+	
+	private double timeRemaining = 300;
 	private double totalTime = timeRemaining;
+	
 	private Array<IVisualEffect> effects = new Array<IVisualEffect>();
 	private IHability[] habilities = new IHability[3];
+	
 	private boolean phantom = false;
 	private Array<Crystal> crystals = new Array<Crystal>();
+	
+    private IGameEnd game;
 	
 	public Player(int x, int y, char variation) {
 		super(x, y);
@@ -38,6 +43,10 @@ public class Player extends Element implements IPlayer{
     
     public void connect(IHability h, int i) {
         this.habilities[i] = h;
+    }
+    
+    public void connect(IGameEnd game) {
+        this.game = game;
     }
 	
     // From ICommand
@@ -67,6 +76,7 @@ public class Player extends Element implements IPlayer{
     }
 	
 	private void move(int dx, int dy) {
+	    if(dead) return;
 	    int xi = x, yi = y;
 	    
 	    x += dx;
@@ -83,16 +93,19 @@ public class Player extends Element implements IPlayer{
 
     @Override
     public void commandAction() {
+        if(dead) return;
         space.action(x, y, this);
     }
 
     @Override
     public void commandDeaction() {
-        space.deaction(x, y);
+        if(dead) return;
+        space.deaction(x, y, this);
     }
 
     @Override
     public void useHability(int i) {
+        if(dead) return;
         habilities[i].use();
     }
 	
@@ -118,6 +131,14 @@ public class Player extends Element implements IPlayer{
         timeRemaining -= t*distanceFactor();
         updateEffects(t);
         updateHabilities(t);
+        
+        if(timeRemaining <= 0) {
+            dead = true;
+            setPhantom(true);
+            lantern.turnOff();
+            SoundManager.playPlayerDying();
+            game.gameOver(false);
+        }
     }
 
     private double distanceFactor() {

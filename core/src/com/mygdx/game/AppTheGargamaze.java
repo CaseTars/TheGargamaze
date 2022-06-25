@@ -1,28 +1,32 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
+import com.mygdx.game.interfaces.IGame;
 import com.mygdx.game.interfaces.ITime;
 
-public class AppTheGargamaze extends Game {
+public class AppTheGargamaze extends Game implements IGame {
 	private View view;
-	private boolean running;
+	private boolean running = false;
+    private boolean sucess;
 	private ITime Tcase;
 	private ITime Ttars;
     private ITime control;
 	    
 	@Override
 	public void create () {
-		running = false;
-		this.setScreen(new MenuViewScreen(this));
+        SoundManager.loadSounds();
+        SoundManager.playGameMusic();
+        MenuViewScreen.loadImages();
+        createMenu();
 	}
 	
-	public void create2() {
-		 Builder bob = new Builder();
+	public void createMenu() {
+        this.setScreen(new MenuViewScreen(this));
+	}
+	
+	public void createGame() {
+		 Builder bob = new Builder(this);
 		 try {
 			 bob.build();
 		 }
@@ -59,4 +63,24 @@ public class AppTheGargamaze extends Game {
 			view.dispose();
 		}
 	}
+
+    @Override
+    public void gameOver(boolean sucess) {
+        running = false;
+        this.sucess = sucess;
+        view.fadeOut();
+    }
+
+    @Override
+    public void gameOverContinue() {
+        this.setScreen(new EndScreen(this, sucess));
+    }
+
+    @Override
+    public void setScreen(int i) {
+        if(i==0)
+            createMenu();
+        else if(i==1)
+            createGame();
+    }
 }

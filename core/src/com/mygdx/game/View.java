@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.interfaces.IGameEnd;
 import com.mygdx.game.interfaces.IViewSwitchHability;
 import com.mygdx.game.interfaces.IVisualPlayer;
 
@@ -30,10 +31,19 @@ public class View implements IViewSwitchHability, Screen {
     private Array<Texture>  th1, th2;
     private boolean thAnimating = false;
     
+    private boolean fadingOut = false;
+    private float fadeOutDelay = 1f;
+    private float fadeOutDuration = 3f;
+    private float fadeOutOpacity = 0;
+    private float fadeOutTime = 0;
+    private Texture imgBlack;
+    private IGameEnd game;
+    
     private IVisualPlayer Vcase;
     private IVisualPlayer Vtars;
 
     public View() {
+        loadImages();
         camera = new OrthographicCamera();
         camera.position.set(0, 0, 0);
         camera.update();
@@ -48,25 +58,19 @@ public class View implements IViewSwitchHability, Screen {
                 cells[x][y] = new ViewCell(x,y);
     }
     
+    private void loadImages() {
+        imgBlack = new Texture(Gdx.files.internal("black.png"));
+    }
+    
     public void connect(IVisualPlayer Vcase, IVisualPlayer Vtars) {
         this.Vcase = Vcase;
         this.Vtars = Vtars;
     }
-
-    public void show() {
-        ScreenUtils.clear(0, 0, 0, 1); //cor do fundo
-        camera.update();
-
-        batch.setProjectionMatrix(camera.combined);
-        shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
-        drawMap();
-        drawStatus(Vtars, 0);
-        drawStatus(Vcase, 160+480);
-        drawTeleportHiders();
     
-        viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true); // Restore viewport.
+    public void connect(IGameEnd game) {
+        this.game = game;
     }
-    
+
     private void drawMap() {
         batch.begin();
         for(int x = 0;x < size;x++) {
@@ -75,14 +79,13 @@ public class View implements IViewSwitchHability, Screen {
                 ViewCell aux = cells[x][y];
                 
          	   	for(Texture texture: aux.getTexture()) {
-         	   		batch.draw(texture, aux.getX(), aux.getY(), ViewCell.size, ViewCell.size);
+                    batch.draw(texture, aux.getX(), aux.getY(), ViewCell.size, ViewCell.size);
          	   	}
          	   	
          	   	// Adjust Clarity
                 batch.setColor(1f,1f,1f, 1 - aux.getClarity());
                 batch.draw(ViewCell.getDefaultTexture(), aux.getX(), aux.getY(),
                                                         ViewCell.size, ViewCell.size);
-         	   	
             }
         }
         batch.end();
@@ -101,6 +104,7 @@ public class View implements IViewSwitchHability, Screen {
     
     public void dispose() {
     	ViewCell.dispose();
+    	imgBlack.dispose();
     	batch.dispose();
     }
     
@@ -154,10 +158,25 @@ public class View implements IViewSwitchHability, Screen {
 
 	@Override
 	public void render(float delta) {
-		show();		
+        ScreenUtils.clear(0, 0, 0, 1); //cor do fundo
+        camera.update();
+
+        batch.setProjectionMatrix(camera.combined);
+        shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
+        drawMap();
+        drawStatus(Vtars, 0);
+        drawStatus(Vcase, 160+480);
+        drawTeleportHiders();
+        
+        if(fadingOut) {
+            drawFadeOut();
+            updateFadeOut(delta);
+        }
+    
+        viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true); // Restore viewport.
 	}
 
-	@Override
+    @Override
 	public void pause() {
 		// TODO Auto-generated method stub
 		
@@ -174,4 +193,31 @@ public class View implements IViewSwitchHability, Screen {
 		// TODO Auto-generated method stub
 		
 	}
+
+    @Override
+    public void show() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public void fadeOut() {
+        fadingOut = true;
+    }
+    
+    private void drawFadeOut() {
+        batch.begin();
+        batch.setColor(1f,1f,1f,fadeOutOpacity);
+        batch.draw(imgBlack, 0, 0, 800, 480);
+        batch.end();
+    }
+
+    private void updateFadeOut(float delta) {
+        fadeOutTime += delta;
+        
+        if(fadeOutTime>fadeOutDelay)
+            fadeOutOpacity = (fadeOutTime-fadeOutDelay)/(fadeOutDuration-fadeOutDelay);
+            
+        if(fadeOutTime>fadeOutDuration)
+            game.gameOverContinue();
+    }
 }

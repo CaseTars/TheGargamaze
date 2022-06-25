@@ -32,7 +32,7 @@ public abstract class Element implements IElement{
     
     public void action(IPlayerInteraction player) {}
     
-    public void deaction() {}
+    public void deaction(IPlayerInteraction player) {}
     
     public void interact(IPlayerInteraction player) {}
 }

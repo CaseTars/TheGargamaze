@@ -35,22 +35,17 @@ public class MenuControl implements InputProcessor {
 			Vector3 touchPos = new Vector3();
 			touchPos.set(screenX, screenY, 0);
 			
-			menu.camera(touchPos);
+			menu.unproject(touchPos);
 			float posX = touchPos.x;
 			float posY = touchPos.y;
 						
 			if(menu.playContains(posX, posY)) menu.play();
 			else if(menu.tutorialContains(posX, posY)) menu.showTutorial();
 		
-			else if(menu.musicContains(posX, posY) && SoundManager.getMusic()) {  //setmusicOff
-				SoundManager.setMusic(false);
-				SoundManager.stopGameMusic();
-				menu.showMusic(false);
-			}
-			else if(menu.musicContains(posX, posY)  && posY < 140 && !SoundManager.getMusic()) {  //setMusicOn
-				SoundManager.setMusic(true);
-				SoundManager.playGameMusic();
-				menu.showMusic(true);
+			else if(menu.musicContains(posX, posY)) {
+			    boolean state = SoundManager.getMusic();
+				SoundManager.setMusic(!state);
+				menu.showMusic(!state);
 			}
 		
 		return false;

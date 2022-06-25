@@ -1,5 +1,7 @@
 package com.mygdx.game.elements.buttons;
 
+import com.mygdx.game.interfaces.IPlayerInteraction;
+
 public class ButtonSpecificNoSpring extends ButtonSpecific{
 
     public ButtonSpecificNoSpring(int x, int y, char variation) {
@@ -7,5 +9,5 @@ public class ButtonSpecificNoSpring extends ButtonSpecific{
     }
 
     @Override
-    public void deaction() {}
+    public void deaction(IPlayerInteraction player) {}
 }

@@ -12,6 +12,7 @@ public class SoundManager {
 	private static Sound crystalGetting;
 	private static Sound playerDying;
 	private static Sound playerTeleport;
+    private static Sound endFail;
 	private static boolean musicOn;
 
 	public static void loadSounds() {
@@ -23,14 +24,14 @@ public class SoundManager {
 //	     crystalGetting = Gdx.audio.newSound(Gdx.files.internal("Super-Mario-Bros-1-Up.wav"));
 	     playerDying = Gdx.audio.newSound(Gdx.files.internal("Mario Death.mp3"));
 	     playerTeleport = Gdx.audio.newSound(Gdx.files.internal("EndermansTeleport .mp3"));
+	     endFail = Gdx.audio.newSound(Gdx.files.internal("endFail.mp3"));
 	     musicOn = true;
 	}
 	
 	public static void playGameMusic() {
-		if(musicOn) {
-			gameMusic.setLooping(true);
-			gameMusic.play();
-		}
+	    musicOn = true;
+		gameMusic.setLooping(true);
+		gameMusic.play();
 	}
 	
 	public static void stopGameMusic() {
@@ -57,15 +58,27 @@ public class SoundManager {
 	}
 	
 	public static void playPlayerDying() {
+	    stopGameMusic();
 		playerDying.play();	
 	}
 	
 	public static void playPlayerTeleport() {
 		playerTeleport.play(1, 1, 0);
 	}
+	
+	public static void playEnd() {
+        endFail.play();
+    }
+	
+	public static void stopEnd() {
+	    endFail.stop();
+    }
 
-	public static void setMusic(boolean turnOn) {
-		musicOn = turnOn;
+	public static void setMusic(boolean state) {
+	    if(state)
+	        playGameMusic();
+	    else
+	        stopGameMusic();
 	}
 	
 	public static boolean getMusic() {
@@ -79,5 +92,6 @@ public class SoundManager {
 		playerDying.dispose();
 		wallHit.dispose();
 		playerTeleport.dispose();
+		endFail.dispose();
 	}
 }

@@ -10,10 +10,10 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.interfaces.IGameControl;
 
 public class MenuViewScreen implements Screen{
-
-		private AppTheGargamaze game;
+		private IGameControl game;
 		private OrthographicCamera camera;
 	    private Viewport viewport;
 	    private SpriteBatch batch;
@@ -32,8 +32,8 @@ public class MenuViewScreen implements Screen{
 	    private static Texture imgMusicOff;
 	    private static Texture imgBackGround;
 
-		public MenuViewScreen(AppTheGargamaze gam) {
-			game = gam;
+		public MenuViewScreen(AppTheGargamaze game) {
+			this.game = game;
 			
 			batch = new SpriteBatch();
 
@@ -42,19 +42,8 @@ public class MenuViewScreen implements Screen{
 	        camera.update();
 
 	        viewport = new FitViewport(800, 480, camera);
-	        
-			imgHappySantanche = new Texture(Gdx.files.internal("HappySantache.png"));  //check
-			imgTittle = new Texture(Gdx.files.internal("Tittle.png")); 
-			imgPlay = new Texture(Gdx.files.internal("Play.png")); 
-			imgTutorial = new Texture(Gdx.files.internal("Tutorial.png")); 
-			imgMusicOn = new Texture(Gdx.files.internal("MusicaOn.png")); 
-			imgMusicOff = new Texture(Gdx.files.internal("MusicaOff.png")); 
-			imgBackGround = new Texture(Gdx.files.internal("fundo.jpeg")); 
 			showTutorial = false;
 			showMusicOn = true;
-			
-	        SoundManager.loadSounds();
-			SoundManager.playGameMusic();
 			
 			menuControl = new MenuControl();
 			menuControl.connectMenu(this);
@@ -68,6 +57,16 @@ public class MenuViewScreen implements Screen{
 			music = new Rectangle(posX,160-10-(2*height),width, height);
 			
 	        Gdx.input.setInputProcessor(menuControl);
+		}
+		
+		public static void loadImages() {
+            imgHappySantanche   = new Texture(Gdx.files.internal("HappySantache.png"));  //check
+            imgTittle           = new Texture(Gdx.files.internal("Tittle.png"));
+            imgPlay             = new Texture(Gdx.files.internal("Play.png"));
+            imgTutorial         = new Texture(Gdx.files.internal("Tutorial.png"));
+            imgMusicOn          = new Texture(Gdx.files.internal("MusicaOn.png"));
+            imgMusicOff         = new Texture(Gdx.files.internal("MusicaOff.png"));
+            imgBackGround       = new Texture(Gdx.files.internal("fundo.jpeg"));
 		}
 
 		@Override
@@ -95,7 +94,7 @@ public class MenuViewScreen implements Screen{
 	        viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true); 
 		}
 		
-		public void camera(Vector3 touchPos) {
+		public void unproject(Vector3 touchPos) {
 			viewport.unproject(touchPos);
 		}
 		
@@ -112,8 +111,7 @@ public class MenuViewScreen implements Screen{
 		}
 
 		public void play() {
-			game.create2();
-			dispose();
+		    game.setScreen(1);
 		}
 		
 		public void showTutorial() {
@@ -125,10 +123,9 @@ public class MenuViewScreen implements Screen{
 		}
 		
 		@Override
-		public void resize(int width, int height) {
-			// TODO Auto-generated method stub
-			
-		}
+	    public void resize(int width, int height) {
+	        viewport.update(width, height);
+	    }
 	
 		@Override
 		public void pause() {
@@ -157,8 +154,7 @@ public class MenuViewScreen implements Screen{
 	        imgMusicOn.dispose();
 	        imgMusicOff.dispose();
 	        imgBackGround.dispose();
-	//      batch.dispose();
-	
+	        batch.dispose();
 		}
 	
 		@Override

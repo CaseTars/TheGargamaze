@@ -105,9 +105,9 @@ public class Cell implements ICell{
 	}
 
 	@Override
-	public void deaction() {
+	public void deaction(IPlayerInteraction player) {
 		for(Element element: elements) {
-			element.deaction();
+			element.deaction(player);
 		}
 		
 	}

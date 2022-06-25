@@ -1,7 +1,6 @@
 package com.mygdx.game;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import com.badlogic.gdx.Gdx;
@@ -15,6 +14,7 @@ import com.mygdx.game.elements.buttons.Button;
 import com.mygdx.game.habilities.PhantomHability;
 import com.mygdx.game.habilities.SwitchPlacesHability;
 import com.mygdx.game.habilities.VisionRadiusHability;
+import com.mygdx.game.interfaces.IGameEnd;
 
 public class Builder {
     private View view;
@@ -22,6 +22,7 @@ public class Builder {
     private Player pTars;
     private Space space;
     private Control control;
+    private IGameEnd game;
     
     private char[][] mazeMatrix;
     private boolean[][] visibilityMatrix;
@@ -32,13 +33,17 @@ public class Builder {
     private char[][] gatesConfigurationMatrix;
     private Position[][] gatesPositionMatrix;
     
+    public Builder(IGameEnd game) {
+        this.game = game;
+    }
+    
     public void build() throws IOException {
-    	
 		readFile();
 		
     	space = new Space();
         space.setAlwaysVisibleCells(visibilityMatrix);
     	view = new View();
+    	view.connect(game);
         connectCells();
         control = new Control();
         
@@ -53,11 +58,13 @@ public class Builder {
 			    case 'C':
                     pCase = new Player(x,y,'C');
                     pCase.connect(space);
+                    pCase.connect(game);
                     space.insert(pCase);
                     break;
 			    case 'T':
                     pTars = new Player(x,y,'T');
                     pTars.connect(space);
+                    pTars.connect(game);
                     space.insert(pTars);
                     break;
 			    case 'D':

@@ -36,8 +36,8 @@ public class Lantern implements ILantern{
         for(int dx = -radius; dx<=radius; dx++)
             for(int dy = -radius; dy<=radius; dy++) {
                 float dist = (float) Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)) - 1;
-                if(dist>radius) continue;
-                float clarity = 1f - (dist/maxDist);
+                if(dist>radius-0.5f) continue;
+                float clarity = 1f - (dist/maxDist)*(2f/3f);
                 space.iluminate(getX() + dx, getY() + dy, clarity);
             }
     }
@@ -61,11 +61,13 @@ public class Lantern implements ILantern{
     @Override
     public void turnOff() {
         on = false;
+        space.updateVisibility();
     }
 
     @Override
     public void turnOn() {
         on = true;
+        space.updateVisibility();
     }
 
 }

@@ -7,7 +7,7 @@ import com.mygdx.game.interfaces.ISpaceEdit;
 public class Blackhole {
 	private int x = 15,
 				y = 15,
-				radius = 3;
+				radius = 1;
 	private Array<BlackholeBlocker> bhbs = new Array<BlackholeBlocker>();
 	
 	public void createBlockers(ISpaceEdit space) {

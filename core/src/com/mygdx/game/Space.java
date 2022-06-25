@@ -43,7 +43,7 @@ public class Space implements ISpace{
 	
 	public void remove(Player toRemove) {
         cells[toRemove.getX()][toRemove.getY()].remove(toRemove);
-        cells[toRemove.getX()][toRemove.getY()].deaction();
+        cells[toRemove.getX()][toRemove.getY()].deaction(toRemove);
     }
 	
 	public void addLantern(ILantern lantern) {
@@ -57,7 +57,7 @@ public class Space implements ISpace{
 		    throw new ObstructedCell("This cell is obstructed!");
 		
 		cells[xi][yi].remove(toMove);
-        cells[xi][yi].deaction();
+        cells[xi][yi].deaction(toMove);
 		cells[xf][yf].insert(toMove);
         cells[xf][yf].interact(toMove);
         updateVisibility();
@@ -91,8 +91,8 @@ public class Space implements ISpace{
 	}
 
 	@Override
-	public void deaction(int x, int y) {
-		cells[x][y].deaction();
+	public void deaction(int x, int y, IPlayerInteraction player) {
+		cells[x][y].deaction(player);
 	}
 
     @Override

@@ -8,6 +8,7 @@ import com.mygdx.game.interfaces.IPlayerInteraction;
 public class Button extends Element{
     private Array<IGate> gates = new Array<IGate>();
 	boolean pressed = false;
+	private char playerPressing;
 	
 	public Button(int x, int y) {
 		super(x, y);
@@ -17,14 +18,18 @@ public class Button extends Element{
 		gates.add(gate); 
 	}
 	
+	@Override
 	public void action(IPlayerInteraction player) {
+	    playerPressing = player.variation();
 	    pressed = true;
 		for(IGate gate: gates)
 			gate.open();
         cell.update();
 	}
     
-    public void deaction() {
+	@Override
+    public void deaction(IPlayerInteraction player) {
+	    if(player.variation() != playerPressing) return;
         pressed = false;
         for(IGate gate: gates)
             gate.close();
