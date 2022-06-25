@@ -72,6 +72,7 @@ public class Builder {
                 case '1':
                 case '2':
                 case '3':
+                case '4':
                     Crystal crystal = new Crystal(x,y,mazeMatrix[x][y]);
                     crystal.connect(space);
                     space.insert(crystal);

@@ -26,7 +26,8 @@ public class SoundManager {
 	     musicOn = true;
 	}
 	
-	public static void playGameMusic() {
+	public static void playGameMusic() { //n da dando looping na musica
+		
 		if(musicOn) {
 			gameMusic.setLooping(true);
 			gameMusic.play();

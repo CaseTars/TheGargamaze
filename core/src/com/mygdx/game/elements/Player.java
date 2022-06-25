@@ -11,6 +11,7 @@ import com.mygdx.game.interfaces.IPlayer;
 import com.mygdx.game.interfaces.IPosition;
 import com.mygdx.game.interfaces.ISpaceCommand;
 import com.mygdx.game.interfaces.IVisualEffect;
+import com.mygdx.game.interfaces.IVisualHability;
 
 public class Player extends Element implements IPlayer{
 	private ISpaceCommand space;
@@ -22,6 +23,7 @@ public class Player extends Element implements IPlayer{
 	private IHability[] habilities = new IHability[3];
 	private boolean phantom = false;
 	private Array<Crystal> crystals = new Array<Crystal>();
+	private Array<Character> inventory = new Array<Character>();
 	
 	public Player(int x, int y, char variation) {
 		super(x, y);
@@ -190,6 +192,7 @@ public class Player extends Element implements IPlayer{
 
     public void addCrystal(Crystal c) {
         crystals.add(c);
+        inventory.add(c.variation());
         updateHabilities();
         SoundManager.playCrystalGetting();
     }
@@ -202,6 +205,7 @@ public class Player extends Element implements IPlayer{
         if(removed.canEnter()) {
             removed.enter();
             updateHabilities();
+            inventory.removeIndex(inventory.size -1);
         }
         else {
             crystals.add(removed);
@@ -220,5 +224,20 @@ public class Player extends Element implements IPlayer{
                 return true;
         return false;
     }
+
+	@Override
+	public Array<Character> getInventory() {
+		// TODO Auto-generated method stub
+		return inventory;
+	}
+
+	@Override
+	public Array<IVisualHability> getHabilities() {
+		Array<IVisualHability> returnHabilities = new Array<IVisualHability>();
+		for(int i = 0;i < 3;i++) {
+			returnHabilities.add(habilities[i]); 
+		}
+		return returnHabilities;
+	}
 
 }
