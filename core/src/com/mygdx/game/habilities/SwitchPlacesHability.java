@@ -99,4 +99,10 @@ public class SwitchPlacesHability extends Hability {
             lock();
     }
 
+	@Override
+	public char type() {
+		// TODO Auto-generated method stub
+		return 'T';
+	}
+
 }

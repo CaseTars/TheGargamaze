@@ -33,4 +33,11 @@ public class PhantomHability extends Hability {
         	removeEffect();
         }
     }
+
+	@Override
+	public char type() {
+		// TODO Auto-generated method stub
+		return 'P';
+	}
+
 }

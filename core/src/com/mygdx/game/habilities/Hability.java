@@ -64,4 +64,9 @@ public abstract class Hability implements IHability{
     protected void lock() {
         isUnlocked = false;
     }
+    
+    public boolean unlocked() {
+		// TODO Auto-generated method stub
+		return isUnlocked;
+	}
 }

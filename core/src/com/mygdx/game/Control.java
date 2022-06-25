@@ -4,10 +4,12 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.mygdx.game.interfaces.ICommand;
 import com.mygdx.game.interfaces.IControl;
+import com.mygdx.game.interfaces.IViewCommand;
 
 public class Control implements InputProcessor, IControl {
     private ICommand pCase;
     private ICommand pTars;
+    private IViewCommand view;
     private float timeOut = 0;
     
     public void conectCase(ICommand pCase) {
@@ -16,6 +18,10 @@ public class Control implements InputProcessor, IControl {
     
     public void conectTars(ICommand pTars) {
     	this.pTars = pTars;
+    }
+    
+    public void conectView(IViewCommand view) {
+    	this.view = view;
     }
     
     public boolean keyDown(int keycode) {
@@ -61,7 +67,9 @@ public class Control implements InputProcessor, IControl {
             pCase.dropCrystal();
         else if(keycode == Input.Keys.Q)
             pTars.dropCrystal();
-        
+        else if(keycode == Input.Keys.SPACE)
+        	view.showCommands(true);
+        	
         return false;
     }
 
@@ -70,6 +78,8 @@ public class Control implements InputProcessor, IControl {
         	pCase.commandDeaction();
         else if(keycode == Input.Keys.E)
         	pTars.commandDeaction();
+        else if(keycode == Input.Keys.SPACE)
+        	view.showCommands(false);
         return false;
     }
 

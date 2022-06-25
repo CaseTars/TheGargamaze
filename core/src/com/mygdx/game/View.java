@@ -15,10 +15,12 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.interfaces.IGameEnd;
+import com.mygdx.game.interfaces.IViewCommand;
 import com.mygdx.game.interfaces.IViewSwitchHability;
+import com.mygdx.game.interfaces.IVisualHability;
 import com.mygdx.game.interfaces.IVisualPlayer;
 
-public class View implements IViewSwitchHability, Screen {
+public class View implements IViewSwitchHability, Screen, IViewCommand {
     public static final int size = Space.size;
 
     private ShapeRenderer shapeRenderer;
@@ -41,6 +43,15 @@ public class View implements IViewSwitchHability, Screen {
     
     private IVisualPlayer Vcase;
     private IVisualPlayer Vtars;
+    
+    private Texture tarsCommands;
+    private Texture caseCommands;
+    private boolean showCommands;
+    
+    private Array<Texture> crystals;   
+    private Array<Texture> visionHab;
+    private Array<Texture> ghostHab;
+    private Array<Texture> teleportHab;
 
     public View() {
         loadImages();
@@ -51,6 +62,14 @@ public class View implements IViewSwitchHability, Screen {
         viewport = new FitViewport(800, 480, camera);
         batch = new SpriteBatch();
         ViewCell.loadImages();
+        
+        crystals = new Array<Texture>();
+        visionHab = new Array<Texture>();
+        ghostHab = new Array<Texture>();
+        teleportHab = new Array<Texture>();
+        
+        loadCommands();
+        showCommands = false;
         
         cells = new ViewCell[size][size];
         for(int x = 0;x < size;x++)
@@ -65,6 +84,35 @@ public class View implements IViewSwitchHability, Screen {
     public void connect(IVisualPlayer Vcase, IVisualPlayer Vtars) {
         this.Vcase = Vcase;
         this.Vtars = Vtars;
+    }
+    
+    public void loadCommands() {
+    	caseCommands = new Texture(Gdx.files.internal("redCommands.png"));
+    	tarsCommands = new Texture(Gdx.files.internal("blueCommands.png"));
+    	  
+    	crystals.add(new Texture(Gdx.files.internal("crystalYellow1.png")));   
+    	crystals.add(new Texture(Gdx.files.internal("crystalGreen1.png")));
+    	crystals.add(new Texture(Gdx.files.internal("crystalViolet1.png")));
+    	crystals.add(new Texture(Gdx.files.internal("crystalBlue.png")));
+    	crystals.add(new Texture(Gdx.files.internal("crystalRed1.png")));
+    	crystals.add(new Texture(Gdx.files.internal("crystalBlue2.png")));
+    	crystals.add(new Texture(Gdx.files.internal("crystalRed2.png")));
+
+    	visionHab.add(new Texture(Gdx.files.internal("flashlightBlock.png"))); //blovk
+    	visionHab.add(new Texture(Gdx.files.internal("flashlightNormal.png"))); //normal
+    	visionHab.add(new Texture(Gdx.files.internal("flashlightCooldown.png"))); //cooldown
+    	visionHab.add(new Texture(Gdx.files.internal("flashlightRunning.png"))); //running
+    		
+    	ghostHab.add(new Texture(Gdx.files.internal("ghostBlock.png"))); //blovk
+    	ghostHab.add(new Texture(Gdx.files.internal("ghostNormal.png"))); //normal
+    	ghostHab.add(new Texture(Gdx.files.internal("ghostCooldown.png"))); //cooldown
+    	ghostHab.add(new Texture(Gdx.files.internal("ghostRunning.png"))); //running
+    	    
+    	teleportHab.add(new Texture(Gdx.files.internal("troca2Block.png"))); //blovk
+    	teleportHab.add(new Texture(Gdx.files.internal("troca2Normal.png"))); //normal
+    	teleportHab.add(new Texture(Gdx.files.internal("troca2Cooldown.png"))); //cooldown
+    	teleportHab.add(new Texture(Gdx.files.internal("troca2Running.png"))); //running  
+
     }
     
     public void connect(IGameEnd game) {
@@ -88,6 +136,7 @@ public class View implements IViewSwitchHability, Screen {
                                                         ViewCell.size, ViewCell.size);
             }
         }
+        batch.setColor(1f,1f,1f,1f);
         batch.end();
     }
     
@@ -102,10 +151,129 @@ public class View implements IViewSwitchHability, Screen {
         shapeRenderer.end();
     }
     
+    public void showCommands(boolean show) { //o tutorial tem que deixar como true
+    	showCommands = show;
+    }
+    
+	private void drawCommands() {
+		
+		float width = viewport.getWorldWidth();
+		float height = viewport.getWorldHeight();
+
+		batch.begin();
+		
+		batch.draw(caseCommands, 0, height*1/5, (367/3)+22, (314/3)+22);
+		batch.draw(tarsCommands, (width*5/6)-7, height*1/5, (367/3)+22, (314/3)+22);
+		
+	    batch.end();
+	}
+	
+	private void drawCrystals() {
+		float width = viewport.getWorldWidth();
+		float rFirstCrystal = (width*5/6)-9;
+		float size = 3/2*ViewCell.size + 8;
+		boolean bigCrystalCase = false;
+		boolean bigCrystalTars = false;
+
+		float posY = 360-size-10;
+		float posYBig = 360-3*size-13;
+
+		
+		Array<Character> caseInventory = Vcase.getInventory();
+		Array<Character> tarsInventory = Vtars.getInventory();
+		
+		batch.begin();
+		
+		int i = 0;
+ 	   	for(Character character: caseInventory) {
+ 	   		batch.draw(crystals.get(Character.getNumericValue(character)), rFirstCrystal+i*size, posY, size, size); 
+ 	   		i++;
+ 	   		if(character == '3') bigCrystalCase = true;
+ 	   	}
+ 	   	
+ 	   	int j = 0;
+	   	for(Character character: tarsInventory) {
+ 	   		batch.draw(crystals.get(Character.getNumericValue(character)), 18+j*size, posY, size, size);
+	   		j++;
+	   		if(character == '4') bigCrystalTars = true;
+	   	}
+	   	if(bigCrystalCase) batch.draw(crystals.get(3), rFirstCrystal+size+12, posYBig, size*2, size*2); 
+	   	else batch.draw(crystals.get(5), rFirstCrystal+size+12, posYBig, size*2, size*2);     //ghost
+	   	
+	   	if(bigCrystalTars) batch.draw(crystals.get(4), 18+size+12, posYBig, size*2, size*2);
+	   	else batch.draw(crystals.get(6), 18+size+12, posYBig, size*2, size*2);               //ghost
+	   	
+	   	batch.end();
+	}
+	
+	private void drawHabilities() { 
+		float width = viewport.getWorldWidth();
+		
+		float rFirstCrystal = (width*5/6) + 12;
+		
+		float size = 3/2*ViewCell.size+8; 
+		
+		Array<IVisualHability> caseHabilities = Vcase.getHabilities();
+		Array<IVisualHability> tarsHabilities = Vtars.getHabilities();
+
+		float posY = 360-5*size; 
+		
+		batch.begin();	
+		
+	   	int k = 0;
+	   	for(IVisualHability hability: caseHabilities) {
+	   		Array<Texture> auxCase = null;
+	   		if(hability.type() == 'V') auxCase = visionHab;
+	   		else if(hability.type() == 'T') auxCase = teleportHab;
+	   		else if(hability.type() == 'P') auxCase = ghostHab;
+
+	   		if(!hability.unlocked()) batch.draw(auxCase.get(0), rFirstCrystal+k*size, posY, size, size); //block
+	   		else {
+	   			if(hability.isRunning()) batch.draw(auxCase.get(3), rFirstCrystal+k*size, posY, size, size); //rodando
+	   			else if(hability.onCooldown()) batch.draw(auxCase.get(2), rFirstCrystal+k*size, posY, size, size);//cooldown
+	   			else batch.draw(auxCase.get(1), rFirstCrystal+k*size, posY, size, size); //normal
+	   		}
+	   		k++;
+	   	}
+		
+	   	int l = 0;
+		for(IVisualHability hability: tarsHabilities) {
+			Array<Texture> auxTars = null;
+			
+	   		if(hability.type() == 'V') auxTars = visionHab;
+	   		else if(hability.type() == 'T') auxTars = teleportHab;
+	   		else if(hability.type() == 'P') auxTars = ghostHab;    
+
+	   		if(!hability.unlocked())  batch.draw(auxTars.get(0), 40+l*size, posY, size, size); //bloqueada
+	   		else {
+	   			if(hability.isRunning())  batch.draw(auxTars.get(3), 40+l*size, posY, size, size); //rodando
+	   			else if(hability.onCooldown()) batch.draw(auxTars.get(2), 40+l*size, posY, size, size);//cooldown
+	   			else batch.draw(auxTars.get(1), 40+l*size, posY, size, size); //normal
+	   		}
+	   		l++;
+	   	}		
+		batch.end();
+	}
+
     public void dispose() {
     	ViewCell.dispose();
     	imgBlack.dispose();
     	batch.dispose();
+    	
+    	caseCommands.dispose();
+    	tarsCommands.dispose();
+    	for(Texture texture: crystals) {
+    		texture.dispose();
+    	}
+    	for(Texture texture: visionHab) {
+    		texture.dispose();
+    	}
+    	for(Texture texture: ghostHab) {
+    		texture.dispose();
+    	}
+    	for(Texture texture: teleportHab) {
+    		texture.dispose();
+    	}
     }
     
     public ViewCell getCell(int x, int y) {
@@ -128,6 +296,7 @@ public class View implements IViewSwitchHability, Screen {
      	for(Texture texture: th2)
  	   		batch.draw(texture, thX2, thY2, ViewCell.size, ViewCell.size);
 
+        batch.setColor(1f,1f,1f,1f);
         batch.end();
     }
 
@@ -167,6 +336,10 @@ public class View implements IViewSwitchHability, Screen {
         drawStatus(Vtars, 0);
         drawStatus(Vcase, 160+480);
         drawTeleportHiders();
+        drawCrystals();
+        drawHabilities();
+        
+        if(showCommands) drawCommands();
         
         if(fadingOut) {
             drawFadeOut();

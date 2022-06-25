@@ -29,4 +29,11 @@ public class VisionRadiusHability extends Hability {
         else
             lock();
     }
+
+	@Override
+	public char type() {
+		// TODO Auto-generated method stub
+		return 'V';
+	}
+	
 }

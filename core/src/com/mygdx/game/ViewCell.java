@@ -173,13 +173,11 @@ public class ViewCell implements IUpdate {
 			   		else  textures.add(imgWall);
                else if(cell.visual(i).type() == 'D') textures.add(imgGround);
 			   else if(cell.visual(i).type() == 'C') {
-				   textures.add(imgCrystalViolet); //teste
-				   if(cell.visual(i).variation() == 'b')textures.add(imgCrystalBlue); 
-				   else if(cell.visual(i).variation() == 'r')textures.add(imgCrystalRed);
-				   else if(cell.visual(i).variation() == '3')textures.add(imgCrystalViolet);
-				   else if(cell.visual(i).variation() == '0')textures.add(imgCrystalOrange);
-				   else if(cell.visual(i).variation() == '2')textures.add(imgCrystalGreen);
-				   else if(cell.visual(i).variation() == '1')textures.add(imgCrystalYellow);
+				   if(cell.visual(i).variation() == '3')textures.add(imgCrystalBlue);
+				   else if(cell.visual(i).variation() == '4')textures.add(imgCrystalRed);
+				   else if(cell.visual(i).variation() == '0')textures.add(imgCrystalYellow);
+				   else if(cell.visual(i).variation() == '2')textures.add(imgCrystalViolet);
+				   else if(cell.visual(i).variation() == '1')textures.add(imgCrystalGreen);
 			   }
 			   else if(cell.visual(i).type() == 'P') {
 				   if(cell.visual(i).variation() == 'C') {

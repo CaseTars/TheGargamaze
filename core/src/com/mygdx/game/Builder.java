@@ -46,7 +46,7 @@ public class Builder {
     	view.connect(game);
         connectCells();
         control = new Control();
-        
+        control.conectView(view);
 
     	for(int x = 0;x < Space.size;x++) {
 			for(int y = 0;y < Space.size;y++) {
@@ -83,6 +83,7 @@ public class Builder {
                 case '1':
                 case '2':
                 case '3':
+                case '4':
                     Crystal crystal = new Crystal(x,y,mazeMatrix[x][y]);
                     crystal.connect(space);
                     space.insert(crystal);
