@@ -3,7 +3,6 @@ package com.mygdx.game;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.elements.Element;
 import com.mygdx.game.elements.Player;
-import com.mygdx.game.elements.Wall;
 import com.mygdx.game.exceptions.ObstructedCell;
 import com.mygdx.game.interfaces.ISpace;
 import com.mygdx.game.interfaces.ILantern;
@@ -81,9 +80,9 @@ public class Space implements ISpace{
 	}
 
     @Override
-    public void iluminate(int x, int y) {
+    public void iluminate(int x, int y, float clarity) {
         if(x < 0 || x >= size || y < 0 || y >= size) return;
-        cells[x][y].setVisibility(true);
+        cells[x][y].setVisibility(true, clarity);
     }
 
 	@Override

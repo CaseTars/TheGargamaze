@@ -68,20 +68,25 @@ public class View implements IViewSwitchHability, Screen {
     }
     
     private void drawMap() {
-//    	drawBaseMap();
         batch.begin();
-        batch.setColor(1f,1f,1f,1f);
         for(int x = 0;x < size;x++) {
             for(int y = 0;y < size;y++) {
+                batch.setColor(1f,1f,1f,1f);
                 ViewCell aux = cells[x][y];
+                
          	   	for(Texture texture: aux.getTexture()) {
          	   		batch.draw(texture, aux.getX(), aux.getY(), ViewCell.size, ViewCell.size);
-         	   	} 
+         	   	}
+         	   	
+         	   	// Adjust Clarity
+                batch.setColor(1f,1f,1f, 1 - aux.getClarity());
+                batch.draw(ViewCell.getDefaultTexture(), aux.getX(), aux.getY(),
+                                                        ViewCell.size, ViewCell.size);
+         	   	
             }
         }
         batch.end();
     }
-    
     
     private void drawStatus(IVisualPlayer player, int xRef) {
         shapeRenderer.begin(ShapeType.Filled);

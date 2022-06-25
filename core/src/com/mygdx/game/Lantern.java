@@ -5,7 +5,7 @@ import com.mygdx.game.interfaces.IPosition;
 import com.mygdx.game.interfaces.ISpaceIluminate;
 
 public class Lantern implements ILantern{
-    private int x, y, radius = 1;
+    private int x, y, radius = 2;
     private ISpaceIluminate space;
     private IPosition element;
     private boolean on = true;
@@ -31,9 +31,15 @@ public class Lantern implements ILantern{
     @Override
     public void iluminate() {
         if(!on) return;
+        float maxDist = radius;//*1.41f;
+        
         for(int dx = -radius; dx<=radius; dx++)
-            for(int dy = -radius; dy<=radius; dy++)
-                space.iluminate(getX() + dx, getY() + dy);
+            for(int dy = -radius; dy<=radius; dy++) {
+                float dist = (float) Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)) - 1;
+                if(dist>radius) continue;
+                float clarity = 1f - (dist/maxDist);
+                space.iluminate(getX() + dx, getY() + dy, clarity);
+            }
     }
 
     @Override

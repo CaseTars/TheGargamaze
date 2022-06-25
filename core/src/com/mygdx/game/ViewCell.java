@@ -43,6 +43,7 @@ public class ViewCell implements IUpdate {
 
     private float x;
     private float y;
+    private float clarity;
     private IVisualCell cell;
     
     public ViewCell(int x, int y) {
@@ -118,13 +119,7 @@ public class ViewCell implements IUpdate {
 	   textures.clear();
 	   textures.add(imgGround); 
 	   if(!cell.visible()) {  
-		   if(nbElements <= 1) textures.add(imgDark);  
-		   else {
-			   for(int i = 1;i < nbElements;i++) {
-				   if(cell.visual(i).variation() == 'C') textures.add(imgCase); 
-				   if(cell.visual(i).variation() == 'T') textures.add(imgTars);
-			   }
-		   }  
+		   textures.add(imgDark);
 	   }
 	   else {
 		   for(int i = 0;i < nbElements;i++) {
@@ -166,12 +161,12 @@ public class ViewCell implements IUpdate {
 			   }
 			   else if(cell.visual(i).type() == 'G') {
 				   if(cell.visual(i).variation() == 'H') { //hard
-					   if(cell.visual(0).state() == 'c') textures.add(imgGateHardClosed); 
-					   else if(cell.visual(0).state() == 'o') textures.add(imgGateHardOpen);  
+					   if(cell.visual(i).state() == 'c') textures.add(imgGateHardClosed); 
+					   else if(cell.visual(i).state() == 'o') textures.add(imgGateHardOpen);  
 				   }
 				   else {  //normal
-					   if(cell.visual(0).state() == 'c') textures.add(imgGateClosed);  
-					   else if(cell.visual(0).state() == 'o') textures.add(imgGateOpen); 
+					   if(cell.visual(i).state() == 'c') textures.add(imgGateClosed);  
+					   else if(cell.visual(i).state() == 'o') textures.add(imgGateOpen); 
 				   }
 			   }
 			   else if(cell.visual(i).type() == 'W')
@@ -203,11 +198,13 @@ public class ViewCell implements IUpdate {
 		   }
 		   if(nbElements > 0 && cell.visual(0).type() == 'D')
                textures.add(imgDarkness);
+		   
+		   clarity = cell.clarity();
 	   }
 	}
 	
 	public static Texture getDefaultTexture() {
-	    return imgGround;
+	    return imgDark;
 	}
 	
 	public Array<Texture> getTexture() {
@@ -220,5 +217,9 @@ public class ViewCell implements IUpdate {
 	
 	public float getY() {
         return y;
+    }
+	
+    public float getClarity() {
+        return clarity;
     }
 }

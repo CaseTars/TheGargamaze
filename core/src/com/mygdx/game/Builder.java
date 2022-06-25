@@ -68,6 +68,10 @@ public class Builder {
                     HardWall hardWall = new HardWall(x,y);
                     space.insert(hardWall);
                     break;
+                case 'G':
+                    Gate gate = Gate.create(x,y, 'N');
+                    space.insert(gate);
+                    break;
                 case '0':
                 case '1':
                 case '2':

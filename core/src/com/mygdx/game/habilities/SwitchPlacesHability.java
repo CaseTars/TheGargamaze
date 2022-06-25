@@ -76,6 +76,7 @@ public class SwitchPlacesHability extends Hability {
     }
     
     protected void removeEffect() {
+        super.removeEffect();
         view.stopAnimation();
     }
     

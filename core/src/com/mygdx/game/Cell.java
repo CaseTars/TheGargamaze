@@ -16,6 +16,7 @@ public class Cell implements ICell{
     private IUpdate viewCell;
     private boolean visible = false, 
                     alwaysVisible = false;
+    private float clarity;
     Array<IVisual> textures = new Array<IVisual>();
 
     public void setAlwaysVisible() {
@@ -48,11 +49,26 @@ public class Cell implements ICell{
         return maior;
     }
     
-    public void setVisibility(boolean visible) {
+    public void setVisibility(boolean visible, float clarity) {
         if(alwaysVisible) return;
-        if(this.visible == visible) return;
+        if(this.visible == false && visible == false) {
+            this.clarity = 0;
+            return;
+        }
+        
+        if(visible == false)
+            this.clarity = 0;
+        else
+            this.clarity += clarity;
+        if(clarity > 1)
+            clarity = 1;
+        
         this.visible = visible;
         viewCell.update();
+    }
+    
+    public void setVisibility(boolean visible) {
+        setVisibility(visible, 1);
     }
     
     public IGate getGate() {
@@ -68,6 +84,12 @@ public class Cell implements ICell{
     @Override
     public boolean visible() {
         return visible;
+    }
+
+    @Override
+    public float clarity() {
+        if(alwaysVisible) return 1;
+        return clarity;
     }
 
     @Override
