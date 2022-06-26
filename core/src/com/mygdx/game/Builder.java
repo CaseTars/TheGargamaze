@@ -208,7 +208,7 @@ public class Builder {
     }
     
     private void readFile() throws IOException {
-        FileReader file = new FileReader("Maze.txt");
+        FileReader file = new FileReader("./maps/Maze.txt");
         BufferedReader readFile = new BufferedReader(file);
         
         Space.size = Integer.parseInt(readFile.readLine());

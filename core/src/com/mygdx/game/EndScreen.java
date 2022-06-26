@@ -50,12 +50,13 @@ public class EndScreen implements Screen {
     }
     
     private void loadImages(boolean sucess) {
-        imgBlack  = new Texture(Gdx.files.internal("black.png"));
-        imgButton = new Texture(Gdx.files.internal("bakctomenu1.png"));
+        String path = "./images/screens/";
+        imgBlack  = new Texture(Gdx.files.internal(path + "black.png"));
+        imgButton = new Texture(Gdx.files.internal(path + "backtomenu.png"));
         if(sucess)
-            img   = new Texture(Gdx.files.internal("sucessScreen.png"));
+            img   = new Texture(Gdx.files.internal(path + "sucessScreen.png"));
         else
-            img   = new Texture(Gdx.files.internal("failScreen.png"));
+            img   = new Texture(Gdx.files.internal(path + "failScreen.png"));
     }
 
     @Override
@@ -104,11 +105,10 @@ public class EndScreen implements Screen {
     public void unproject(Vector3 touchPos) {
         viewport.unproject(touchPos);
     }
-
+    
     @Override
     public void resize(int width, int height) {
-        // TODO Auto-generated method stub
-
+        viewport.update(width, height);
     }
 
     @Override
