@@ -1,5 +1,6 @@
 package com.mygdx.game.elements.buttons;
 
+import com.mygdx.game.SoundManager;
 import com.mygdx.game.interfaces.IPlayerInteraction;
 
 public class ButtonSpecific extends Button{
@@ -12,7 +13,10 @@ public class ButtonSpecific extends Button{
     
     @Override
     public void action(IPlayerInteraction player) {
-        if(this.variation != player.variation()) return;
+        if(this.variation != player.variation()) {
+            SoundManager.playError();
+            return;
+        }
         super.action(player);
     }
     

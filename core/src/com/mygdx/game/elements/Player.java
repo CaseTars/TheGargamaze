@@ -9,6 +9,7 @@ import com.mygdx.game.interfaces.ILantern;
 import com.mygdx.game.interfaces.IPlayer;
 import com.mygdx.game.interfaces.IPosition;
 import com.mygdx.game.interfaces.ISpaceCommand;
+import com.mygdx.game.interfaces.IUpdate;
 import com.mygdx.game.interfaces.IVisualEffect;
 import com.mygdx.game.interfaces.IVisualHability;
 
@@ -18,7 +19,7 @@ public class Player extends Element implements IPlayer{
 	private ILantern lantern;
 	private boolean dead = false;
 	
-	private double timeRemaining = 30;
+	private double timeRemaining = 15000;
 	private double totalTime = timeRemaining;
 	
 	private Array<IVisualEffect> effects = new Array<IVisualEffect>();
@@ -29,6 +30,7 @@ public class Player extends Element implements IPlayer{
 	private Array<Character> inventory = new Array<Character>();
 	
     private IGameEnd game;
+    private IUpdate bh;
 	
 	public Player(int x, int y, char variation) {
 		super(x, y);
@@ -49,6 +51,10 @@ public class Player extends Element implements IPlayer{
     
     public void connect(IGameEnd game) {
         this.game = game;
+    }
+    
+    public void connect(IUpdate bh) {
+        this.bh = bh;
     }
 	
     // From ICommand
@@ -86,6 +92,7 @@ public class Player extends Element implements IPlayer{
         try {
             space.move(this, xi, yi, x, y, phantom);
             checkEffects();
+            bh.update();
         } catch (ObstructedCell e) {
     	    SoundManager.playWallHit();
             x = xi;
@@ -130,27 +137,10 @@ public class Player extends Element implements IPlayer{
 	// From ITime
     @Override
     public void update(float t) {
-        timeRemaining -= t*distanceFactor();
         updateEffects(t);
         updateHabilities(t);
-        
-        if(timeRemaining <= 0) {
-            dead = true;
-            setPhantom(true);
-            lantern.turnOff();
-            SoundManager.playPlayerDying();
-            game.gameOver(false);
-        }
-    }
-
-    private double distanceFactor() {
-        double distToCenter = distance(x,y,15,15);
-        return Math.pow(distToCenter, 2);
     }
     
-    private double distance(int x1, int y1, int x2, int y2) {
-        return Math.sqrt(Math.pow(x1-x2, 2) + Math.pow(y1-y2, 2));
-    }
     // From IVisualPlayer
     @Override
     public float timeRemaining() {
@@ -260,5 +250,20 @@ public class Player extends Element implements IPlayer{
 		}
 		return returnHabilities;
 	}
+
+    @Override
+    public void updateTimeRemaining(float t) {
+        timeRemaining += t;
+        
+        if(timeRemaining <= 0) {
+            dead = true;
+            setPhantom(true);
+            lantern.turnOff();
+            SoundManager.playPlayerDying();
+            game.gameOver(false);
+        }
+        else if(timeRemaining > totalTime)
+            timeRemaining = totalTime;
+    }
 
 }

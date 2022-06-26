@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.interfaces.IGame;
 import com.mygdx.game.interfaces.ITime;
 
@@ -9,9 +10,7 @@ public class AppTheGargamaze extends Game implements IGame {
 	private View view;
 	private boolean running = false;
     private boolean sucess;
-	private ITime Tcase;
-	private ITime Ttars;
-    private ITime control;
+	private Array<ITime> updateTs = new Array<ITime>();
 	    
 	@Override
 	public void create () {
@@ -32,16 +31,18 @@ public class AppTheGargamaze extends Game implements IGame {
 		 }
 		 catch(Exception Exception){
 			 //mensagem de erro e acabar o jogp
-			 System.out.println(Exception.fillInStackTrace());
+			 Exception.printStackTrace();
 			 System.exit(1);
 		 }
 		 
 		 running = true;
-		 view  = bob.getView();
-		 Tcase = bob.getCase();
-		 Ttars = bob.getTars();
-		 control = bob.getControl();
-		 
+		 updateTs.add(bob.getCase());
+         updateTs.add(bob.getTars());
+         updateTs.add(bob.getControl());
+         updateTs.add(bob.getBH());
+
+         view  = bob.getView();
+         
 		 this.setScreen(view);
 	}
 
@@ -49,11 +50,9 @@ public class AppTheGargamaze extends Game implements IGame {
 		super.render();
 		
 		float delta = Gdx.graphics.getDeltaTime();
-		if(running) {
-			Tcase.update(delta);
-			Ttars.update(delta);
-			control.update(delta);
-		}
+		if(running)
+		    for(ITime updateT : updateTs)
+    			updateT.update(delta);
 	}
 	
 	@Override

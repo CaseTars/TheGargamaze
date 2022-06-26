@@ -2,11 +2,9 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.interfaces.IUpdate;
 import com.mygdx.game.interfaces.IVisualCell;
-import com.mygdx.game.interfaces.IVisualEffect;
 
 public class ViewCell implements IUpdate {
     public static final float size = 480f/Space.size;
@@ -189,6 +187,8 @@ public class ViewCell implements IUpdate {
 					   else textures.add(imgTars);
 				   }
 			   }
+			   else if(cell.visual(i).type() == 'Z')
+			       textures.clear();
 			   else {
 		    	   textures.add(imgHappySantanche);
 		       }

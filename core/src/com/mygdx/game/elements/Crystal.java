@@ -1,6 +1,7 @@
 package com.mygdx.game.elements;
 
 import com.mygdx.game.interfaces.ISpaceCrystal;
+import com.mygdx.game.SoundManager;
 import com.mygdx.game.interfaces.ILantern;
 import com.mygdx.game.interfaces.IPlayerInteraction;
 
@@ -25,6 +26,13 @@ public class Crystal extends Element {
     
 	@Override
 	public void action(IPlayerInteraction player) {
+	    if(variation == '3' && player.variation() == 'T' || // crital vermelho pro player azul
+	       variation == '4' && player.variation() == 'C') { // ou o contrario -> cancela.
+	        SoundManager.playError();
+	        return;
+	    }
+	        
+	        
 	    player.addCrystal(this);
 	    leave();
 	}

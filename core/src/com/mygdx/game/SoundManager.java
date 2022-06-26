@@ -13,6 +13,7 @@ public class SoundManager {
 	private static Sound playerDying;
 	private static Sound playerTeleport;
     private static Sound endFail;
+    private static Sound error;
 	private static boolean musicOn;
 
 	public static void loadSounds() {
@@ -25,6 +26,7 @@ public class SoundManager {
 	     playerDying = Gdx.audio.newSound(Gdx.files.internal("Mario Death.mp3"));
 	     playerTeleport = Gdx.audio.newSound(Gdx.files.internal("EndermansTeleport .mp3"));
 	     endFail = Gdx.audio.newSound(Gdx.files.internal("endFail.mp3"));
+         error = Gdx.audio.newSound(Gdx.files.internal("error.mp3"));
 	     musicOn = true;
 	}
 	
@@ -74,6 +76,10 @@ public class SoundManager {
 	    endFail.stop();
     }
 
+    public static void playError() {
+        error.play();
+    }
+
 	public static void setMusic(boolean state) {
 	    if(state)
 	        playGameMusic();
@@ -93,5 +99,6 @@ public class SoundManager {
 		wallHit.dispose();
 		playerTeleport.dispose();
 		endFail.dispose();
+		error.dispose();
 	}
 }

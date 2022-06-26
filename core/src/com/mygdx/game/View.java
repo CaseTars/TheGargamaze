@@ -3,13 +3,12 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Vector;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -17,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.interfaces.IGameEnd;
 import com.mygdx.game.interfaces.IViewCommand;
 import com.mygdx.game.interfaces.IViewSwitchHability;
+import com.mygdx.game.interfaces.IVisualBH;
 import com.mygdx.game.interfaces.IVisualHability;
 import com.mygdx.game.interfaces.IVisualPlayer;
 
@@ -48,10 +48,13 @@ public class View implements IViewSwitchHability, Screen, IViewCommand {
     private Texture caseCommands;
     private boolean showCommands;
     
-    private Array<Texture> crystals;   
-    private Array<Texture> visionHab;
-    private Array<Texture> ghostHab;
-    private Array<Texture> teleportHab;
+    private Array<Texture> crystals    = new Array<Texture>();   
+    private Array<Texture> visionHab   = new Array<Texture>();
+    private Array<Texture> ghostHab    = new Array<Texture>();
+    private Array<Texture> teleportHab = new Array<Texture>();
+    
+    private Rectangle bhPos;
+    private Texture imgBlackHole;
 
     public View() {
         loadImages();
@@ -63,12 +66,6 @@ public class View implements IViewSwitchHability, Screen, IViewCommand {
         batch = new SpriteBatch();
         ViewCell.loadImages();
         
-        crystals = new Array<Texture>();
-        visionHab = new Array<Texture>();
-        ghostHab = new Array<Texture>();
-        teleportHab = new Array<Texture>();
-        
-        loadCommands();
         showCommands = false;
         
         cells = new ViewCell[size][size];
@@ -79,6 +76,33 @@ public class View implements IViewSwitchHability, Screen, IViewCommand {
     
     private void loadImages() {
         imgBlack = new Texture(Gdx.files.internal("black.png"));
+        imgBlackHole = new Texture(Gdx.files.internal("blackHole.png"));
+        
+        caseCommands = new Texture(Gdx.files.internal("redCommands.png"));
+        tarsCommands = new Texture(Gdx.files.internal("blueCommands.png"));
+          
+        crystals.add(new Texture(Gdx.files.internal("crystalYellow1.png")));   
+        crystals.add(new Texture(Gdx.files.internal("crystalGreen1.png")));
+        crystals.add(new Texture(Gdx.files.internal("crystalViolet1.png")));
+        crystals.add(new Texture(Gdx.files.internal("crystalBlue.png")));
+        crystals.add(new Texture(Gdx.files.internal("crystalRed1.png")));
+        crystals.add(new Texture(Gdx.files.internal("crystalBlue2.png")));
+        crystals.add(new Texture(Gdx.files.internal("crystalRed2.png")));
+
+        visionHab.add(new Texture(Gdx.files.internal("flashlightBlock.png"))); //blovk
+        visionHab.add(new Texture(Gdx.files.internal("flashlightNormal.png"))); //normal
+        visionHab.add(new Texture(Gdx.files.internal("flashlightCooldown.png"))); //cooldown
+        visionHab.add(new Texture(Gdx.files.internal("flashlightRunning.png"))); //running
+            
+        ghostHab.add(new Texture(Gdx.files.internal("ghostBlock.png"))); //blovk
+        ghostHab.add(new Texture(Gdx.files.internal("ghostNormal.png"))); //normal
+        ghostHab.add(new Texture(Gdx.files.internal("ghostCooldown.png"))); //cooldown
+        ghostHab.add(new Texture(Gdx.files.internal("ghostRunning.png"))); //running
+            
+        teleportHab.add(new Texture(Gdx.files.internal("troca2Block.png"))); //blovk
+        teleportHab.add(new Texture(Gdx.files.internal("troca2Normal.png"))); //normal
+        teleportHab.add(new Texture(Gdx.files.internal("troca2Cooldown.png"))); //cooldown
+        teleportHab.add(new Texture(Gdx.files.internal("troca2Running.png"))); //running 
     }
     
     public void connect(IVisualPlayer Vcase, IVisualPlayer Vtars) {
@@ -86,37 +110,41 @@ public class View implements IViewSwitchHability, Screen, IViewCommand {
         this.Vtars = Vtars;
     }
     
-    public void loadCommands() {
-    	caseCommands = new Texture(Gdx.files.internal("redCommands.png"));
-    	tarsCommands = new Texture(Gdx.files.internal("blueCommands.png"));
-    	  
-    	crystals.add(new Texture(Gdx.files.internal("crystalYellow1.png")));   
-    	crystals.add(new Texture(Gdx.files.internal("crystalGreen1.png")));
-    	crystals.add(new Texture(Gdx.files.internal("crystalViolet1.png")));
-    	crystals.add(new Texture(Gdx.files.internal("crystalBlue.png")));
-    	crystals.add(new Texture(Gdx.files.internal("crystalRed1.png")));
-    	crystals.add(new Texture(Gdx.files.internal("crystalBlue2.png")));
-    	crystals.add(new Texture(Gdx.files.internal("crystalRed2.png")));
-
-    	visionHab.add(new Texture(Gdx.files.internal("flashlightBlock.png"))); //blovk
-    	visionHab.add(new Texture(Gdx.files.internal("flashlightNormal.png"))); //normal
-    	visionHab.add(new Texture(Gdx.files.internal("flashlightCooldown.png"))); //cooldown
-    	visionHab.add(new Texture(Gdx.files.internal("flashlightRunning.png"))); //running
-    		
-    	ghostHab.add(new Texture(Gdx.files.internal("ghostBlock.png"))); //blovk
-    	ghostHab.add(new Texture(Gdx.files.internal("ghostNormal.png"))); //normal
-    	ghostHab.add(new Texture(Gdx.files.internal("ghostCooldown.png"))); //cooldown
-    	ghostHab.add(new Texture(Gdx.files.internal("ghostRunning.png"))); //running
-    	    
-    	teleportHab.add(new Texture(Gdx.files.internal("troca2Block.png"))); //blovk
-    	teleportHab.add(new Texture(Gdx.files.internal("troca2Normal.png"))); //normal
-    	teleportHab.add(new Texture(Gdx.files.internal("troca2Cooldown.png"))); //cooldown
-    	teleportHab.add(new Texture(Gdx.files.internal("troca2Running.png"))); //running  
-
-    }
-    
     public void connect(IGameEnd game) {
         this.game = game;
+    }
+    
+    public void createBH(IVisualBH bh) {
+        float posX   = 160 + bh.getX()*ViewCell.size;
+        float posY   =       bh.getY()*ViewCell.size;
+        float lenght = bh.getSize()*ViewCell.size;
+        bhPos = new Rectangle(posX, posY, lenght, lenght);
+    }
+
+    @Override
+    public void render(float delta) {
+        ScreenUtils.clear(0, 0, 0, 1); //cor do fundo
+        camera.update();
+
+        batch.setProjectionMatrix(camera.combined);
+        shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
+        
+        drawBlackHole();
+        drawMap();
+        drawStatus(Vtars, 0);
+        drawStatus(Vcase, 160+480);
+        drawTeleportHiders();
+        drawCrystals();
+        drawHabilities();
+        
+        if(showCommands) drawCommands();
+        
+        if(fadingOut) {
+            drawFadeOut();
+            updateFadeOut(delta);
+        }
+    
+        viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true); // Restore viewport.
     }
 
     private void drawMap() {
@@ -140,6 +168,12 @@ public class View implements IViewSwitchHability, Screen, IViewCommand {
         batch.end();
     }
     
+    private void drawBlackHole() {
+        batch.begin();
+        batch.draw(imgBlackHole, bhPos.x, bhPos.y, bhPos.width, bhPos.height);
+        batch.end();
+    }
+    
     private void drawStatus(IVisualPlayer player, int xRef) {
         shapeRenderer.begin(ShapeType.Filled);
         shapeRenderer.setColor(Color.GRAY);
@@ -156,7 +190,6 @@ public class View implements IViewSwitchHability, Screen, IViewCommand {
     }
     
 	private void drawCommands() {
-		
 		float width = viewport.getWorldWidth();
 		float height = viewport.getWorldHeight();
 
@@ -177,7 +210,6 @@ public class View implements IViewSwitchHability, Screen, IViewCommand {
 
 		float posY = 360-size-10;
 		float posYBig = 360-3*size-13;
-
 		
 		Array<Character> caseInventory = Vcase.getInventory();
 		Array<Character> tarsInventory = Vtars.getInventory();
@@ -206,7 +238,7 @@ public class View implements IViewSwitchHability, Screen, IViewCommand {
 	   	batch.end();
 	}
 	
-	private void drawHabilities() { 
+	private void drawHabilities() {
 		float width = viewport.getWorldWidth();
 		
 		float rFirstCrystal = (width*5/6) + 12;
@@ -258,6 +290,7 @@ public class View implements IViewSwitchHability, Screen, IViewCommand {
     public void dispose() {
     	ViewCell.dispose();
     	imgBlack.dispose();
+    	imgBlackHole.dispose();
     	batch.dispose();
     	
     	caseCommands.dispose();
@@ -324,30 +357,6 @@ public class View implements IViewSwitchHability, Screen, IViewCommand {
     public void stopAnimation() {
         thAnimating = false;
     }
-
-	@Override
-	public void render(float delta) {
-        ScreenUtils.clear(0, 0, 0, 1); //cor do fundo
-        camera.update();
-
-        batch.setProjectionMatrix(camera.combined);
-        shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
-        drawMap();
-        drawStatus(Vtars, 0);
-        drawStatus(Vcase, 160+480);
-        drawTeleportHiders();
-        drawCrystals();
-        drawHabilities();
-        
-        if(showCommands) drawCommands();
-        
-        if(fadingOut) {
-            drawFadeOut();
-            updateFadeOut(delta);
-        }
-    
-        viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true); // Restore viewport.
-	}
 
     @Override
 	public void pause() {

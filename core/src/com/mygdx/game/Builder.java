@@ -23,6 +23,7 @@ public class Builder {
     private Space space;
     private Control control;
     private IGameEnd game;
+    private Blackhole bh;
     
     private char[][] mazeMatrix;
     private boolean[][] visibilityMatrix;
@@ -163,6 +164,15 @@ public class Builder {
         
         view.connect(pCase, pTars);
         
+        // Cria Buraco negro
+        
+        bh = new Blackhole(space);
+        bh.connect(pCase, pTars);
+        bh.connect(game);
+        view.createBH(bh);
+        pCase.connect(bh);
+        pTars.connect(bh);
+        
         control.conectCase(pCase);
         control.conectTars(pTars);
         Gdx.input.setInputProcessor(control);
@@ -191,6 +201,10 @@ public class Builder {
     
     Control getControl() {
         return control;
+    }
+
+    Blackhole getBH() {
+        return bh;
     }
     
     private void readFile() throws IOException {
