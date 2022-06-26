@@ -39,15 +39,16 @@ public class AppTheGargamaze extends Game implements IGame {
 			 System.exit(1);
 		 }
 		 
-		 running = true;
+		 updateTs.clear();
 		 updateTs.add(bob.getCase());
          updateTs.add(bob.getTars());
          updateTs.add(bob.getControl());
          updateTs.add(bob.getBH());
-
+         
          view  = bob.getView();
          
 		 this.setScreen(view);
+         running = true;
 	}
 
 	public void render () {
