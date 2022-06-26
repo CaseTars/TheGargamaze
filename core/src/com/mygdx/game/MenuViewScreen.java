@@ -60,10 +60,10 @@ public class MenuViewScreen implements Screen{
 		public static void loadImages() {
             imgHappySantanche   = new Texture(Gdx.files.internal("HappySantache.png"));  //check
             imgTittle           = new Texture(Gdx.files.internal("Tittle.png"));
-            imgPlay             = new Texture(Gdx.files.internal("Play.png"));
+            imgPlay             = new Texture(Gdx.files.internal("Play2.png"));
             imgTutorial         = new Texture(Gdx.files.internal("Tutorial.png"));
-            imgMusicOn          = new Texture(Gdx.files.internal("MusicaOn.png"));
-            imgMusicOff         = new Texture(Gdx.files.internal("MusicaOff.png"));
+            imgMusicOn          = new Texture(Gdx.files.internal("MusicOn.png"));
+            imgMusicOff         = new Texture(Gdx.files.internal("MusicOff.png"));
             imgBackGround       = new Texture(Gdx.files.internal("fundo.jpeg"));
 		}
 
