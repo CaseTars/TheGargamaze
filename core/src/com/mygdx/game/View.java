@@ -33,11 +33,13 @@ public class View implements IViewSwitchHability, Screen, IViewCommand {
     private Array<Texture>  th1, th2;
     private boolean thAnimating = false;
     
+    private boolean fadingIn = true;
+    private float fadeInDuration = 1f;
     private boolean fadingOut = false;
-    private float fadeOutDelay = 1f;
-    private float fadeOutDuration = 3f;
-    private float fadeOutOpacity = 0;
-    private float fadeOutTime = 0;
+    private float fadeOutDelay = 2f;
+    private float fadeOutDuration = 4f;
+    private float fadeOpacity = 1;
+    private float fadeTime = 0;
     private Texture imgBlack;
     private IGameEnd game;
     
@@ -139,9 +141,9 @@ public class View implements IViewSwitchHability, Screen, IViewCommand {
         
         if(showCommands) drawCommands();
         
-        if(fadingOut) {
-            drawFadeOut();
-            updateFadeOut(delta);
+        if(fadingIn || fadingOut) {
+            drawFade();
+            updateFade(delta);
         }
     
         viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true); // Restore viewport.
@@ -149,6 +151,7 @@ public class View implements IViewSwitchHability, Screen, IViewCommand {
 
     private void drawMap() {
         batch.begin();
+        
         for(int x = 0;x < size;x++) {
             for(int y = 0;y < size;y++) {
                 batch.setColor(1f,1f,1f,1f);
@@ -164,12 +167,14 @@ public class View implements IViewSwitchHability, Screen, IViewCommand {
                                                         ViewCell.size, ViewCell.size);
             }
         }
+        
         batch.setColor(1f,1f,1f,1f);
         batch.end();
     }
     
     private void drawBlackHole() {
         batch.begin();
+        batch.setColor(1f,1f,1f,1f);
         batch.draw(imgBlackHole, bhPos.x, bhPos.y, bhPos.width, bhPos.height);
         batch.end();
     }
@@ -381,25 +386,35 @@ public class View implements IViewSwitchHability, Screen, IViewCommand {
         // TODO Auto-generated method stub
         
     }
-
+    
     public void fadeOut() {
         fadingOut = true;
     }
     
-    private void drawFadeOut() {
+    private void drawFade() {
         batch.begin();
-        batch.setColor(1f,1f,1f,fadeOutOpacity);
+        batch.setColor(1f,1f,1f,fadeOpacity);
         batch.draw(imgBlack, 0, 0, 800, 480);
         batch.end();
     }
 
-    private void updateFadeOut(float delta) {
-        fadeOutTime += delta;
+    private void updateFade(float delta) {
+        fadeTime += delta;
         
-        if(fadeOutTime>fadeOutDelay)
-            fadeOutOpacity = (fadeOutTime-fadeOutDelay)/(fadeOutDuration-fadeOutDelay);
-            
-        if(fadeOutTime>fadeOutDuration)
-            game.gameOverContinue();
+        if(fadingOut) {
+            if(fadeTime>fadeOutDelay)
+                fadeOpacity = (fadeTime-fadeOutDelay)/(fadeOutDuration-fadeOutDelay);
+                
+            if(fadeTime>fadeOutDuration)
+                game.gameOverContinue();
+        }
+        else if(fadingIn) {
+            fadeOpacity = 1 - fadeTime/fadeInDuration;
+                
+            if(fadeTime>fadeInDuration) {
+                fadingIn = false;
+                fadeTime = 0;
+            }
+        }
     }
 }

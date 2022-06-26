@@ -12,13 +12,13 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.interfaces.IGameControl;
 
-public class EndScreen implements Screen {
-    private Texture img;
+public class StoryScreen implements Screen {
+    private Texture imgStory;
     private OrthographicCamera camera;
     private Viewport viewport;
     private SpriteBatch batch;
     
-    private boolean fadingIn = true;
+    private boolean fadingOut = false;
     private float fadeDuration = 1f;
     private float fadeTime = 0;
     private Texture imgBlack;
@@ -26,42 +26,40 @@ public class EndScreen implements Screen {
     private Rectangle button;
     private Texture imgButton;
     
-    public EndScreen(IGameControl game, boolean sucess) {
+    IGameControl game;
+    
+    public StoryScreen(IGameControl game) {
+        this.game = game;
+        
         camera = new OrthographicCamera();
         camera.position.set(0, 0, 0);
         camera.update();
         viewport = new FitViewport(800, 480, camera);
         batch = new SpriteBatch();
         
-        loadImages(sucess);
+        loadImages();
         
         float width = 115;
         float height = width*115f/366f;
         button = new Rectangle((800-width)/2f,10,width,height);
         
-        EndControl control = new EndControl();
+        StoryControl control = new StoryControl();
         control.connect(this);
-        control.connect(game);
         control.setButtonPos(button);
-        
-        SoundManager.playEnd();
         
         Gdx.input.setInputProcessor(control);
     }
     
-    private void loadImages(boolean sucess) {
+    private void loadImages() {
         imgBlack  = new Texture(Gdx.files.internal("black.png"));
-        imgButton = new Texture(Gdx.files.internal("bakctomenu1.png"));
-        if(sucess)
-            img   = new Texture(Gdx.files.internal("sucessScreen.png"));
-        else
-            img   = new Texture(Gdx.files.internal("failScreen.png"));
+        imgButton = new Texture(Gdx.files.internal("play.png"));
+        imgStory  = new Texture(Gdx.files.internal("story.png"));
     }
 
     @Override
     public void show() {
         // TODO Auto-generated method stub
-
+        
     }
 
     @Override
@@ -72,33 +70,37 @@ public class EndScreen implements Screen {
         
         draw();
         
-        if(fadingIn) {
-            drawFadeIn();
-            updateFadeIn(delta);
+        if(fadingOut) {
+            drawFadeOut();
+            updateFadeOut(delta);
         }
         
         viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true); // Restore viewport.
     }
-
+    
     private void draw() {
         batch.begin();
         batch.setColor(1f,1f,1f,1f);
-        batch.draw(img, 0, 0, 800, 480);
+        batch.draw(imgStory, 0, 0, 800, 480);
         batch.draw(imgButton, button.x, button.y, button.width, button.height);
         batch.end();
     }
-
-    private void drawFadeIn() {
+    
+    private void drawFadeOut() {
         batch.begin();
-        batch.setColor(1f,1f,1f, 1-fadeTime/fadeDuration);
+        batch.setColor(1f,1f,1f, fadeTime/fadeDuration);
         batch.draw(imgBlack, 0, 0, 800, 480);
         batch.end();
     }
     
-    private void updateFadeIn(float delta) {
+    public void fadeOut() {
+        fadingOut = true;
+    }
+    
+    private void updateFadeOut(float delta) {
         fadeTime += delta;
         if(fadeTime > fadeDuration)
-            fadingIn = false;
+            game.setScreen(2);
     }
     
     public void unproject(Vector3 touchPos) {
@@ -108,30 +110,31 @@ public class EndScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         // TODO Auto-generated method stub
-
+        
     }
 
     @Override
     public void pause() {
         // TODO Auto-generated method stub
-
+        
     }
 
     @Override
     public void resume() {
         // TODO Auto-generated method stub
-
+        
     }
 
     @Override
     public void hide() {
         // TODO Auto-generated method stub
-
+        
     }
 
     @Override
     public void dispose() {
-        img.dispose();
+        // TODO Auto-generated method stub
+        
     }
 
 }

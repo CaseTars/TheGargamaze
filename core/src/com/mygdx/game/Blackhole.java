@@ -20,6 +20,8 @@ public class Blackhole implements IUpdate, ITime, IVisualBH {
 	
 	private IGameEnd game;
 	
+	boolean gameOver = false;
+	
 	public Blackhole(ISpaceEdit space) {
 	    
         for(int dx = -radius; dx<=radius; dx++)
@@ -44,17 +46,20 @@ public class Blackhole implements IUpdate, ITime, IVisualBH {
         boolean tarsIn = inside(posTars);
         
         if(caseIn)
-            incCase = 5000;
+            incCase = 20000;
         else
             incCase = - (float) distanceFactor(posCase);
         
         if(tarsIn)
-            incTars = 5000;
+            incTars = 20000;
         else
             incTars = - (float) distanceFactor(posTars);
         
-        if(caseIn && tarsIn && pCase.hasCrystal('3') && pTars.hasCrystal('4'))
+        if(caseIn && tarsIn && pCase.hasCrystal('3') && pTars.hasCrystal('4') && !gameOver) {
+            gameOver = true;
+            SoundManager.playVictory();
             game.gameOver(true);
+        }
     }
 
     private double distanceFactor(IPosition player) {
@@ -95,6 +100,4 @@ public class Blackhole implements IUpdate, ITime, IVisualBH {
     public int getSize() {
         return 2*radius+1;
     }
-
-    
 }

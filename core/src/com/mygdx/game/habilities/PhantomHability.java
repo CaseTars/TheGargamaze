@@ -30,7 +30,8 @@ public class PhantomHability extends Hability {
             unlock();
         else {
             lock();
-        	removeEffect();
+            if(isRunning)
+                removeEffect();
         }
     }
 

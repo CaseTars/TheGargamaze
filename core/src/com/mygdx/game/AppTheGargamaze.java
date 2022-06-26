@@ -23,6 +23,10 @@ public class AppTheGargamaze extends Game implements IGame {
 	public void createMenu() {
         this.setScreen(new MenuViewScreen(this));
 	}
+    
+    public void createStory() {
+        this.setScreen(new StoryScreen(this));
+    }
 	
 	public void createGame() {
 		 Builder bob = new Builder(this);
@@ -80,6 +84,8 @@ public class AppTheGargamaze extends Game implements IGame {
         if(i==0)
             createMenu();
         else if(i==1)
+            createStory();
+        else if(i==2)
             createGame();
     }
 }

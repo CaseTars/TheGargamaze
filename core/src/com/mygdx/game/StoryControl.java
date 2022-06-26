@@ -3,19 +3,13 @@ package com.mygdx.game;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-import com.mygdx.game.interfaces.IGameControl;
 
-public class EndControl implements InputProcessor {
+public class StoryControl implements InputProcessor {
     private Rectangle buttonPos;
-    private EndScreen screen;
-    private IGameControl game;
-    
-    public void connect(EndScreen screen) {
-        this.screen = screen;
-    }
+    private StoryScreen screen;
 
-    public void connect(IGameControl game) {
-        this.game = game;
+    public void connect(StoryScreen screen) {
+        this.screen = screen;
     }
     
     public void setButtonPos(Rectangle buttonPos) {
@@ -49,10 +43,7 @@ public class EndControl implements InputProcessor {
         float posX = touchPos.x;
         float posY = touchPos.y;
         
-        if(buttonPos.contains(posX, posY)) {
-            SoundManager.stopEnd();
-            game.setScreen(0);
-        }
+        if(buttonPos.contains(posX, posY)) screen.fadeOut();
     
         return false;
     }

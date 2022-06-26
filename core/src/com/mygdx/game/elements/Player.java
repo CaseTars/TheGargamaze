@@ -18,9 +18,9 @@ public class Player extends Element implements IPlayer{
 	private char variation;
 	private ILantern lantern;
 	private boolean dead = false;
-	
-	private double timeRemaining = 15000;
-	private double totalTime = timeRemaining;
+
+	private double totalTime = 300000;
+	private double timeRemaining = totalTime;
 	
 	private Array<IVisualEffect> effects = new Array<IVisualEffect>();
 	private IHability[] habilities = new IHability[3];

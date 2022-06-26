@@ -19,7 +19,6 @@ public class MenuViewScreen implements Screen{
 	    private SpriteBatch batch;
 	    private MenuControl menuControl;
 	    private boolean showTutorial;
-	    private boolean showMusicOn;
 	    private Rectangle play;
 	    private Rectangle tutorial;
 	    private Rectangle music;
@@ -43,7 +42,6 @@ public class MenuViewScreen implements Screen{
 
 	        viewport = new FitViewport(800, 480, camera);
 			showTutorial = false;
-			showMusicOn = true;
 			
 			menuControl = new MenuControl();
 			menuControl.connectMenu(this);
@@ -82,6 +80,7 @@ public class MenuViewScreen implements Screen{
 			batch.draw(imgPlay, play.x, play.y, play.width, play.height);
 			batch.draw(imgTutorial, tutorial.x, tutorial.y, tutorial.width, tutorial.height);
 			
+			boolean showMusicOn = SoundManager.getMusic();
 			if(showMusicOn) batch.draw(imgMusicOn, music.x, music.y, music.width, music.height);
 			else if(!showMusicOn) batch.draw(imgMusicOff, music.x, music.y, music.width, music.height);
 			
@@ -116,10 +115,6 @@ public class MenuViewScreen implements Screen{
 		
 		public void showTutorial() {
 			showTutorial = true;
-		}
-		
-		public void showMusic(boolean musicOn) {
-			showMusicOn = musicOn;
 		}
 		
 		@Override

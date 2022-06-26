@@ -45,7 +45,6 @@ public class MenuControl implements InputProcessor {
 			else if(menu.musicContains(posX, posY)) {
 			    boolean state = SoundManager.getMusic();
 				SoundManager.setMusic(!state);
-				menu.showMusic(!state);
 			}
 		
 		return false;
