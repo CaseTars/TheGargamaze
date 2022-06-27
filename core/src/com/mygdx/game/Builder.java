@@ -17,6 +17,8 @@ import com.mygdx.game.habilities.VisionRadiusHability;
 import com.mygdx.game.interfaces.IGameEnd;
 
 public class Builder {
+    protected String mazePath = "./maps/maze.txt";
+    
     private View view;
     private Player pCase;
     private Player pTars;
@@ -208,7 +210,7 @@ public class Builder {
     }
     
     private void readFile() throws IOException {
-        FileReader file = new FileReader("./maps/Maze.txt");
+        FileReader file = new FileReader(mazePath);
         BufferedReader readFile = new BufferedReader(file);
         
         Space.size = Integer.parseInt(readFile.readLine());

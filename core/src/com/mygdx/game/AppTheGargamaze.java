@@ -7,7 +7,6 @@ import com.mygdx.game.interfaces.IGame;
 import com.mygdx.game.interfaces.ITime;
 
 public class AppTheGargamaze extends Game implements IGame {
-	private View view;
 	private boolean running = false;
     private boolean sucess;
 	private Array<ITime> updateTs = new Array<ITime>();
@@ -44,13 +43,37 @@ public class AppTheGargamaze extends Game implements IGame {
          updateTs.add(bob.getTars());
          updateTs.add(bob.getControl());
          updateTs.add(bob.getBH());
-         
-         view  = bob.getView();
+
+         View view  = bob.getView();
          
 		 this.setScreen(view);
          running = true;
 	}
 
+    public void createTutorial() {
+         Builder bob = new Builder(this);
+         
+         try {
+             bob.build();
+         }
+         catch(Exception Exception){
+             //mensagem de erro e acabar o jogp
+             Exception.printStackTrace();
+             System.exit(1);
+         }
+         
+         updateTs.clear();
+         updateTs.add(bob.getCase());
+         updateTs.add(bob.getTars());
+         updateTs.add(bob.getControl());
+         updateTs.add(bob.getBH());
+         
+         View view  = bob.getView();
+         
+         this.setScreen(view);
+         running = true;
+    }
+    
 	public void render () {
 		super.render();
 		
@@ -63,9 +86,6 @@ public class AppTheGargamaze extends Game implements IGame {
 	@Override
 	public void dispose () { 
 		SoundManager.disposeSounds();
-		if(view != null) {
-			view.dispose();
-		}
 	}
 
     @Override
