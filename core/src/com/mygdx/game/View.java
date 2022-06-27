@@ -151,7 +151,7 @@ public class View implements IViewSwitchHability, Screen, IViewCommand {
         shapeRenderer.end();
     }
     
-    public void showCommands(boolean show) { //o tutorial tem que deixar como true
+    public void showCommands(boolean show) { 
     	showCommands = show;
     }
     
@@ -162,8 +162,8 @@ public class View implements IViewSwitchHability, Screen, IViewCommand {
 
 		batch.begin();
 		
-		batch.draw(caseCommands, 0, height*1/5, (367/3)+22, (314/3)+22);
-		batch.draw(tarsCommands, (width*5/6)-7, height*1/5, (367/3)+22, (314/3)+22);
+		batch.draw(caseCommands, 0, height*1/10 , (367/3)+22, (471/3)+22);
+		batch.draw(tarsCommands, (width*5/6)-12, height*1/10, (367/3)+22, (471/3)+22);
 		
 	    batch.end();
 	}
