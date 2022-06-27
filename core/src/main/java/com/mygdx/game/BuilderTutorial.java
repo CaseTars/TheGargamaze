@@ -6,7 +6,7 @@ public class BuilderTutorial extends Builder {
 
     public BuilderTutorial(IGameControl game) {
         super(game);
-        mazePath = "tutorial.txt";
+        mazePath = "maps/tutorial.txt";
     }
     
     @Override

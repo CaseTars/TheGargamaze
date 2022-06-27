@@ -19,7 +19,7 @@ import com.mygdx.game.habilities.VisionRadiusHability;
 import com.mygdx.game.interfaces.IGameControl;
 
 public class Builder {
-    protected String mazePath = "maze.txt";
+    protected String mazePath = "maps/maze.txt";
     
     protected View view;
     private Player pCase;

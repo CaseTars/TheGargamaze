@@ -50,7 +50,7 @@ public class EndScreen implements Screen {
     }
     
     private void loadImages(boolean sucess) {
-        String path = "./images/screens/";
+        String path = "images/screens/";
         imgBlack  = new Texture(Gdx.files.internal(path + "black.png"));
         imgButton = new Texture(Gdx.files.internal(path + "backtomenu.png"));
         if(sucess)
