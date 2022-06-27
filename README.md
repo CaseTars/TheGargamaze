@@ -2,7 +2,6 @@
 
 # Descrição Resumida do Projeto/Jogo
 
-> Descreva resumidamente o jogo e seu propósito.
 > O propósito do jogo é a captura dos dois cristais principais para que consigam ganhar. Contudo, para isso, os jogadores precisam de habilidades que são adquiridas através da captura de outros cristais que ficam localizados no cantos do mapa, mas para isso precisam vencer desafios em um labirinto com pouca visibilidade e correr contra o seu pior inimigo: O Tempo de Vida. Além disso, no centro do mapa se encontra um buraco negro que distorce a passagem do tempo aos seus arredores, por conta disso, quanto mais longe do buraco negro os jogadores se encontram mais rapido suas vidas lhe são tiradas, e quando os jogadores entram no buraco negro, suas vidas são restauradas. 
 
 # Equipe
