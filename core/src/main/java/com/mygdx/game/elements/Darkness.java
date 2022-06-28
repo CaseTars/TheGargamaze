@@ -1,7 +1,7 @@
 package com.mygdx.game.elements;
 
+import com.mygdx.game.elements.player.IPlayerInteraction;
 import com.mygdx.game.habilities.VisualEffect;
-import com.mygdx.game.interfaces.IPlayerInteraction;
 
 public class Darkness extends Element {
 

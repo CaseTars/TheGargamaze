@@ -1,7 +1,7 @@
 package com.mygdx.game.elements.buttons;
 
 import com.mygdx.game.SoundManager;
-import com.mygdx.game.interfaces.IPlayerInteraction;
+import com.mygdx.game.elements.player.IPlayerInteraction;
 
 public class ButtonSpecific extends Button{
     char variation;

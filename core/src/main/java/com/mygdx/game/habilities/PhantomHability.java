@@ -1,6 +1,6 @@
 package com.mygdx.game.habilities;
 
-import com.mygdx.game.interfaces.IPlayerInteraction;
+import com.mygdx.game.elements.player.IPlayerInteraction;
 
 public class PhantomHability extends Hability {
     IPlayerInteraction player;

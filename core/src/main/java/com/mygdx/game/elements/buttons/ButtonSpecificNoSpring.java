@@ -1,6 +1,6 @@
 package com.mygdx.game.elements.buttons;
 
-import com.mygdx.game.interfaces.IPlayerInteraction;
+import com.mygdx.game.elements.player.IPlayerInteraction;
 
 public class ButtonSpecificNoSpring extends ButtonSpecific{
 

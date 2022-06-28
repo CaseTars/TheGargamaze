@@ -1,7 +1,7 @@
 package com.mygdx.game.elements;
 
+import com.mygdx.game.elements.player.IPlayerInteraction;
 import com.mygdx.game.interfaces.IElement;
-import com.mygdx.game.interfaces.IPlayerInteraction;
 import com.mygdx.game.interfaces.IUpdate;
 
 public abstract class Element implements IElement{

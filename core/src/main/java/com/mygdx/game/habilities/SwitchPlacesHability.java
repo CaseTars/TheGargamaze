@@ -1,10 +1,10 @@
 package com.mygdx.game.habilities;
 
 import com.mygdx.game.SoundManager;
+import com.mygdx.game.elements.player.IPlayerSwitchHability;
 import com.mygdx.game.interfaces.IControllerTimeOut;
-import com.mygdx.game.interfaces.IPlayerSwitchHability;
 import com.mygdx.game.interfaces.ISpaceSwitchHability;
-import com.mygdx.game.interfaces.IViewSwitchHability;
+import com.mygdx.game.screens.game.view.IViewSwitchHability;
 
 public class SwitchPlacesHability extends Hability {
     private IPlayerSwitchHability pCase, pTars;
