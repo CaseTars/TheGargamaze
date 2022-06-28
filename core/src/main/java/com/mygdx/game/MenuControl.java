@@ -1,5 +1,8 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector3;
 
@@ -12,7 +15,15 @@ public class MenuControl implements InputProcessor {
 	
 	@Override
 	public boolean keyDown(int keycode) {
-		// TODO Auto-generated method stub
+	    if(keycode == Input.Keys.F11) {
+	        Boolean fullScreen = Gdx.graphics.isFullscreen();
+	        Graphics.DisplayMode currentMode = Gdx.graphics.getDisplayMode();
+	        if (fullScreen == true)
+	            Gdx.graphics.setWindowedMode(800, 480);
+	        else
+	            Gdx.graphics.setFullscreenMode(currentMode);
+	        
+	    }
 		return false;
 	}
 
