@@ -18,16 +18,17 @@ public class SoundManager {
 	private static boolean musicOn = true;
 
 	public static void loadSounds() {
-        gameMusic         = Gdx.audio.newMusic(Gdx.files.internal("interstellarTheme.mp3"));
-	    doorOpening       = Gdx.audio.newSound(Gdx.files.internal("MCDoorOpen.mp3"));
-        doorClosing       = Gdx.audio.newSound(Gdx.files.internal("MCDoorClose.mp3"));
-	    wallHit           = Gdx.audio.newSound(Gdx.files.internal("batendo.wav"));
-	    crystalGetting    = Gdx.audio.newSound(Gdx.files.internal("upandoXpMine.wav"));
-	    playerDying       = Gdx.audio.newSound(Gdx.files.internal("marioDeath.mp3"));
-	    playerTeleport    = Gdx.audio.newSound(Gdx.files.internal("endermanTeleport.mp3"));
-	    end               = Gdx.audio.newSound(Gdx.files.internal("end.mp3"));
-        error             = Gdx.audio.newSound(Gdx.files.internal("error.mp3"));
-        victory           = Gdx.audio.newSound(Gdx.files.internal("victory.mp3"));
+	    String path = "sounds/";
+        gameMusic         = Gdx.audio.newMusic(Gdx.files.internal(path + "interstellarTheme.mp3"));
+	    doorOpening       = Gdx.audio.newSound(Gdx.files.internal(path + "MCDoorOpen.mp3"));
+        doorClosing       = Gdx.audio.newSound(Gdx.files.internal(path + "MCDoorClose.mp3"));
+	    wallHit           = Gdx.audio.newSound(Gdx.files.internal(path + "batendo.wav"));
+	    crystalGetting    = Gdx.audio.newSound(Gdx.files.internal(path + "upandoXpMine.wav"));
+	    playerDying       = Gdx.audio.newSound(Gdx.files.internal(path + "marioDeath.mp3"));
+	    playerTeleport    = Gdx.audio.newSound(Gdx.files.internal(path + "endermanTeleport.mp3"));
+	    end               = Gdx.audio.newSound(Gdx.files.internal(path + "end.mp3"));
+        error             = Gdx.audio.newSound(Gdx.files.internal(path + "error.mp3"));
+        victory           = Gdx.audio.newSound(Gdx.files.internal(path + "victory.mp3"));
 	}
 	
 	public static void playGameMusic() {

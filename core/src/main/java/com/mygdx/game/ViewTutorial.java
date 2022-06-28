@@ -14,7 +14,7 @@ public class ViewTutorial extends View {
         fadingIn = false;
         fadingOut = false;
         showCommands = true;
-        imgButton = new Texture(Gdx.files.internal("./images/screens/backtomenu.png"));
+        imgButton = new Texture(Gdx.files.internal("images/screens/backtomenu.png"));
 
         float width = 115;
         float height = width*115f/366f;

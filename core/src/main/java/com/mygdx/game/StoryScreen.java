@@ -51,9 +51,10 @@ public class StoryScreen implements Screen {
     }
     
     private void loadImages() {
-        imgBlack  = new Texture(Gdx.files.internal("black.png"));
-        imgButton = new Texture(Gdx.files.internal("continue2.png"));
-        imgStory  = new Texture(Gdx.files.internal("story.png"));
+        String path = "images/screens/";
+        imgBlack  = new Texture(Gdx.files.internal(path + "black.png"));
+        imgButton = new Texture(Gdx.files.internal(path + "continue2.png"));
+        imgStory  = new Texture(Gdx.files.internal(path + "story.png"));
     }
 
     @Override

@@ -24,7 +24,7 @@ public class Lwjgl3Launcher {
 		//// useful for testing performance, but can also be very stressful to some hardware.
 		//// You may also need to configure GPU drivers to fully disable Vsync; this can cause screen tearing.
 		configuration.setWindowedMode(800, 480);
-		configuration.setWindowIcon("libgdx128.png", "libgdx64.png", "libgdx32.png", "libgdx16.png");
+		configuration.setWindowIcon("iconx128.png", "iconx64.png", "iconx32.png", "iconx16.png");
 		return configuration;
 	}
 }

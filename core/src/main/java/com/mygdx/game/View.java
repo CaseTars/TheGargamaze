@@ -79,34 +79,37 @@ public class View implements IViewSwitchHability, Screen, IViewCommand {
     }
     
     private void loadImages() {
-        imgBlack     = new Texture(Gdx.files.internal("black.png"));
-        caseCommands = new Texture(Gdx.files.internal("redCommands.png"));
-        tarsCommands = new Texture(Gdx.files.internal("blueCommands.png"));
+        String path = "images/screens/";
+        imgBlack     = new Texture(Gdx.files.internal(path + "black.png"));
+        caseCommands = new Texture(Gdx.files.internal(path + "redCommands.png"));
+        tarsCommands = new Texture(Gdx.files.internal(path + "blueCommands.png"));
         
-        imgBlackHole = new Texture(Gdx.files.internal("blackHole.png"));
+        imgBlackHole = new Texture(Gdx.files.internal("images/elements/blackHole.png"));
         
-        crystals.add(new Texture(Gdx.files.internal("crystalYellow1.png")));   
-        crystals.add(new Texture(Gdx.files.internal("crystalGreen1.png")));
-        crystals.add(new Texture(Gdx.files.internal("crystalViolet1.png")));
-        crystals.add(new Texture(Gdx.files.internal("crystalBlue.png")));
-        crystals.add(new Texture(Gdx.files.internal("crystalRed1.png")));
-        crystals.add(new Texture(Gdx.files.internal("crystalBlue2.png")));
-        crystals.add(new Texture(Gdx.files.internal("crystalRed2.png")));
+        path = "images/crystals/";
+        crystals.add(new Texture(Gdx.files.internal(path + "crystalYellow1.png")));   
+        crystals.add(new Texture(Gdx.files.internal(path + "crystalGreen1.png")));
+        crystals.add(new Texture(Gdx.files.internal(path + "crystalViolet1.png")));
+        crystals.add(new Texture(Gdx.files.internal(path + "crystalBlue.png")));
+        crystals.add(new Texture(Gdx.files.internal(path + "crystalRed1.png")));
+        crystals.add(new Texture(Gdx.files.internal(path + "crystalBlue2.png")));
+        crystals.add(new Texture(Gdx.files.internal(path + "crystalRed2.png")));
 
-        visionHab.add(new Texture(Gdx.files.internal("flashlightBlock.png"))); //block
-        visionHab.add(new Texture(Gdx.files.internal("flashlightNormal.png"))); //normal
-        visionHab.add(new Texture(Gdx.files.internal("flashlightCooldown.png"))); //cooldown
-        visionHab.add(new Texture(Gdx.files.internal("flashlightRunning.png"))); //running
+        path = "images/habilities/";
+        visionHab.add(new Texture(Gdx.files.internal(path + "flashlightBlock.png"))); //block
+        visionHab.add(new Texture(Gdx.files.internal(path + "flashlightNormal.png"))); //normal
+        visionHab.add(new Texture(Gdx.files.internal(path + "flashlightCooldown.png"))); //cooldown
+        visionHab.add(new Texture(Gdx.files.internal(path + "flashlightRunning.png"))); //running
             
-        ghostHab.add(new Texture(Gdx.files.internal("ghostBlock.png"))); //block
-        ghostHab.add(new Texture(Gdx.files.internal("ghostNormal.png"))); //normal
-        ghostHab.add(new Texture(Gdx.files.internal("ghostCooldown.png"))); //cooldown
-        ghostHab.add(new Texture(Gdx.files.internal("ghostRunning.png"))); //running
+        ghostHab.add(new Texture(Gdx.files.internal(path + "ghostBlock.png"))); //block
+        ghostHab.add(new Texture(Gdx.files.internal(path + "ghostNormal.png"))); //normal
+        ghostHab.add(new Texture(Gdx.files.internal(path + "ghostCooldown.png"))); //cooldown
+        ghostHab.add(new Texture(Gdx.files.internal(path + "ghostRunning.png"))); //running
             
-        teleportHab.add(new Texture(Gdx.files.internal("troca2Block.png"))); //block
-        teleportHab.add(new Texture(Gdx.files.internal("troca2Normal.png"))); //normal
-        teleportHab.add(new Texture(Gdx.files.internal("troca2Cooldown.png"))); //cooldown
-        teleportHab.add(new Texture(Gdx.files.internal("troca2Running.png"))); //running 
+        teleportHab.add(new Texture(Gdx.files.internal(path + "troca2Block.png"))); //block
+        teleportHab.add(new Texture(Gdx.files.internal(path + "troca2Normal.png"))); //normal
+        teleportHab.add(new Texture(Gdx.files.internal(path + "troca2Cooldown.png"))); //cooldown
+        teleportHab.add(new Texture(Gdx.files.internal(path + "troca2Running.png"))); //running 
     }
     
     public void connect(IVisualPlayer Vcase, IVisualPlayer Vtars) {

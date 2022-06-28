@@ -11,8 +11,8 @@ import com.mygdx.game.interfaces.IPlayerInteraction;
 public class Cell implements ICell{
     private Array<Element> elements = new Array<Element>();
     private IUpdate viewCell;
-    private boolean visible = false, 
-                    alwaysVisible = false;
+    private boolean visible = true, 
+                    alwaysVisible = true;
     private float clarity;
     Array<IVisual> textures = new Array<IVisual>();
 

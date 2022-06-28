@@ -34,7 +34,6 @@ public class ViewCell implements IUpdate {
     private static Texture imgButtonFreeFrame;
     private static Texture imgButtonPressedFrame;
     private static Texture imgDarkness;
-    private static Texture imgHappySantanche;
         
     private Array<Texture> textures = new Array<Texture>();
 
@@ -54,34 +53,35 @@ public class ViewCell implements IUpdate {
     }
     
     public static void loadImages() {
-        imgCase     			  = new Texture(Gdx.files.internal("case.png"));	//check
-        imgTars     			  = new Texture(Gdx.files.internal("tars.png"));   //check
-        imgCasePhantom			  = new Texture(Gdx.files.internal("casePhantom.png"));   //check
-        imgTarsPhantom     		  = new Texture(Gdx.files.internal("tarsPhantom.png"));   //check
-        imgWall        			  = new Texture(Gdx.files.internal("wall.png"));     //check
-        imgHardWall        		  = new Texture(Gdx.files.internal("hardWall.png"));    //check
-        imgGround   			  = new Texture(Gdx.files.internal("ground.png"));   //check
-        imgDark	        		  = new Texture(Gdx.files.internal("dark.png"));	//check
-        imgGateClosed 		      = new Texture(Gdx.files.internal("gate.png"));	//check
-        imgGateOpen 	          = new Texture(Gdx.files.internal("gateOpen.png"));   //check
-        imgGateHardClosed 		  = new Texture(Gdx.files.internal("hardGate.png"));	//check
-        imgGateHardOpen 	      = new Texture(Gdx.files.internal("hardGateOpen1.png"));   
-        imgButtonFree 			  = new Texture(Gdx.files.internal("buttonFree.png")); //check
-        imgButtonPressed		  = new Texture(Gdx.files.internal("buttonPressed.png"));  //check
-        imgDarkness               = new Texture(Gdx.files.internal("darkness.png"));	//check
-        imgBlueBG				  = new Texture(Gdx.files.internal("fundoAzul1.png"));	//check 
-        imgRedBG				  = new Texture(Gdx.files.internal("fundoVermelho1.png"));	//check
-        imgButtonFreeFrame		  = new Texture(Gdx.files.internal("molduraApagada.png"));	//check
-        imgButtonPressedFrame	  = new Texture(Gdx.files.internal("molduraAcesa.png"));	//check
+        String path = "images/elements/";
+        imgCase     			  = new Texture(Gdx.files.internal(path + "case.png"));	//check
+        imgTars     			  = new Texture(Gdx.files.internal(path + "tars.png"));   //check
+        imgCasePhantom			  = new Texture(Gdx.files.internal(path + "casePhantom.png"));   //check
+        imgTarsPhantom     		  = new Texture(Gdx.files.internal(path + "tarsPhantom.png"));   //check
+        imgWall        			  = new Texture(Gdx.files.internal(path + "wall.png"));     //check
+        imgHardWall        		  = new Texture(Gdx.files.internal(path + "hardWall.png"));    //check
+        imgGround   			  = new Texture(Gdx.files.internal(path + "ground.png"));   //check
+        imgDark	        		  = new Texture(Gdx.files.internal(path + "dark.png"));	//check
+        imgGateClosed 		      = new Texture(Gdx.files.internal(path + "gate.png"));	//check
+        imgGateOpen 	          = new Texture(Gdx.files.internal(path + "gateOpen.png"));   //check
+        imgGateHardClosed 		  = new Texture(Gdx.files.internal(path + "hardGate.png"));	//check
+        imgGateHardOpen 	      = new Texture(Gdx.files.internal(path + "hardGateOpen1.png"));   
+        imgButtonFree 			  = new Texture(Gdx.files.internal(path + "buttonFree.png")); //check
+        imgButtonPressed		  = new Texture(Gdx.files.internal(path + "buttonPressed.png"));  //check
+        imgDarkness               = new Texture(Gdx.files.internal(path + "darkness.png"));	//check
+        imgBlueBG				  = new Texture(Gdx.files.internal(path + "fundoAzul1.png"));	//check 
+        imgRedBG				  = new Texture(Gdx.files.internal(path + "fundoVermelho1.png"));	//check
+        imgButtonFreeFrame		  = new Texture(Gdx.files.internal(path + "molduraApagada.png"));	//check
+        imgButtonPressedFrame	  = new Texture(Gdx.files.internal(path + "molduraAcesa.png"));	//check
 
-        imgCrystalYellow          = new Texture(Gdx.files.internal("crystalYellow1.png"));
-        imgCrystalBlue            = new Texture(Gdx.files.internal("crystalBlue.png"));
-        imgCrystalRed             = new Texture(Gdx.files.internal("crystalRed1.png"));
-        imgCrystalGreen           = new Texture(Gdx.files.internal("crystalGreen1.png"));
-        imgCrystalViolet          = new Texture(Gdx.files.internal("crystalViolet1.png"));
-        imgCrystalOrange          = new Texture(Gdx.files.internal("crystalOrange1.png"));
+        path = "images/crystals/";
+        imgCrystalYellow          = new Texture(Gdx.files.internal(path + "crystalYellow1.png"));
+        imgCrystalBlue            = new Texture(Gdx.files.internal(path + "crystalBlue.png"));
+        imgCrystalRed             = new Texture(Gdx.files.internal(path + "crystalRed1.png"));
+        imgCrystalGreen           = new Texture(Gdx.files.internal(path + "crystalGreen1.png"));
+        imgCrystalViolet          = new Texture(Gdx.files.internal(path + "crystalViolet1.png"));
+        imgCrystalOrange          = new Texture(Gdx.files.internal(path + "crystalOrange1.png"));
         
-        imgHappySantanche         = new Texture(Gdx.files.internal("HappySantache.png"));  //check
     }
 	
     public static void dispose() {
@@ -105,7 +105,6 @@ public class ViewCell implements IUpdate {
         imgCrystalGreen.dispose();
         imgCrystalViolet.dispose();
         imgCrystalOrange.dispose();
-        imgHappySantanche.dispose();
         imgBlueBG.dispose();
         imgRedBG.dispose();
         imgButtonFreeFrame.dispose();
@@ -192,9 +191,6 @@ public class ViewCell implements IUpdate {
 			   }
 			   else if(cell.visual(i).type() == 'Z')
 			       textures.clear();
-			   else {
-		    	   textures.add(imgHappySantanche);
-		       }
 		   }
 		   if(nbElements > 0 && cell.visual(0).type() == 'D')
                textures.add(imgDarkness);

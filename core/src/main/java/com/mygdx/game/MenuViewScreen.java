@@ -22,7 +22,6 @@ public class MenuViewScreen implements Screen{
 	    private Rectangle tutorial;
 	    private Rectangle music;
 
-	    private static Texture imgHappySantanche;
 	    private static Texture imgTittle;
 	    private static Texture imgPlay;
 	    private static Texture imgTutorial;
@@ -56,14 +55,13 @@ public class MenuViewScreen implements Screen{
 		}
 		
 		public static void loadImages() {
-            imgHappySantanche   = new Texture(Gdx.files.internal("HappySantache.png"));  //check
-            
-            imgTittle           = new Texture(Gdx.files.internal("Tittle.png"));
-            imgPlay             = new Texture(Gdx.files.internal("Play.png"));
-            imgTutorial         = new Texture(Gdx.files.internal("Tutorial.png"));
-            imgMusicOn          = new Texture(Gdx.files.internal("MusicOn.png"));
-            imgMusicOff         = new Texture(Gdx.files.internal("MusicOff.png"));
-            imgBackGround       = new Texture(Gdx.files.internal("menu.jpeg"));
+            String path = "images/screens/";
+            imgTittle           = new Texture(Gdx.files.internal(path + "Tittle.png"));
+            imgPlay             = new Texture(Gdx.files.internal(path + "Play.png"));
+            imgTutorial         = new Texture(Gdx.files.internal(path + "Tutorial.png"));
+            imgMusicOn          = new Texture(Gdx.files.internal(path + "MusicOn.png"));
+            imgMusicOff         = new Texture(Gdx.files.internal(path + "MusicOff.png"));
+            imgBackGround       = new Texture(Gdx.files.internal(path + "menu.jpeg"));
 		}
 
 		@Override
@@ -136,7 +134,6 @@ public class MenuViewScreen implements Screen{
 	
 		@Override
 		public void dispose() {
-	        imgHappySantanche.dispose();
 	        imgTittle.dispose();
 	        imgPlay.dispose();
 	        imgTutorial.dispose();
