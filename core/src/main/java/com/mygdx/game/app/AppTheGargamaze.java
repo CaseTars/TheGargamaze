@@ -40,11 +40,10 @@ public class AppTheGargamaze extends Game implements IGame {
 		 try {
 			 bob.build();
 		 }
-		 catch(Exception Exception){
-			 //mensagem de erro e acabar o jogp
-			 Exception.printStackTrace();
-			 System.exit(1);
-		 }
+         catch(AssembleError Exception){
+             System.out.println(Exception.getMessage());
+             System.exit(1);
+         }
 		 
 		 updateTs.clear();
 		 updateTs.add(bob.getCase());
@@ -65,7 +64,7 @@ public class AppTheGargamaze extends Game implements IGame {
              bob.build();
          }
          catch(AssembleError Exception){
-        	 System.out.println("Error while creating game.");
+        	 System.out.println(Exception.getMessage());
         	 System.exit(1);
          }
          
