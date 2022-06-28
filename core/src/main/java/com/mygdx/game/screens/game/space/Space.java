@@ -81,6 +81,7 @@ public class Space implements ISpace{
 
     @Override
     public void iluminate(int x, int y, float clarity) {
+        // metodo chamado pela lanterna para iluminar uma celula especifica
         if(x < 0 || x >= size || y < 0 || y >= size) return;
         cells[x][y].setVisibility(true, clarity);
     }
