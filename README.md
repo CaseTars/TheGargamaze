@@ -27,3 +27,6 @@
 ## Diagrama Geral da Arquitetura do Jogo
 
 >[Fotos dos Diagramas](/assets/)
+>Estrutura
+>builder
+>diagrama
