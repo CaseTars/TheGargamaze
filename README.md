@@ -11,9 +11,7 @@
 * `Kevin Caio Marques dos Santos ` - `247218`
 
 # Arquivo Executável do Jogo
-
-> Coloque aqui um link para download do arquivo `jar` ou equivalente para execução do seu jogo.
->[Prévia](https://drive.google.com/file/d/138DYyCo_OWfGWI8gYvdxZ3F5L54VvRnI/view?usp=sharing)
+>[Download](https://drive.google.com/file/d/138DYyCo_OWfGWI8gYvdxZ3F5L54VvRnI/view?usp=sharing)
 
 # Slides do Projeto
 
