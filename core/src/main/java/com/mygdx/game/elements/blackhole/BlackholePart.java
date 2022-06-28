@@ -1,4 +1,6 @@
-package com.mygdx.game.elements;
+package com.mygdx.game.elements.blackhole;
+
+import com.mygdx.game.elements.element.Element;
 
 public class BlackholePart extends Element {
 

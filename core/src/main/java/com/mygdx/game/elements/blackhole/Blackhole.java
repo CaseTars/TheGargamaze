@@ -1,14 +1,12 @@
-package com.mygdx.game.screens.game;
+package com.mygdx.game.elements.blackhole;
 
 import com.mygdx.game.SoundManager;
 import com.mygdx.game.app.IGameControl;
-import com.mygdx.game.elements.BlackholePart;
 import com.mygdx.game.elements.player.IPlayerBH;
 import com.mygdx.game.interfaces.IPosition;
-import com.mygdx.game.interfaces.ISpaceEdit;
 import com.mygdx.game.interfaces.ITime;
 import com.mygdx.game.interfaces.IUpdate;
-import com.mygdx.game.interfaces.IVisualBH;
+import com.mygdx.game.screens.game.space.ISpaceEdit;
 
 public class Blackhole implements IUpdate, ITime, IVisualBH {
 	private int x = 15,

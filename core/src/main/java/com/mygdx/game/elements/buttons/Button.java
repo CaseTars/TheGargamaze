@@ -1,9 +1,9 @@
 package com.mygdx.game.elements.buttons;
 
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.elements.Element;
+import com.mygdx.game.elements.element.Element;
+import com.mygdx.game.elements.gate.IGate;
 import com.mygdx.game.elements.player.IPlayerInteraction;
-import com.mygdx.game.interfaces.IGate;
 
 public class Button extends Element{
     private Array<IGate> gates = new Array<IGate>();

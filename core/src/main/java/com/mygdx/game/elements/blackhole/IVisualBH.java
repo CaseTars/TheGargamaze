@@ -1,4 +1,4 @@
-package com.mygdx.game.interfaces;
+package com.mygdx.game.elements.blackhole;
 
 public interface IVisualBH {
     public int getX();

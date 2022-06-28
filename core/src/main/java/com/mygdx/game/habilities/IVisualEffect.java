@@ -1,4 +1,6 @@
-package com.mygdx.game.interfaces;
+package com.mygdx.game.habilities;
+
+import com.mygdx.game.interfaces.ITime;
 
 public interface IVisualEffect extends ITime {
     public void applyEffect();

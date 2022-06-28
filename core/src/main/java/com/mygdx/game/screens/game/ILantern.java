@@ -1,4 +1,4 @@
-package com.mygdx.game.interfaces;
+package com.mygdx.game.screens.game;
 
 public interface ILantern {
     public void iluminate();

@@ -15,10 +15,10 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.app.IGameControl;
-import com.mygdx.game.interfaces.IVisualBH;
-import com.mygdx.game.interfaces.IVisualHability;
-import com.mygdx.game.interfaces.IVisualPlayer;
-import com.mygdx.game.screens.game.Space;
+import com.mygdx.game.elements.blackhole.IVisualBH;
+import com.mygdx.game.elements.player.IVisualPlayer;
+import com.mygdx.game.habilities.IVisualHability;
+import com.mygdx.game.screens.game.space.Space;
 
 public class View implements Screen, IViewSwitchHability, IViewCommand {
     public static int size;

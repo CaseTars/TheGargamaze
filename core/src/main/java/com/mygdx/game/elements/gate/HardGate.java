@@ -1,4 +1,4 @@
-package com.mygdx.game.elements;
+package com.mygdx.game.elements.gate;
 
 public class HardGate extends Gate {
 

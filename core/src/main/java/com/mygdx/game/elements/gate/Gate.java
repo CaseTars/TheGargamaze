@@ -1,7 +1,7 @@
-package com.mygdx.game.elements;
+package com.mygdx.game.elements.gate;
 
 import com.mygdx.game.SoundManager;
-import com.mygdx.game.interfaces.IGate;
+import com.mygdx.game.elements.element.Element;
 
 public class Gate extends Element implements IGate{
 	protected boolean closed;

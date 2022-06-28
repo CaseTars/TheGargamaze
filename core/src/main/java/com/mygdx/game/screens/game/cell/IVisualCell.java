@@ -1,4 +1,6 @@
-package com.mygdx.game.interfaces;
+package com.mygdx.game.screens.game.cell;
+
+import com.mygdx.game.elements.element.IVisual;
 
 public interface IVisualCell {
     public int nElements();

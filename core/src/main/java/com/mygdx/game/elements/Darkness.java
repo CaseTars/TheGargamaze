@@ -1,5 +1,6 @@
 package com.mygdx.game.elements;
 
+import com.mygdx.game.elements.element.Element;
 import com.mygdx.game.elements.player.IPlayerInteraction;
 import com.mygdx.game.habilities.VisualEffect;
 

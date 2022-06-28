@@ -1,5 +1,7 @@
 package com.mygdx.game.elements;
 
+import com.mygdx.game.elements.element.Element;
+
 public class Wall extends Element{
     public Wall(int x, int y) {
         super(x, y);

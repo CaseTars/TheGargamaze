@@ -3,7 +3,7 @@ package com.mygdx.game.screens.tutorial;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.app.IGameControl;
-import com.mygdx.game.screens.game.Control;
+import com.mygdx.game.screens.game.control.Control;
 
 public class ControlTutorial extends Control {
     private Rectangle buttonPos;

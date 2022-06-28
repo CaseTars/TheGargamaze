@@ -4,15 +4,15 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.SoundManager;
 import com.mygdx.game.app.IGameControl;
 import com.mygdx.game.elements.Crystal;
-import com.mygdx.game.elements.Element;
+import com.mygdx.game.elements.element.Element;
 import com.mygdx.game.exceptions.ObstructedCell;
-import com.mygdx.game.interfaces.IHability;
-import com.mygdx.game.interfaces.ILantern;
+import com.mygdx.game.habilities.IHability;
+import com.mygdx.game.habilities.IVisualEffect;
+import com.mygdx.game.habilities.IVisualHability;
 import com.mygdx.game.interfaces.IPosition;
-import com.mygdx.game.interfaces.ISpaceCommand;
 import com.mygdx.game.interfaces.IUpdate;
-import com.mygdx.game.interfaces.IVisualEffect;
-import com.mygdx.game.interfaces.IVisualHability;
+import com.mygdx.game.screens.game.ILantern;
+import com.mygdx.game.screens.game.space.ISpaceCommand;
 
 public class Player extends Element implements IPlayer{
 	private ISpaceCommand space;

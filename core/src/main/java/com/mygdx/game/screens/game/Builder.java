@@ -8,14 +8,18 @@ import com.mygdx.game.Position;
 import com.mygdx.game.app.IGameControl;
 import com.mygdx.game.elements.Crystal;
 import com.mygdx.game.elements.Darkness;
-import com.mygdx.game.elements.Gate;
 import com.mygdx.game.elements.HardWall;
 import com.mygdx.game.elements.Wall;
+import com.mygdx.game.elements.blackhole.Blackhole;
 import com.mygdx.game.elements.buttons.Button;
+import com.mygdx.game.elements.gate.Gate;
 import com.mygdx.game.elements.player.Player;
+import com.mygdx.game.exceptions.AssembleError;
 import com.mygdx.game.habilities.PhantomHability;
 import com.mygdx.game.habilities.SwitchPlacesHability;
 import com.mygdx.game.habilities.VisionRadiusHability;
+import com.mygdx.game.screens.game.control.Control;
+import com.mygdx.game.screens.game.space.Space;
 import com.mygdx.game.screens.game.view.View;
 
 public class Builder {
@@ -42,8 +46,13 @@ public class Builder {
         this.game = game;
     }
     
-    public void build() throws IOException {
-		readFile();
+    public void build() throws AssembleError {
+		try{
+			readFile();
+		}
+		catch(Exception IOException){
+			throw new AssembleError("Error while building map.");
+		}
 		
     	space = new Space();
         space.setAlwaysVisibleCells(visibilityMatrix);
@@ -84,7 +93,7 @@ public class Builder {
         control.conectView(view);
     }
     
-    private void buildMaze() {
+    private void buildMaze() throws AssembleError {
         for(int x = 0;x < Space.size;x++) {
             for(int y = 0;y < Space.size;y++) {
                 switch(mazeMatrix[x][y]) {
@@ -112,7 +121,7 @@ public class Builder {
                     HardWall hardWall = new HardWall(x,y);
                     space.insert(hardWall);
                     break;
-                case 'G':   // Cria Portão desconectado
+                case 'G':   // Cria Portï¿½o desconectado
                     Gate gate = Gate.create(x,y, 'N');
                     space.insert(gate);
                     break;
@@ -134,8 +143,7 @@ public class Builder {
                 case '-':
                     break;
                 default:
-                    System.out.println("Error - bloco nao existe: " + mazeMatrix[x][y]); // FAZER COMO EXCECAO?
-                    break;
+                	throw new AssembleError("Inexistent block: " + mazeMatrix[x][y]);
                 }
             }
         }

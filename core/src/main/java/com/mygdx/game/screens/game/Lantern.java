@@ -1,8 +1,7 @@
 package com.mygdx.game.screens.game;
 
-import com.mygdx.game.interfaces.ILantern;
 import com.mygdx.game.interfaces.IPosition;
-import com.mygdx.game.interfaces.ISpaceIluminate;
+import com.mygdx.game.screens.game.space.ISpaceIluminate;
 
 public class Lantern implements ILantern{
     private int x, y, radius = 2;

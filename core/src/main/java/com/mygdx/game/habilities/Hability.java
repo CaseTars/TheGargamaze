@@ -1,7 +1,5 @@
 package com.mygdx.game.habilities;
 
-import com.mygdx.game.interfaces.IHability;
-
 public abstract class Hability implements IHability{
     private boolean isUnlocked = false;
     protected boolean onCooldown = false;

@@ -1,12 +1,12 @@
-package com.mygdx.game.screens.game;
+package com.mygdx.game.screens.game.space;
 
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.elements.Element;
+import com.mygdx.game.elements.element.Element;
 import com.mygdx.game.elements.player.IPlayerInteraction;
 import com.mygdx.game.elements.player.Player;
 import com.mygdx.game.exceptions.ObstructedCell;
-import com.mygdx.game.interfaces.ISpace;
-import com.mygdx.game.interfaces.ILantern;
+import com.mygdx.game.screens.game.ILantern;
+import com.mygdx.game.screens.game.cell.Cell;
 
 public class Space implements ISpace{
 	public static int size;

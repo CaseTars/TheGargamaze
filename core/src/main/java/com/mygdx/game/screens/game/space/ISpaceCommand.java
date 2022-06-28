@@ -1,4 +1,4 @@
-package com.mygdx.game.interfaces;
+package com.mygdx.game.screens.game.space;
 
 import com.mygdx.game.elements.player.IMove;
 

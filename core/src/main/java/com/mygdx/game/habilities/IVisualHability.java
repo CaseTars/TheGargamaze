@@ -1,4 +1,4 @@
-package com.mygdx.game.interfaces;
+package com.mygdx.game.habilities;
 
 public interface IVisualHability {
     public boolean isRunning();

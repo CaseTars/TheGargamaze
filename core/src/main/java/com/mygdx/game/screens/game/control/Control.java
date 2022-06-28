@@ -1,9 +1,8 @@
-package com.mygdx.game.screens.game;
+package com.mygdx.game.screens.game.control;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.mygdx.game.interfaces.ICommand;
-import com.mygdx.game.interfaces.IControl;
+import com.mygdx.game.elements.player.ICommand;
 import com.mygdx.game.screens.game.view.IViewCommand;
 
 public class Control implements InputProcessor, IControl {

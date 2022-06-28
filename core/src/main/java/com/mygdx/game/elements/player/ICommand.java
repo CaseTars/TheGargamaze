@@ -1,4 +1,4 @@
-package com.mygdx.game.interfaces;
+package com.mygdx.game.elements.player;
 
 public interface ICommand {
 	public void moveLeft();

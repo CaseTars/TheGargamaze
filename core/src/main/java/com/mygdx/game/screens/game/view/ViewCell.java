@@ -4,8 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.interfaces.IUpdate;
-import com.mygdx.game.interfaces.IVisualCell;
-import com.mygdx.game.screens.game.Space;
+import com.mygdx.game.screens.game.cell.IVisualCell;
+import com.mygdx.game.screens.game.space.Space;
 
 public class ViewCell implements IUpdate {
     public static float size;

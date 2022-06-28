@@ -1,12 +1,11 @@
-package com.mygdx.game.screens.game;
+package com.mygdx.game.screens.game.cell;
 
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.elements.Element;
+import com.mygdx.game.elements.element.Element;
+import com.mygdx.game.elements.element.IVisual;
+import com.mygdx.game.elements.gate.IGate;
 import com.mygdx.game.elements.player.IPlayerInteraction;
 import com.mygdx.game.interfaces.IUpdate;
-import com.mygdx.game.interfaces.IVisual;
-import com.mygdx.game.interfaces.ICell;
-import com.mygdx.game.interfaces.IGate;
 
 public class Cell implements ICell{
     private Array<Element> elements = new Array<Element>();

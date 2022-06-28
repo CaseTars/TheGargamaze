@@ -1,9 +1,10 @@
 package com.mygdx.game.elements;
 
-import com.mygdx.game.interfaces.ISpaceCrystal;
 import com.mygdx.game.SoundManager;
+import com.mygdx.game.elements.element.Element;
 import com.mygdx.game.elements.player.IPlayerInteraction;
-import com.mygdx.game.interfaces.ILantern;
+import com.mygdx.game.screens.game.ILantern;
+import com.mygdx.game.screens.game.space.ISpaceCrystal;
 
 public class Crystal extends Element {
     private ISpaceCrystal space;

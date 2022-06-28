@@ -3,7 +3,6 @@ package com.mygdx.game.habilities;
 import com.mygdx.game.Position;
 import com.mygdx.game.elements.player.IPlayerInteraction;
 import com.mygdx.game.interfaces.IPosition;
-import com.mygdx.game.interfaces.IVisualEffect;
 
 public class VisualEffect implements IVisualEffect {
     IPlayerInteraction player;

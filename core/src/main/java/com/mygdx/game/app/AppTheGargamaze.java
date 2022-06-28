@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.SoundManager;
+import com.mygdx.game.exceptions.AssembleError;
 import com.mygdx.game.interfaces.ITime;
 import com.mygdx.game.screens.end.EndScreen;
 import com.mygdx.game.screens.game.Builder;
@@ -63,10 +64,9 @@ public class AppTheGargamaze extends Game implements IGame {
          try {
              bob.build();
          }
-         catch(Exception Exception){
-             //mensagem de erro e acabar o jogp
-             Exception.printStackTrace();
-             System.exit(1);
+         catch(AssembleError Exception){
+        	 System.out.println("Error while creating game.");
+        	 System.exit(1);
          }
          
          updateTs.clear();

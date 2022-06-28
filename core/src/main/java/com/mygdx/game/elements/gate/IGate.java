@@ -1,4 +1,4 @@
-package com.mygdx.game.interfaces;
+package com.mygdx.game.elements.gate;
 
 public interface IGate {
 	

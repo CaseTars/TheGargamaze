@@ -1,4 +1,4 @@
-package com.mygdx.game.interfaces;
+package com.mygdx.game.screens.game.space;
 
 public interface ISpaceCrystal extends ISpaceEdit{
     public int obstructionLevel(int x, int y);

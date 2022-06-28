@@ -1,8 +1,8 @@
 package com.mygdx.game.elements.player;
 
 import com.mygdx.game.elements.Crystal;
+import com.mygdx.game.habilities.IVisualEffect;
 import com.mygdx.game.interfaces.IPosition;
-import com.mygdx.game.interfaces.IVisualEffect;
 
 public interface IPlayerInteraction {
     public char variation();
