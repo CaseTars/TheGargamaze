@@ -1,4 +1,4 @@
-# Intruções de Intalção e Execução
+# Intruções de Intalação e Execução
 
 ## Instalação e Execução do Executável
 
