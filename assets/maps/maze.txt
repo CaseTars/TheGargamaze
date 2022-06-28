@@ -12,11 +12,11 @@ H,W,D,D,D,W,D,D,D,W,-,W,W,W,-,W,-,W,-,W,W,W,-,W,-,W,W,W,W,-,H
 H,W,D,D,D,D,D,D,D,D,-,W,-,W,-,W,-,W,-,W,-,-,-,W,-,-,-,-,-,-,H
 H,W,D,D,D,W,D,D,D,W,-,W,-,W,W,W,W,W,-,W,W,W,-,W,-,W,W,W,W,W,H
 H,W,W,D,W,W,W,D,W,W,-,-,-,-,-,-,-,-,-,-,-,-,-,W,-,-,-,-,W,-,H
-H,D,D,D,D,D,D,D,W,W,-,W,-,2,-,-,-,1,-,W,-,W,-,-,-,W,W,-,W,-,H
+H,D,D,D,D,D,D,D,W,W,-,W,-,-,-,-,-,-,-,W,-,W,-,-,-,W,W,-,W,-,H
 H,D,W,D,H,H,H,W,W,-,-,W,-,-,-,-,-,-,-,W,-,W,W,W,H,H,H,-,-,-,H
-H,W,W,W,H,4,-,-,W,W,W,W,4,T,-,-,-,C,3,W,-,-,W,-,-,3,H,W,W,W,H
+H,W,W,W,H,4,-,-,W,W,W,W,-,T,-,-,-,C,-,W,-,-,W,-,-,3,H,W,W,W,H
 H,-,-,-,H,H,H,W,W,-,-,W,-,-,-,-,-,-,-,W,W,W,W,W,H,H,H,D,D,D,H
-H,-,W,-,-,-,-,-,W,-,W,W,-,1,-,-,-,0,-,W,D,D,D,W,D,D,W,D,W,W,H
+H,-,W,-,-,-,-,-,W,-,W,W,-,-,-,-,-,-,-,W,D,D,D,W,D,D,W,D,W,W,H
 H,-,W,-,W,-,W,-,W,-,-,-,-,-,-,-,-,-,-,D,D,W,D,D,W,D,D,D,D,D,H
 H,W,W,W,W,-,W,W,W,-,W,W,-,W,W,W,W,W,D,W,D,D,W,D,W,D,W,D,W,D,H
 H,-,-,-,-,-,-,-,-,-,-,W,-,-,-,W,D,D,D,W,W,D,W,D,D,D,W,D,W,D,H
