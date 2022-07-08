@@ -616,6 +616,7 @@ public interface IPlayerBH {
 ```
 
 # Plano de Exceções 
+O jogo não possui grandes casos de exceções. Mas algumas foram implementadas, como a de leitura do arquivo de texto usado para a montagem do jogo a qual imprime uma mensagem de erro caso isso ocorra e a de movimentos inválidos que somente levanta a exceção mas não acontece nada, uma vez que esse caso pode ocorrer em diversos momentos por erros de movimentação por parte do jogador por trás do jogo.
 
 ## Diagrama da Hierarquia de Exceções
 
