@@ -474,7 +474,7 @@ O App registra o fim de jogo e avisa o View para começar a animação de Fade O
 
 ## Componente `Jogador`
 
-O jogador é um dos componentes centrais do jogo, sendo responsável por gerenciar tudo que diz respeito a um dos jogadores: suas habilidade, seu inventário, seu estado e o tempo de vida restante.
+O jogador é um dos componentes centrais do jogo, sendo responsável por gerenciar tudo que diz respeito a um dos jogadores: suas habilidades, seu inventário, seu estado e o tempo de vida restante.
 
 ![Diagrama do Componente Jogador](imgs/componenteJogador.png)
 
@@ -543,7 +543,7 @@ public interface IVisualPlayer {
 
 ### Interface `IPlayerInteraction`
 
-Interface de interação do jogador, que oferece métodos de interação com outros elementos, como a a escuridão, e também é a interface utilizada por algumas das habilidade, para realizar o efeito desejado.
+Interface de interação do jogador, que oferece métodos de interação com outros elementos, como com a escuridão, e também é a interface utilizada por algumas das habilidade, para realizar o efeito desejado.
 
 ```java
 public interface IPlayerInteraction {
@@ -576,7 +576,7 @@ public interface IPlayerSwitchHability extends IPosition, ICommand {
 
 ### Interface `IPlayerBH`
 
-Interface oferecida para o Buraco negro, para que ele consiga saber a posição deste e atualizar seu tempo restante da maneira desejada. Também conta com o método *hasCrystal*, para conseguir saber se o jogo terminou com vitória e avisar o App.
+Interface oferecida para o Buraco negro, para que ele consiga saber a posição do jogador e atualizar seu tempo restante da maneira desejada. Também conta com o método *hasCrystal*, para conseguir saber se o jogo terminou com vitória e avisar o App.
 
 ```java
 public interface IPlayerBH {
