@@ -199,8 +199,121 @@ public class Builder {
 
 # Conclusão e trabalhos futuros
 
-# Documentação dos componentes
-
 # Diagramas
+
+## Diagrama Geral da Arquitetura do Jogo
+
+![Figura da arquitetura geral do jogo](imgs/arquiteturaGeral.png)
+
+Utilizamos o framework libgdx, que força o uso de uma certa estrutura para o jogo, primeiramente temos os Launcher, classe responsável por inicializar o jogo e criar um objeto da classe App. Esta classe é responsável por gerenciar as telas do jogo, como o menu inicial, tela de história e a tela da partida (este nome se refere à tela em que realmente o jogo ocorre, onde os jogadores tem controle dos personagens e seus objetivos a cumprir).
+
+Utilizamos o padrão de arquitetura MVC, no diagrama está representado a classe responsável pela visualização e a de controle de cada estágio do jogo. A comunicação entre estes objetos quando dentro da partida também inclui o model, que será detalhado no próximo diagrama.
+
+![Figura da arquitetura geral do jogo](imgs/arquiteturaGeralJogo.png)
+
+Como é possível ver no diagrama, o funcionamento da partida é intuitivo. O Controle se comunica com os Jogadores, para informá-los das ações e movimentos que devem ser tomados, em seguida os Jogadores se comunicam com o Espaço, que possui uma matriz de Células. Cada Célula é conectada à uma Célula view, responsável por auxiliar o View na impressão do jogo na tela. 
+
+Os jogadores, assim como todos os elementos no mapa, como botões, paredes e cristais, são herdeiros da classe abstrata Elemento, e cada Célula armazena uma lista de Elementos, e portanto, a comunicação da Célula com os elementos dentro dela é completamente polimórfica.
+
+![Figura das funções do montador](imgs/montador.png)
+
+Como será visto à frente, existem muitas conexões entre diversos componentes do jogo, por interfaces. Essa conexões são feitas pelo Montador, classe responsável por instânciar cada objeto essencial para o funcionamento do jogo e conectá-los.
+
+## Diagramas Gerais dos Componentes
+
+Agora será detalhado as funcionalidades gerais de alguns aspectos da partida.
+
+### Controle dos Jogadores
+
+![Figura mostrando a comunicação do controle com os jogadores](imgs/controle_jogs.png)
+
+O controle recebe os comandos do teclado, e é responsável por por chamar os métodos corretos para cada jogador, à depender da tecla pressionada.
+
+### Comunicação dos Jogadores com o Espaço
+
+![Figura mostrando a comunicação dos jogadores com o Espaço](imgs/jogs_espaco.png)
+
+Após receber a informação de movimentação do controle, os jogadores pedem ao espaço para realizar o movimento para a célula especificada, o espaço é responsável por verificar se este movimento é possível, o que foi feito atráves do conceito de nível de obstrução.
+
+Cada elemento tem como atributo um nível de obstrução. O nível de obstrução de uma Célula é dado pelo maior nível de obstrução dos elementos dentro dela. Dessa forma, o espaço só permite que o movimento seja feito quando o nível de obstrução da célula-alvo é menor ou igual à 1. O nível de obstrução de paredes e portões, por exemplo, é 2, e portanto o jogador não é capaz de andar para células que contenham um destes elementos.
+
+O nível de obstrução 1 apenas impede que cristais sejam inseridos na célula, o que faz com que não seja possível inserir dois cristais na mesma célula, dado que o nível de obstrução de um cristal também é 1.
+
+
+### Interface Visual Geral
+
+![Figura mostrando a comunicação de cada célula com sua Célula view correspondente](imgs/cell_viewCell.png)
+
+Cada Célula está conectada à sua Célula view correspondente, e é responsável por avisá-la de qualquer alteração que ocorra nela, como de iluminação ou dos elementos que ela contém (padrão de observer). Quando avisada de que ocorreu alguma modificação, a Célula view é responsável por se atualizar, perguntando à Célula, qual seu estado, percentual de iluminação e quais Elementos estão presentes nela. 
+
+Com isso, a Célula view monta uma lista de texturas que compõe a imagem daquela célula. Por fim, o View utiliza esta lista para sobrepor a imagem na tela, na posição correta. Dividindo as ações mais gerais e específicas de forma simples.
+
+
+### Iluminação do mapa
+
+![Figura mostrando o funcionamento da iluminação do mapa](imgs/iluminacao.png)
+
+A iluminação do mapa mapa é feita através de objetos da classe Lanterna. Cada célula conta com um atributo booleano de visibildade, o espaço é capaz de informar uma célula se ela precisa estar iluminada ou não, assim, cada vez em que ocorre um evento de mudança de iluminação do mapa, como um movimento de um jogador ou o uso de uma habilidade de aumento de raio de visão, o espaço é responsável por escurecer o mapa por completo, e chamar cada lanterna para iluminar a região que ela é capaz de iluminar.
+
+A lanterna por sua vez está sempre conectada à um elemento através de uma interface de posição, dessa forma, quando chamada pelo espaço para iluminar, ela é capaz de saber quais são as posições que devem ser iluminadas. Essas posições são informadas de volta ao espaço, que é responsável, por fim, de avisar as células nas posições indicadas.
+
+O elemento também pode contar com uma referência opcional para sua lanterna, para poder alterar certos parâmetros desta, como o raio de iluminação.
+
+Por fim, além de avisar ao espaço quais células devem ser iluminadas, a lanterna também informa um valor percentual da quantidade de iluminação da célula, o que possibilita o degradê de iluminação presente no jogo.
+
+### Habilidades
+
+![Diagrama geral de funcionamento das habilidades](imgs/habilidades.png)
+
+Cada habilidade é herdeira de uma classe abstrada que contém o funcionamento geral de uma habilidade, composto da lógica de atualização de tempo, por exemplo na atualização da passagem do tempo de cooldown, a lógica de desbloqueio da habilidade e de uso. Cada habilidade conta com uma interface de comunicação com o jogador, para poder perguntar se este têm o cristal necessário para desbloquea-la. O jogador por sua vez é responsável por avisar a habilidade sempre que ocorre uma mudança nos cristais de seu inventário.
+
+Por fim, o jogador é capaz de usar qualquer habilidade de forma polimórfica, apenas com o uso do método .use() implementado por qualquer habilidade.
+
+O funcionamento interno de cada habilidade varia, e será detalhado em seguida
+
+__Habilidade Visual__
+
+![Diagrama de funcionamento da habilidade 1](imgs/habilidade1.png)
+
+Como explicado na seção de iluminação do mapa, cada elemento pode conter uma referencia por interface para sua própria lanterna. A habilidade nesse caso é responsável por criar efeitos das classe EfeitoVisual, que são passados ao jogador. Um efeito visual tem uma duração e uma variação no raio de visão, cada vez que um jogador recebe um novo efeito, ele aplica a variação especificada no seu raio de visão. Assim, a habilidade é apenas responsável por gerar um efeito e passá-lo ao jogador. 
+
+Os elementos no espaço também são capazes de interagir com o jogador e passar efeitos visuais, isso é feito pelas regiões mais escuras no mapa, ao interagir com elas, o jogador recebe um efeito visual de variação negativa no seu raio de visão.
+
+__Habilidade Trocar de lugares__
+
+![Diagrama de funcionamento da habilidade 2](imgs/habilidade2.png)
+
+A habilidade de trocar os lugares dos jogadores é a mais estruturalmente complexa, primeiramente, ela possui uma referencia aos dois jogadores, o que a difere das outras que somente possuem referência ao jogador que a possui. Esta dupla referência é necessária pois a habilidade somente deve ser desbloqueada caso os dois jogadores tenham o cristal necessário.
+
+Ao ser utilizada, a habilidade é responsável por verificar se a troca pode ser feita com segurança, garantindo que a troca não seja feita por exemplo quando um dos jogadores está atravessando uma parede. Para isso ela conta com uma referência do Espaço.
+
+Caso a habilidade possa ser utilizada com segurança, ela desativa o Controle de jogo pelo tempo necessário para a execução, para que os jogadores não realizem comandos enquanto ocorre a troca, ela também avisa o View de que a animação de troca se realizará e também gerencia o progresso da animação. Por fim, por meio da mesma interface utilizada na comunicação dos jogadores com o controle, ela avisa cada jogador qual sua nova posição.
+
+__Habilidade Fantasma__
+
+![Diagrama de funcionamento da habilidade 3](imgs/habilidade3.png)
+
+Esta é a habilidade de implementação mais simples, devido à forma que o movimento pelo mapa foi construido. O método de movimentação do Espaço também conta com um atributo *forced*, que informa ao Espaço se o movimento deve ser permitido para o nível de obstrução 3. Quando a habilidade é utilizada, ela apenas informa o jogador de que agora ele tem direito de passar esse parâmetro como verdadeiro.
+
+É importante notar que existem também elementos de nível de obstrução maior que 3, que possibilita a criação de regiões	não podem ser alcançadas mesmo com esta habilidade ativa.
+
+### O tempo
+
+![Diagrama de funcionamento do controle de passagem de tempo](imgs/tempo.png)
+
+No método de renderização do libgdx, podemos obter o valor do tempo de renderização do frame anterior. Este valor é passado para o Buraco negro, jogadores e para o controle. O Buraco negro é responsável por calcular o fator de multiplicação desse tempo para cada jogador, que altera com a distância de cada um deles ao buraco negro, após o cálculo, o Buraco negro informa aos jogadores quanto tempo eles devem atualizar de sua vida. O Buraco negro também informa aos jogadores para regenerar a vida quando eles estão dentro dele.
+
+O tempo de renderização do frame também é passado aos jogadores, qua repassam este tempo para cada uma de suas habilidades e seus efeitos visuais. A forma que este tempo é processado é única a depender do objeto que o recebeu.
+
+Por fim, este tempo também é informado ao Controle, como visto na Habilidade de trocar de lugares, o controle oferece um método *time out*, este método recebe apenas um parâmetro: a duração que os comandos recebidos pelo teclados devem ser ignorados. Por isso, o Controle também precisa receber a informação de passagem de tempo. 
+
+### Finalização da Partida
+
+![Diagrama do processo de fim de jogo](imgs/fimdojogo.png)
+
+O fim do jogo ocorre quando um dos jogadores fica sem bateria ou quando os dois jogadores conseguem entregar os dois cristais finais ao buraco negro. Cada jogador é responsável por avisar o App de que o jogo acabou com falha quando seu tempo de vida se esgota. Já o buraco negro monitora se os dois jogadores entraram nele com seus cristais e quando isso ocorre, informa o App de que o jogo terminou com sucesso.
+
+O App registra o fim de jogo e avisa o View para começar a animação de Fade Out, quando o fade termina o View avisa o App para continuar. Nesse ponto, o App cria a tela de fim de jogo de acordo com o parâmetro de sucesso ou falha que foi registrado.
+
 
 
