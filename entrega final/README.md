@@ -586,6 +586,300 @@ public interface IPlayerBH {
 }
 ```
 
+## Componente `Controle`
+
+O controle é responsável por receber os comandos do teclado e interpretá-los, chamando os métodos adequados dos jogadores.
+
+![Diagrama do Componente Controle](imgs/componenteControle.png)
+
+**Ficha Técnica**
+
+item | detalhamento
+----- | -----
+Classe | `com.mygdx.game.screens.game.control.Control`
+Interfaces  <br />providas| `IControllerTimeOut`, <br /> `ITime`
+
+### Interfaces
+
+Interfaces associadas a esse componente:
+
+![Diagrama Interfaces do Controle](imgs/interfacesControle.png)
+
+Interface agregadora do componente em Java:
+
+```java
+public interface IControl extends IControllerTimeOut, ITime {
+
+}
+```
+
+## Detalhamento das Interfaces
+
+### Interface `IControllerTimeOut`
+
+Interface para colocar o controle em timeOut, de forma que os comandos recebidos do teclado não sejam repassados aos Jogadores.
+
+```java
+public interface IControllerTimeOut {
+    public void setTimeOut(float t);
+}
+```
+
+### Interface `ITime`
+
+Interface para atualização do timeOut, quando em timeOut, o tempo passado no método *update* é utilizado para descontar o tempo de timeOut restante.
+
+```java
+public interface ITime {
+    public void update(float t);
+}
+```
+
+## Componente `Espaço`
+
+O espaço é responsável por gerenciar a movimentação dos jogadores pela matriz, e avisar as células quando os jogadores querem realizar uma ação. Ele também é responsável por atualizar e manter consistente a iluminação do mapa.
+
+No geral, ele gerencia a situação dos elementos nas Células.
+
+![Diagrama do Componente Espaço](imgs/componenteEspaco.png)
+
+**Ficha Técnica**
+
+item | detalhamento
+----- | -----
+Classe | `com.mygdx.game.screens.game.space.Space`
+Interfaces  <br />providas| `ISpaceIluminate`, <br /> `ISpaceCommand`, <br /> `IMove`, <br /> `ISpaceAction`, <br /> `ISpaceSwitchHability`, <br /> `ISpaceCrystal`, <br /> `ISpaceEdit`
+
+### Interfaces
+
+Interfaces associadas a esse componente:
+
+![Diagrama Interfaces do Espaço](imgs/interfacesEspaco.png)
+
+Interface agregadora do componente em Java:
+
+```java
+public interface ISpace extends ISpaceIluminate, ISpaceCommand, ISpaceSwitchHability, ISpaceCrystal, ISpaceEdit{
+
+}
+```
+
+## Detalhamento das Interfaces
+
+### Interface `ISpaceIluminate`
+
+Interface de comunicação com as lanternas, oferencedo um método para iluminar uma célular específica e um para atualizar a visibilidade total. Este último é chamado pela lanterna, quando alguma característica fundamental sua se altera, como uma mudança em seu raio de visão ou sem seu estado (ligada/desligada).
+
+```java
+public interface ISpaceIluminate {
+    public void iluminate(int x, int y, float clarity);
+    public void updateVisibility();
+}
+```
+
+### Interface `ISpaceCommand`, `IMove`, `ISpaceAction`
+
+ISpaceCommand é a interface agregadora de IMove e ISpaceAction, é a interface utilizada pelos jogadores na comunicação com o espaço, além de possibilitar a movimentação, ela também oferece os métodos action e deaction, chamados pelo jogador quando a tecla de ação é pressionada ou liberada. O action do Espaço repassa a chamada para a célula especificada, que por sua vez repassa a chamada para seus elementos. 
+
+Como exemplo temos o botão, quando seu método action é chamado ele aciona o portão que está conectado a ele.
+
+```java
+public interface ISpaceCommand extends IMove, ISpaceAction{
+
+}
+```
+```Java
+public interface IMove {
+	public void move(Player e, int xi, int yi, int xf, int yf, boolean forced) throws ObstructedCell;
+	public void insert(Player e);
+    public void remove(Player e);
+}
+```
+```Java
+public interface ISpaceAction {
+	public void action(int x, int y, IPlayerInteraction player);
+	public void deaction(int x, int y, IPlayerInteraction player);
+}
+```
+
+### Interface `ISpaceSwitchHability`
+
+Interface utilizada pela habilidade de troca de lugares para verificar o nível de obstrução das células em que ambos os jogadores se encontram na hora da troca, desta forma garantindo que a troca dos jogadores ocorra com segurança.
+
+```java
+public interface ISpaceSwitchHability {
+    public int obstructionLevel(int x, int y);
+}
+```
+
+### Interface `ISpaceCrystal`
+
+Implementa o mesmo método utilizado pela habilidade de troca de lugares, neste caso, o cristal verifica, por meio desta interface, qual o nível de obstrução da célula que o jogador está tentando inseri-lo. De forma a garantir que o cristal não seja posicionado em um local estranho e nem em uma célula em que ja exista um Cristal.
+
+```java
+public interface ISpaceSwitchHability {
+    public int obstructionLevel(int x, int y);
+}
+```
+
+### Interface `ISpaceEdit`
+
+Interface utilizada para remover ou inserir um elemento em uma célula, é ultilizada pelo cristal quando ele é retirado do mapa e inserido no inventário de um dos jogadores e quando o jogador insere o cristal de volta no mapa.
+
+```java
+public interface ISpaceIluminate {
+    public void iluminate(int x, int y, float clarity);
+    public void updateVisibility();
+}
+```
+
+## Componente `View`
+
+O View é responsável por gerenciar e imprimir na tela todos os elementos importantes para a visualização do jogo, estes incluem o mapa e seus elementos, o buraco negro e as informações sobre cada jogador, como sua bateria restante, seu inventário e suas habilidades.
+
+Todas essas informações são obtidas atráves de interfaces visuais, que também serão detalhadas aqui.
+
+![Diagrama do Componente View](imgs/componenteView.png)
+
+**Ficha Técnica**
+
+item | detalhamento
+----- | -----
+Classe | `com.mygdx.game.screens.game.view.View`
+Interfaces  <br />providas| `IViewCommand`, <br /> `IViewSwitchHability`
+
+### Interfaces
+
+Interfaces associadas a esse componente:
+
+![Diagrama Interfaces do View](imgs/interfacesEspaco.png)
+
+## Detalhamento das Interfaces
+
+### Interface `IViewCommand`
+
+Esta interface é utilizada pelo controle, quando a barra de espaço, e serve para avisar o View se os comandos (funções de cada tecla do teclado no jogo) devem ser impressos na tela ou não. Essa é a única comunicação direta entre o View e o Controle.
+
+```java
+public interface IViewCommand {
+	public void showCommands(boolean show);
+}
+```
+
+### Interface `IViewSwitchHability`
+
+Novamente, temos uma interface espacialmente utilizada pela habilidade de troca de lugares, a comunicação direta entre eles é feita para possibilitar o controle da animação, executada quando a habilidade é utilizada, pela própria habilidade.
+
+```java
+public interface IViewSwitchHability {
+    public void startAnimation(int x1, int y1, int x2, int y2);
+    public void setOpacity(float opacity);
+    public void stopAnimation();
+}
+```
+
+### Interfaces visuais
+
+Como já dito, as informações quer devem ser mostradas na tela são obtidas atráves também de interfaces, estas são as Interfaces Visuais:
+
+![Diagrama Interfaces Visuais](imgs/interfacesVisuais.png)
+
+Cada uma delas é capaz de passar todas as informações necessárias para mostrar na tela toda a parte visual do jogo. A maior parte dos métodos retorna apenas um número ou caractere, é função do View e de cada ViewCell interpretar este caractere e escolher uma imagem para colocar na tela.
+
+## Componente `Célula`
+
+Cada célula da matriz de células do espaço é responsável por armazenar elementos e possibilitar acesso aos métodos interagir e action/deaction de cada um deles, ela também tem a função de saber seu estado de visibilidade e avisar sua ViewCell correspondente quando alguma mudança ocorre, para que a ViewCell possa atualizar sua imagem de acordo.
+
+![Diagrama do Componente Célula](imgs/componenteCell.png)
+
+**Ficha Técnica**
+
+item | detalhamento
+----- | -----
+Classe | `com.mygdx.game.screens.game.cell.Cell`
+Interfaces  <br />providas| `IAction`, <br /> `IUpdate`, <br /> `IVisualCell`
+
+### Interfaces
+
+Interfaces associadas a esse componente:
+
+![Diagrama Interfaces da Célula](imgs/interfacesCell.png)
+
+Interface agregadora do componente em Java:
+
+```java
+public interface ICell extends IVisualCell, IAction, IUpdate{
+
+}
+```
+
+## Detalhamento das Interfaces
+
+### Interface `IAction`
+
+Realiza a chamada da ação/desfazer ação de cada um dos elementos na célula, chamada pelo Espaço, quando o jogador realiza a chamada na interface ISpaceAction, já comentada.
+
+```java
+public interface IAction {
+	public void action(IPlayerInteraction player);
+	public void deaction(IPlayerInteraction player);
+}
+```
+
+### Interface `IUpdate`
+
+Sempre que um elemento é inserido em uma Célula, ele recebe uma referência para esta interface da célula que agora ele se encontra, essa conexão é feita pela própria célula quando algum elemento é inserido nela e desfeita quando o elemento é removido.
+
+Isso é feito pois existe a possibilidade de que um elemento mude de aparência, exemplo: um portão se abrindo. Para que sua imagem seja atualizada o elemento deve chamar o método update, por essa interface, para que a célula avise sua ViewCell correspondente de que houve uma mudança.
+
+```java
+public interface IUpdate {
+	public void update();
+}
+```
+
+### Interface `IVisualCell`
+
+Interface visual da célula, além de poder informar sobre o estado da própria célula, também pode retornar a interface visual de qualquer elemento dentro dela.
+
+```java
+public interface IVisualCell {
+    public int nElements();
+    public boolean visible();
+    public float clarity();
+    public IVisual visual(int index);
+}
+```
+
+## Componente `Célula View`
+
+O View também conta com uma matriz de células, no caso, Células View. Cada Célula View é responsável por manter atualizada uma lista de texturas, que é a lista utilizada pelo view no momento de imprimir as imagens de cada célula.
+
+![Diagrama do Componente Célula View](imgs/componenteViewCell.png)
+
+**Ficha Técnica**
+
+item | detalhamento
+----- | -----
+Classe | `com.mygdx.game.screens.game.view.ViewCell`
+Interface  <br />provida| `IUpdate`
+
+### Interfaces
+
+Interfaces associadas a esse componente:
+
+![Diagrama Interfaces da Célula View](imgs/interfacesViewCell.png)
+
+### Interface `IUpdate`
+
+Interface utilizada pela Célula corresponde para avisar a Célula View de que houve uma alteração. Sabendo disso a célula view monta sua lista de texturas utilizando a interface IVisualCell, referência para a Célula.
+
+```java
+public interface IUpdate {
+	public void update();
+}
+```
+
 # Plano de Exceções 
 
 ## Diagrama da Hierarquia de Exceções
