@@ -55,19 +55,143 @@ Codigo criação do cristal do player
 
 Codigo Array de Ilantern do space
 
+```Java
+public class Space implements ISpace {
+    
+	private Array<ILantern> lanterns = new Array<ILantern>();
+    ...
+}
+```
+
 Codigo Iluminacao da lanterna
+
+```Java
+public class Lantern implements ILantern {
+    private ISpaceIluminate space;
+    private IPosition element;
+    ...
+    public void iluminate() {
+    	...
+    	for(int dx = -radius;dx <= radius;dx++) {
+    		for(int dy = -radius;dy <= radius;dy++) {
+    		...
+    		space.iluminate(getX() + dx, getY() + dy, clarity);
+    		}
+    	}
+    }
+    ...
+}
+```
 
 Outro destaque é a forma como os as imagens são dispostas na tela, com o uso da sobreposição de imagens para evitar a criação de imagens para casos muito específicos. Por exemplo, em um caso em que um dos jogadores entra na frente dos botões, em uma mesma renderização é desenhado primeiro o botão e depois o jogador. E isso é feito com o uso de um array de texturas de uma mesma célula, um array com todas as texturas em ordem de prioridade é enviada para o view, responsável por desenhá-las na tela.
 
 Codigo de texturas 1
 
+```Java
+public void update() {
+
+    int nbElements = cell.nElements();
+    
+    textures.clear();
+    textures.add(imgGround);
+    
+    if(!cell.visible()) }
+    	textures.add(imgDark);
+    ...
+    else {
+		for(int i=0;i < nbElements;i++){
+			if(cell.visual(i).type() == 'B') {
+				if(cell.visual(i).variation() == 'C') {
+					if(cell.visual(i).state() == 'p') {
+						textures.add(imgButtonPressedFrame);
+						textures.add(imgBlueBG);
+						textures.add(imgButtonPressed);
+					}
+				}
+			...
+			}
+			else if(cell.visual(i).type() == 'P') {
+				...
+			}
+		}    
+    }
+    ...
+}
+```
+
 Codigo de texturas 2
+
+``` Java
+private void drawMap() {
+	batch.begin();
+	
+	for(int x=0;x < size;x++){
+			for(int y=0;y < size;y++){
+				batch.setColor(1f,1f,1f,1f);
+				ViewCell aux = cells[x][y];
+				
+				for(Texture texture: aux.getTexture()) {
+					batch.draw(texture, aux.getX(), aux,getY(), ViewCell.size, ViewCell.size);
+				}
+				...
+			}
+	}
+	batch.end();
+}
+```
 
 Outro destaque é o controle do tempo de vida dos jogadores dependendo da posição em que este se encontra no mapa, quanto mais longe do buraco negro mais rápido o tempo passa. Essa implementação se alinha com a ideia do jogo, o buraco negro que se encontra no centro é o responsável por controlar essa variação do tempo.
 
 Codigo do tempo buraco negro
 
+```Java
+public class Blackhole implements IUpdate, ITime, IVisualBH {
+	...
+	private IPlayerBH pCase, pTars;
+	...	
+	public void update() {
+	   posCase = pCase.getIPosition();
+	   posTars = pTars.getIPosition();
+	   boolean caseIn = inside(posCase);
+	   boolean tarsIn = inside(posTars);
+	    
+	   if(caseIn)
+	       incCase = 20000;
+	   else
+	       incCase = - (float) distanceFactor(posCase);
+	    
+	   if(tarsIn)
+	       incTars = 20000;
+	   else
+	       incTars = - (float) distanceFactor(posTars);
+	   ...
+	}
+	...
+	public void update(float t) {
+        pCase.updateTimeRemaining(t * incCase);
+        pTars.updateTimeRemaining(t * incTars);
+    }	
+
+```
+
 Outro destaque é que o mapa é criado com base em um arquivo .txt. Por isso, o mapa pode ser criado em vários tamanhos e com diversas variações de puzzles e desafios, bastando somente alterar o .txt.
+
+Código do Builder
+
+```Java
+public class Builder {
+	private void readFile() throws IOException {
+		FileHandle handle = Gdx.files.internal(mazePath);
+		...
+		readMazeMatrix(lines);
+		...
+		readVisibilityMatrix(lines);
+		...
+		readButtons(lines);
+	}
+}
+```
+
 
 # Destaques de Orientação a Objetos
 
