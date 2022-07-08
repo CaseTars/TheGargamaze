@@ -213,10 +213,13 @@ public class Builder {
 }
 ```
 
-Por fim, um último destaque interessante é o da movimentação do jogador pelo mapa, o que indica se um movimento é permitido é o conceito de nível de obstrução de uma sala, isso será explicado mais para frente. O destaque aqui é que no caso de um movimento não permitido, o Espaço joga uma exceção de célula obstruida para o jogador.
+Por fim, um último destaque interessante é o da movimentação do jogador pelo mapa: o que indica se um movimento para uma célula é permitido ou não é o conceito de nível de obstrução da célula, isso será explicado mais para frente. O destaque aqui é que no caso de um movimento não permitido, o Espaço joga uma exceção de célula obstruida para o jogador.
+
+* Código de movimento do Espaço
 
 ```Java
 public void move(Player toMove, int xi, int yi,  int xf, int yf, boolean forced) throws ObstructedCell {
+    
 		int obsLevel = cells[xf][yf].obstructionLevel();
 	    if(obsLevel == 3 || (!forced && obsLevel == 2))
 		    throw new ObstructedCell("This cell is obstructed!");
@@ -224,7 +227,7 @@ public void move(Player toMove, int xi, int yi,  int xf, int yf, boolean forced)
 	}
 ```
 
-Essa implementação é vantajosa pois possibilita que o jogador atualize sua posição antes de pedir o movimento ao espaço, caso a célula esteja obstruída ele reverte sua posição. A posição do jogador precisa ser atualizada antes do movimento pois a atualização da visibilidade do mapa é feita no final da função de movimento, e a lantarna utiliza a posição salva no jogador para realizar a iluminação.
+Essa implementação é vantajosa pois possibilita que o jogador atualize sua posição antes de pedir o movimento ao espaço, caso a célula esteja obstruída ele reverte sua posição. A posição do jogador precisa ser atualizada antes do movimento pois a atualização da visibilidade do mapa é feita no final da função de movimento, e a lanterna utiliza a posição salva no jogador para realizar a iluminação.
 
 # Destaques de Orientação a Objetos
 
@@ -266,19 +269,19 @@ public class Cell implements ICell{
     }
 
     @Override
-	public void action(IPlayerInteraction player) {
-		for(Element element: elements) {
-			element.action(player);
-		}
-	}
+    public void action(IPlayerInteraction player) {
+        for(Element element: elements) {
+            element.action(player);
+        }
+    }
 
-	@Override
-	public void deaction(IPlayerInteraction player) {
-		for(Element element: elements) {
-			element.deaction(player);
-		}
-		
-	}
+    @Override
+    public void deaction(IPlayerInteraction player) {
+        for(Element element: elements) {
+            element.deaction(player);
+        }
+        
+    }
 
     public void interact(IPlayerInteraction player) {
         for(Element element: elements) {
