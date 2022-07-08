@@ -51,9 +51,9 @@ private void buildMaze() throws AssembleError {
 }
 ```
 
-Codigo criação do cristal do player
+* Codigo criação do cristal do player
 
-Codigo Array de Ilantern do space
+* Codigo Array de Ilantern do space
 
 ```Java
 public class Space implements ISpace {
@@ -63,7 +63,7 @@ public class Space implements ISpace {
 }
 ```
 
-Codigo Iluminacao da lanterna
+* Codigo Iluminacao da lanterna
 
 ```Java
 public class Lantern implements ILantern {
@@ -85,7 +85,7 @@ public class Lantern implements ILantern {
 
 Outro destaque é a forma como os as imagens são dispostas na tela, com o uso da sobreposição de imagens para evitar a criação de imagens para casos muito específicos. Por exemplo, em um caso em que um dos jogadores entra na frente dos botões, em uma mesma renderização é desenhado primeiro o botão e depois o jogador. E isso é feito com o uso de um array de texturas de uma mesma célula, um array com todas as texturas em ordem de prioridade é enviada para o view, responsável por desenhá-las na tela.
 
-Codigo de texturas 1
+* Codigo de texturas 1
 
 ```Java
 public void update() {
@@ -119,7 +119,7 @@ public void update() {
 }
 ```
 
-Codigo de texturas 2
+* Codigo de texturas 2
 
 ``` Java
 private void drawMap() {
@@ -142,7 +142,7 @@ private void drawMap() {
 
 Outro destaque é o controle do tempo de vida dos jogadores dependendo da posição em que este se encontra no mapa, quanto mais longe do buraco negro mais rápido o tempo passa. Essa implementação se alinha com a ideia do jogo, o buraco negro que se encontra no centro é o responsável por controlar essa variação do tempo.
 
-Codigo do tempo buraco negro
+* Codigo do tempo buraco negro
 
 ```Java
 public class Blackhole implements IUpdate, ITime, IVisualBH {
@@ -176,7 +176,7 @@ public class Blackhole implements IUpdate, ITime, IVisualBH {
 
 Outro destaque é que o mapa é criado com base em um arquivo .txt. Por isso, o mapa pode ser criado em vários tamanhos e com diversas variações de puzzles e desafios, bastando somente alterar o .txt.
 
-Código do Builder
+* Código do Builder
 
 ```Java
 public class Builder {
@@ -195,12 +195,25 @@ public class Builder {
 
 # Destaques de Orientação a Objetos
 
+* Polimorfismo: usado para lidar com a presença de elementos em uma mesma célula, com isso cada célula tem um array de elementos genéricos e por isso consegue inserir
+qualquer objeto que seja elemento, independentemente da sua especificidade.
+* Interfaces: usadas nas comunicações entre diferentes objetos, usada para filtrar os métodos providos disponíveis.o
+
 ## Diagrama de Classes Usado no Destaque de OO
+
+* Polimorfismo:
+
+![Diagrama Polimorfismo](imgs/diagramaElements.png)
+
+* Interfaces:
+
+![Diagrama Interfaces](imgs/diagramaInterfaces.png)
+
 
 ## Código do Destaque OO
 
 
-Polimorfismo
+* Polimorfismo
 
 ```Java
 public class Cell implements ICell{
@@ -220,7 +233,7 @@ public class Cell implements ICell{
  }
 ```
 
-Interfaces
+* Interfaces
 
 ```Java
 public class Player extends Element implements IPlayer {
@@ -260,23 +273,35 @@ public interface ICommand {
 
 
 # Destaques de Pattern
+* Facade: usado na inicialização do jogo, na construção dos mapa.  
 
+* Observer: usado no monitoramento da presença dos cristais para que as habilidades fiquem disponíveis. É usado também na atuaização das células do view, 
+quando qualquer evento acontece as células do view são avisadas para que atualizem na tela a movimentação.
+ 
 ## Diagrama do Pattern
+
+* Facade
+
+![Diagrama Builder](imgs/diagramaBuilder.png)
+
+* Observer
+
+	* Hability: 
+![Diagrama observer Hability](imgs/diagramaObserverHability.png)
+
+	* ViewCell:
+![Diagrama observer ViewCell](imgs/cell_viewCell.png)
+
+
+
+
 ## Código do Pattern
 
-Facade: Usado na criação do jogo
+* Facade: 
 
 ```Java
 public class AppTheGargamaze extends Game implements IGame {
 
-	public void createTutorial() {
-         Builder bob = new BuilderTutorial(this);
-         
-         try {
-             bob.build();
-         }
-	...
-	}
 	public void createGame() {
 		 Builder bob = new Builder(this);
 		 try {
@@ -320,7 +345,7 @@ public class AppTheGargamaze extends Game implements IGame {
        ...
     }
 ```
-Observer: Habilidades disponíveis e no View
+* Observer: 
 
 ```Java
 public abstract class Hability implements IHability{
@@ -353,6 +378,10 @@ public class ViewCell implements IUpdate {
 
 
 # Conclusão e trabalhos futuros
+
+Para o futuro, pensa-se em implementar mais alguns patterns, como o singleton para os construtores. No atual código não tem prejuízos sem esse pattern, mas atualmente é  suscetível a más implementações que instanciam o construtor em outro lugar que não o App, que é a classe responsável por inicializar as telas e os construtores. Além disso, pretendemos colocar mais fases para o jogo, e acrescentar mais elementos algo que será relativamente simples devido a grande generalidade dos elementos e métodos de interação.
+
+
 
 # Diagramas
 
@@ -881,6 +910,7 @@ public interface IUpdate {
 ```
 
 # Plano de Exceções 
+O jogo não possui grandes casos de exceções. Mas algumas foram implementadas, como a de leitura do arquivo de texto usado para a montagem do jogo a qual imprime uma mensagem de erro caso isso ocorra e a de movimentos inválidos que somente levanta a exceção mas não acontece nada, uma vez que esse caso pode ocorrer em diversos momentos por erros de movimentação por parte do jogador por trás do jogo.
 
 ## Diagrama da Hierarquia de Exceções
 
