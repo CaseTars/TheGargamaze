@@ -213,11 +213,24 @@ public class Builder {
 }
 ```
 
+Por fim, um último destaque interessante é o da movimentação do jogador pelo mapa, o que indica se um movimento é permitido é o conceito de nível de obstrução de uma sala, isso será explicado mais para frente. O destaque aqui é que no caso de um movimento não permitido, o Espaço joga uma exceção de célula obstruida para o jogador.
+
+```Java
+public void move(Player toMove, int xi, int yi,  int xf, int yf, boolean forced) throws ObstructedCell {
+		int obsLevel = cells[xf][yf].obstructionLevel();
+	    if(obsLevel == 3 || (!forced && obsLevel == 2))
+		    throw new ObstructedCell("This cell is obstructed!");
+		...
+	}
+```
+
+Essa implementação é vantajosa pois possibilita que o jogador atualize sua posição antes de pedir o movimento ao espaço, caso a célula esteja obstruída ele reverte sua posição. A posição do jogador precisa ser atualizada antes do movimento pois a atualização da visibilidade do mapa é feita no final da função de movimento, e a lantarna utiliza a posição salva no jogador para realizar a iluminação.
+
 # Destaques de Orientação a Objetos
 
 * Polimorfismo: usado para lidar com a presença de elementos distintos em uma mesma célula, com isso cada célula tem um array de elementos genéricos e consegue inserir objetos, independentemente da sua especificidade. Cada elemento implementa um método de interação com o jogador quando este entra na célula (utilizado, por exemplo, pela escuridão, para diminuir o raio de visão do jogador que entra nela), e uma de ação, chamada quando o jogador pressiona sua tecla de ação (utilizada, por exemplo, pelo botão e pelo cristal). Como todos os elementos são obrigados a implementar estes métodos, a chamada ocorre para todos da mesma forma, porém nem todos realmente tomam alguma ação nesta chamada.
 
-* Interfaces: usadas nas comunicações entre diferentes objetos, usada para filtrar os métodos providos disponíveis.o
+* Interfaces: usadas nas comunicações entre diversos objetos e componentes, usada para filtrar os métodos providos disponíveis, como exemplo temos as interface visuais, utilizadas pelo view para conseguir apenas as informações relevantes de cada objeto para imprimir na tela. Outro exemplo é dado pelas diversas interfaces implementadas pelo componente Jogador, mostrado abaixo.
 
 ## Diagrama de Classes Usado no Destaque de OO
 
@@ -233,27 +246,50 @@ public class Builder {
 ## Código do Destaque OO
 
 
-* Polimorfismo
+* Polimorfismo: Alguns métodos da classe Célula que utilzam do polimorfismo dos elementos.
 
 ```Java
 public class Cell implements ICell{
     private Array<Element> elements = new Array<Element>();
     ...
+
     public void insert(Element toInsert) {
     	elements.add(toInsert);
     	toInsert.setCell(this);
     	viewCell.update();
     }
+    
     public void remove(Element toRemove) {
     	elements.removeValue(toRemove, true);
     	toRemove.setCell(null);
-       viewCell.update();
+        viewCell.update();
+    }
+
+    @Override
+	public void action(IPlayerInteraction player) {
+		for(Element element: elements) {
+			element.action(player);
+		}
+	}
+
+	@Override
+	public void deaction(IPlayerInteraction player) {
+		for(Element element: elements) {
+			element.deaction(player);
+		}
+		
+	}
+
+    public void interact(IPlayerInteraction player) {
+        for(Element element: elements) {
+            element.interact(player);
+        }
     }
     ...
- }
+}
 ```
 
-* Interfaces
+* Interfaces: Interfaces do Jogador
 
 ```Java
 public class Player extends Element implements IPlayer {
