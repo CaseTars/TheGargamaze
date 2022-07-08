@@ -75,7 +75,7 @@ private void createLantern(Player p) {
 
 ```Java
 public class Space implements ISpace {
-	private Array<ILantern> lanterns = new Array<ILantern>();
+    private Array<ILantern> lanterns = new Array<ILantern>();
     ...
 }
 ```
@@ -88,13 +88,13 @@ public class Lantern implements ILantern {
     private IPosition element;
     ...
     public void iluminate() {
-    	...
-    	for(int dx = -radius;dx <= radius;dx++) {
-    		for(int dy = -radius;dy <= radius;dy++) {
-    		...
-    		space.iluminate(getX() + dx, getY() + dy, clarity);
-    		}
-    	}
+        ...
+        for(int dx = -radius;dx <= radius;dx++) {
+            for(int dy = -radius;dy <= radius;dy++) {
+                ...
+                space.iluminate(getX() + dx, getY() + dy, clarity);
+            }
+        }
     }
     ...
 }
@@ -110,31 +110,30 @@ Outro destaque é a forma como as imagens são dispostas na tela, com o uso da s
 public void update() {
 
     int nbElements = cell.nElements();
-    
+
     textures.clear();
     textures.add(imgGround);
-    
-    if(!cell.visible()) }
-    	textures.add(imgDark);
-    ...
-    else {
-		for(int i=0;i < nbElements;i++){
-			if(cell.visual(i).type() == 'B') {
-				if(cell.visual(i).variation() == 'C') {
-					if(cell.visual(i).state() == 'p') {
-						textures.add(imgButtonPressedFrame);
-						textures.add(imgBlueBG);
-						textures.add(imgButtonPressed);
-					}
-				}
-			...
-			}
-			else if(cell.visual(i).type() == 'P') {
-				...
-			}
-		}    
+
+    if(!cell.visible()) {
+        textures.add(imgDark);
+        ...
     }
-    ...
+    else {
+        for(int i=0;i < nbElements;i++){
+            if(cell.visual(i).type() == 'B') {
+            if(cell.visual(i).variation() == 'C') {
+            if(cell.visual(i).state() == 'p') {
+            textures.add(imgButtonPressedFrame);
+            textures.add(imgBlueBG);
+            textures.add(imgButtonPressed);
+            ...
+            }
+            else if(cell.visual(i).type() == 'P') {
+            ...
+            }
+        }
+    }
+...
 }
 ```
 
@@ -142,20 +141,20 @@ public void update() {
 
 ``` Java
 private void drawMap() {
-	batch.begin();
-	
-	for(int x=0;x < size;x++){
-			for(int y=0;y < size;y++){
-				batch.setColor(1f,1f,1f,1f);
-				ViewCell aux = cells[x][y];
-				
-				for(Texture texture: aux.getTexture()) {
-					batch.draw(texture, aux.getX(), aux,getY(), ViewCell.size, ViewCell.size);
-				}
-				...
-			}
-	}
-	batch.end();
+batch.begin();
+
+    for(int x=0;x < size;x++){
+        for(int y=0;y < size;y++){
+            batch.setColor(1f,1f,1f,1f);
+            ViewCell aux = cells[x][y];
+
+            for(Texture texture: aux.getTexture()) {
+                batch.draw(texture, aux.getX(), aux,getY(), ViewCell.size, ViewCell.size);
+            }
+            ...
+        }
+    }
+batch.end();
 }
 ```
 
@@ -165,31 +164,32 @@ Outro destaque é o controle do tempo de vida dos jogadores dependendo da posiç
 
 ```Java
 public class Blackhole implements IUpdate, ITime, IVisualBH {
-	...
-	private IPlayerBH pCase, pTars;
-	...	
-	public void update() {
-	   posCase = pCase.getIPosition();
-	   posTars = pTars.getIPosition();
-	   boolean caseIn = inside(posCase);
-	   boolean tarsIn = inside(posTars);
-	    
-	   if(caseIn)
-	       incCase = 20000;
-	   else
-	       incCase = - (float) distanceFactor(posCase);
-	    
-	   if(tarsIn)
-	       incTars = 20000;
-	   else
-	       incTars = - (float) distanceFactor(posTars);
-	   ...
-	}
-	...
-	public void update(float t) {
+    ...
+    private IPlayerBH pCase, pTars;
+    ...	
+    public void update() {
+        posCase = pCase.getIPosition();
+        posTars = pTars.getIPosition();
+        boolean caseIn = inside(posCase);
+        boolean tarsIn = inside(posTars);
+
+        if(caseIn)
+            incCase = 20000;
+        else
+            incCase = - (float) distanceFactor(posCase);
+
+        if(tarsIn)
+            incTars = 20000;
+        else
+            incTars = - (float) distanceFactor(posTars);
+        ...
+    }
+    ...
+    public void update(float t) {
         pCase.updateTimeRemaining(t * incCase);
         pTars.updateTimeRemaining(t * incTars);
-    }	
+    }
+}
 
 ```
 
@@ -201,15 +201,15 @@ Outro destaque é que o mapa é criado com base em um arquivo .txt. Por isso, o 
 
 ```Java
 public class Builder {
-	private void readFile() throws IOException {
-		FileHandle handle = Gdx.files.internal(mazePath);
-		...
-		readMazeMatrix(lines);
-		...
-		readVisibilityMatrix(lines);
-		...
-		readButtons(lines);
-	}
+    private void readFile() throws IOException {
+        FileHandle handle = Gdx.files.internal(mazePath);
+        ...
+        readMazeMatrix(lines);
+        ...
+        readVisibilityMatrix(lines);
+        ...
+        readButtons(lines);
+    }
 }
 ```
 
@@ -219,12 +219,12 @@ Por fim, um último destaque interessante é o da movimentação do jogador pelo
 
 ```Java
 public void move(Player toMove, int xi, int yi,  int xf, int yf, boolean forced) throws ObstructedCell {
-    
-		int obsLevel = cells[xf][yf].obstructionLevel();
-	    if(obsLevel == 3 || (!forced && obsLevel == 2))
-		    throw new ObstructedCell("This cell is obstructed!");
-		...
-	}
+
+    int obsLevel = cells[xf][yf].obstructionLevel();
+    if(obsLevel == 3 || (!forced && obsLevel == 2))
+        throw new ObstructedCell("This cell is obstructed!");
+    ...
+}
 ```
 
 Essa implementação é vantajosa pois possibilita que o jogador atualize sua posição antes de pedir o movimento ao espaço, caso a célula esteja obstruída ele reverte sua posição. A posição do jogador precisa ser atualizada antes do movimento pois a atualização da visibilidade do mapa é feita no final da função de movimento, e a lanterna utiliza a posição salva no jogador para realizar a iluminação.
