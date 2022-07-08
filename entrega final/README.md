@@ -974,7 +974,7 @@ public interface IGame extends IGameControl{
 
 ### Interface `IGameControl`
 
-Interface utilizada pelas telas para avisar o App sobre o andamento do jogo, por exemplo, quando o jogador quer sair do tutorial e aperta o botão de retornar ao menu, o controle da tela de turorial utiliza esta interface para alterar a tela para a incial.
+Interface utilizada pelas telas para avisar o App sobre o andamento do jogo, por exemplo, quando o jogador quer sair do tutorial e aperta o botão de retornar ao menu, o controle da tela de tutorial utiliza esta interface para alterar informar o App de que a tela deve ser mudada para a incial.
 
 Esta também é a interface utilizada pelos jogadores e pelo buraco negro para informar o App sobre o fim de uma partida.
 
@@ -985,6 +985,10 @@ public interface IGameControl {
     public void gameOverContinue();
 }
 ```
+
+## Mais Componentes
+
+Existem mais componentes implementados no jogo, porém foram documentados aqui somente os mais relevantes para seu funcionamento.
 
 # Plano de Exceções 
 O jogo não possui grandes casos de exceções. Mas algumas foram implementadas, como a de leitura do arquivo de texto usado para a montagem do jogo a qual imprime uma mensagem de erro caso isso ocorra e a de movimentos inválidos que somente levanta a exceção mas não acontece nada, uma vez que esse caso pode ocorrer em diversos momentos por erros de movimentação por parte do jogador por trás do jogo.
