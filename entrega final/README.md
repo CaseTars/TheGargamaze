@@ -195,7 +195,162 @@ public class Builder {
 
 # Destaques de Orientação a Objetos
 
+## Diagrama de Classes Usado no Destaque de OO
+
+## Código do Destaque OO
+
+
+Polimorfismo
+
+```Java
+public class Cell implements ICell{
+    private Array<Element> elements = new Array<Element>();
+    ...
+    public void insert(Element toInsert) {
+    	elements.add(toInsert);
+    	toInsert.setCell(this);
+    	viewCell.update();
+    }
+    public void remove(Element toRemove) {
+    	elements.removeValue(toRemove, true);
+    	toRemove.setCell(null);
+       viewCell.update();
+    }
+    ...
+ }
+```
+
+Interfaces
+
+```Java
+public class Player extends Element implements IPlayer {
+	...
+	@Override
+	public void moveLeft(){
+	...
+	}
+	...
+	@Override
+	public void dropCrystal(){
+	...
+	}
+} 
+```
+
+```Java
+public interface IPlayer extends    ICommand, ITime, IVisualPlayer, 
+                                    IPlayerInteraction, IPlayerSwitchHability, IPlayerBH {
+
+}
+```
+
+```Java
+public interface ICommand {
+	public void moveLeft();
+	public void moveRight();
+	public void moveUp();
+	public void moveDown();
+	public void moveTo(int x, int y);
+	public void commandAction();
+	public void commandDeaction();
+	public void useHability(int i);
+	public void dropCrystal();
+}
+```
+
+
 # Destaques de Pattern
+
+## Diagrama do Pattern
+## Código do Pattern
+
+Facade: Usado na criação do jogo
+
+```Java
+public class AppTheGargamaze extends Game implements IGame {
+
+	public void createTutorial() {
+         Builder bob = new BuilderTutorial(this);
+         
+         try {
+             bob.build();
+         }
+	...
+	}
+	public void createGame() {
+		 Builder bob = new Builder(this);
+		 try {
+			 bob.build();
+		 }
+	...
+	}	 
+}
+```
+
+```Java
+ public void build() throws AssembleError {
+		try{
+			readFile();
+		}
+		catch(Exception IOException){
+			throw new AssembleError("Error while building map.");
+		}
+		
+		space = new Space();
+		space.setAlwaysVisibleCells(visibilityMatrix);
+		createView();
+		connectCells();
+		createControl();
+		
+		// Monta o mapa
+		buildMaze();
+		buildButtons();
+		
+		// Cria Habilidades
+		createHability(0);  // Habilidade Visual
+		createHability(1);  // Habilidade troca de lugar.
+		createHability(2);  // Habilidade atravessar paredes
+		
+		// cria lanternas
+		createLantern(pCase);
+		createLantern(pTars);
+		
+		// Cria Buraco negro
+		createBlackhole();
+       ...
+    }
+```
+Observer: Habilidades disponíveis e no View
+
+```Java
+public abstract class Hability implements IHability{
+	public void update(float t) {
+        ...
+        if(time < 0) {
+            if(onCooldown) {
+                onCooldown = false;
+                time = 0;
+            }
+            else if(isRunning)
+                removeEffect();
+        }
+    }
+}
+```
+```Java
+public class ViewCell implements IUpdate {
+	public void update() {
+		...
+		textures.clear();
+		textures.add(imgGround);
+		...
+
+	}
+}
+```
+
+
+
 
 # Conclusão e trabalhos futuros
 
@@ -314,6 +469,14 @@ Por fim, este tempo também é informado ao Controle, como visto na Habilidade d
 O fim do jogo ocorre quando um dos jogadores fica sem bateria ou quando os dois jogadores conseguem entregar os dois cristais finais ao buraco negro. Cada jogador é responsável por avisar o App de que o jogo acabou com falha quando seu tempo de vida se esgota. Já o buraco negro monitora se os dois jogadores entraram nele com seus cristais e quando isso ocorre, informa o App de que o jogo terminou com sucesso.
 
 O App registra o fim de jogo e avisa o View para começar a animação de Fade Out, quando o fade termina o View avisa o App para continuar. Nesse ponto, o App cria a tela de fim de jogo de acordo com o parâmetro de sucesso ou falha que foi registrado.
+# Plano de Exceções 
 
+## Diagrama da Hierarquia de Exceções
+
+![Diagrama da Hierarquia de Exceções](imgs/diagramaExceptions.png)
+
+## Descrição das Classes de Exceções
+
+![tabela da descricao de Exceções](imgs/TabelaExceptions.png)
 
 
