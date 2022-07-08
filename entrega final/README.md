@@ -191,5 +191,118 @@ O fim do jogo ocorre quando um dos jogadores fica sem bateria ou quando os dois 
 
 O App registra o fim de jogo e avisa o View para começar a animação de Fade Out, quando o fade termina o View avisa o App para continuar. Nesse ponto, o App cria a tela de fim de jogo de acordo com o parâmetro de sucesso ou falha que foi registrado.
 
+# Componentes
 
+## Componente `Jogador`
 
+O jogador é um dos componentes centrais do jogo, sendo responsável por gerenciar tudo que diz respeito a um dos jogadores: suas habilidade, seu inventário, seu estado e o tempo de vida restante.
+
+![Diagrama do Componente Jogador](imgs/componenteJogador.png)
+
+**Ficha Técnica**
+
+item | detalhamento
+----- | -----
+Classe | `com.mygdx.game.elements.player.Player`
+Interfaces  <br />providas| `IPlayerInteraction`, <br /> `IPlayerBH`,  <br /> `IPlayerSwitchHability`,  <br /> `IVisualPlayer`, <br /> `ICommand`, <br /> `ITime`
+
+### Interfaces
+
+Interfaces associadas a esse componente:
+
+![Diagrama Interfaces do Jogador](imgs/interfacesJogador.png)
+
+Interface agregadora do componente em Java:
+
+```java
+public interface IPlayer extends ICommand, ITime, IVisualPlayer, IPlayerInteraction, IPlayerSwitchHability, IPlayerBH {
+
+}
+```
+
+## Detalhamento das Interfaces
+
+### Interface `ICommand`
+
+Interface utilizada pelo Controle para requisitar ações aos jogadores
+
+```java
+public interface ICommand {
+	public void moveLeft();
+	public void moveRight();
+	public void moveUp();
+	public void moveDown();
+    public void moveTo(int x, int y);
+	public void commandAction();
+	public void commandDeaction();
+	public void useHability(int i);
+	public void dropCrystal();
+}
+```
+
+### Interface `ITime`
+
+Interface de comunicação de passagem de tempo pelo App, nessa chamada o jogador avisa à todos os outros componentes conectados a ele, e que precisam saber da passagem de tempo, sobre a ela.
+
+```java
+public interface ITime {
+    public void update(float t);
+}
+```
+
+### Interface `IVisualPlayer`
+
+Interface visual do jogador, oferece todos os métodos necessários para o View mostrar as informações necessárias na tela, como o tempo restante de bateria, o inventário e o estado de cada umas das habilidades.
+
+```java
+public interface IVisualPlayer {
+    public float timeRemaining();
+    public Array<Character> getInventory();
+    public Array<IVisualHability> getHabilities();
+}
+```
+
+### Interface `IPlayerInteraction`
+
+Interface de interação do jogador, que oferece métodos de interação com outros elementos, como a a escuridão, e também é a interface utilizada por algumas das habilidade, para realizar o efeito desejado.
+
+```java
+public interface IPlayerInteraction {
+    public char variation();
+    
+    public void addEffect(IVisualEffect effect);
+    public void changeRadius(int change);
+    public IPosition getIPosition();
+    
+    public void setPhantom(boolean phantom);
+    
+    public void addCrystal(Crystal c);
+    public boolean hasCrystal(char variation);
+}
+```
+
+### Interface `IPlayerSwitchHability`
+
+Interface da habilidade de trocar os jogadores de lugar, por ser a hablilidade mais complexa, foi necessário criar uma interface somente para oferecer todos os métodos necessitados pela habilidade para seu funcionamento.
+
+Implementa outras duas interfaces, já implementadas pelo Jogador, somente para que a habilidade também tenha acesso aos métodos contidos nelas.
+
+```java
+public interface IPlayerSwitchHability extends IPosition, ICommand {
+    public void leave();
+    public void enter();
+    public boolean hasCrystal(char variation);
+}
+```
+
+### Interface `IPlayerBH`
+
+Interface oferecida para o Buraco negro, para que ele consiga saber a posição deste e atualizar seu tempo restante da maneira desejada. Também conta com o método *hasCrystal*, para conseguir saber se o jogo terminou com vitória e avisar o App.
+
+```java
+public interface IPlayerBH {
+    public void updateTimeRemaining(float t);
+    public IPosition getIPosition();
+    public boolean hasCrystal(char variation);
+}
+```
