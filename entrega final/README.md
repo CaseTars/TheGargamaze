@@ -55,23 +55,302 @@ Codigo criação do cristal do player
 
 Codigo Array de Ilantern do space
 
+```Java
+public class Space implements ISpace {
+    
+	private Array<ILantern> lanterns = new Array<ILantern>();
+    ...
+}
+```
+
 Codigo Iluminacao da lanterna
+
+```Java
+public class Lantern implements ILantern {
+    private ISpaceIluminate space;
+    private IPosition element;
+    ...
+    public void iluminate() {
+    	...
+    	for(int dx = -radius;dx <= radius;dx++) {
+    		for(int dy = -radius;dy <= radius;dy++) {
+    		...
+    		space.iluminate(getX() + dx, getY() + dy, clarity);
+    		}
+    	}
+    }
+    ...
+}
+```
 
 Outro destaque é a forma como os as imagens são dispostas na tela, com o uso da sobreposição de imagens para evitar a criação de imagens para casos muito específicos. Por exemplo, em um caso em que um dos jogadores entra na frente dos botões, em uma mesma renderização é desenhado primeiro o botão e depois o jogador. E isso é feito com o uso de um array de texturas de uma mesma célula, um array com todas as texturas em ordem de prioridade é enviada para o view, responsável por desenhá-las na tela.
 
 Codigo de texturas 1
 
+```Java
+public void update() {
+
+    int nbElements = cell.nElements();
+    
+    textures.clear();
+    textures.add(imgGround);
+    
+    if(!cell.visible()) }
+    	textures.add(imgDark);
+    ...
+    else {
+		for(int i=0;i < nbElements;i++){
+			if(cell.visual(i).type() == 'B') {
+				if(cell.visual(i).variation() == 'C') {
+					if(cell.visual(i).state() == 'p') {
+						textures.add(imgButtonPressedFrame);
+						textures.add(imgBlueBG);
+						textures.add(imgButtonPressed);
+					}
+				}
+			...
+			}
+			else if(cell.visual(i).type() == 'P') {
+				...
+			}
+		}    
+    }
+    ...
+}
+```
+
 Codigo de texturas 2
+
+``` Java
+private void drawMap() {
+	batch.begin();
+	
+	for(int x=0;x < size;x++){
+			for(int y=0;y < size;y++){
+				batch.setColor(1f,1f,1f,1f);
+				ViewCell aux = cells[x][y];
+				
+				for(Texture texture: aux.getTexture()) {
+					batch.draw(texture, aux.getX(), aux,getY(), ViewCell.size, ViewCell.size);
+				}
+				...
+			}
+	}
+	batch.end();
+}
+```
 
 Outro destaque é o controle do tempo de vida dos jogadores dependendo da posição em que este se encontra no mapa, quanto mais longe do buraco negro mais rápido o tempo passa. Essa implementação se alinha com a ideia do jogo, o buraco negro que se encontra no centro é o responsável por controlar essa variação do tempo.
 
 Codigo do tempo buraco negro
 
+```Java
+public class Blackhole implements IUpdate, ITime, IVisualBH {
+	...
+	private IPlayerBH pCase, pTars;
+	...	
+	public void update() {
+	   posCase = pCase.getIPosition();
+	   posTars = pTars.getIPosition();
+	   boolean caseIn = inside(posCase);
+	   boolean tarsIn = inside(posTars);
+	    
+	   if(caseIn)
+	       incCase = 20000;
+	   else
+	       incCase = - (float) distanceFactor(posCase);
+	    
+	   if(tarsIn)
+	       incTars = 20000;
+	   else
+	       incTars = - (float) distanceFactor(posTars);
+	   ...
+	}
+	...
+	public void update(float t) {
+        pCase.updateTimeRemaining(t * incCase);
+        pTars.updateTimeRemaining(t * incTars);
+    }	
+
+```
+
 Outro destaque é que o mapa é criado com base em um arquivo .txt. Por isso, o mapa pode ser criado em vários tamanhos e com diversas variações de puzzles e desafios, bastando somente alterar o .txt.
+
+Código do Builder
+
+```Java
+public class Builder {
+	private void readFile() throws IOException {
+		FileHandle handle = Gdx.files.internal(mazePath);
+		...
+		readMazeMatrix(lines);
+		...
+		readVisibilityMatrix(lines);
+		...
+		readButtons(lines);
+	}
+}
+```
+
 
 # Destaques de Orientação a Objetos
 
+## Diagrama de Classes Usado no Destaque de OO
+
+## Código do Destaque OO
+
+
+Polimorfismo
+
+```Java
+public class Cell implements ICell{
+    private Array<Element> elements = new Array<Element>();
+    ...
+    public void insert(Element toInsert) {
+    	elements.add(toInsert);
+    	toInsert.setCell(this);
+    	viewCell.update();
+    }
+    public void remove(Element toRemove) {
+    	elements.removeValue(toRemove, true);
+    	toRemove.setCell(null);
+       viewCell.update();
+    }
+    ...
+ }
+```
+
+Interfaces
+
+```Java
+public class Player extends Element implements IPlayer {
+	...
+	@Override
+	public void moveLeft(){
+	...
+	}
+	...
+	@Override
+	public void dropCrystal(){
+	...
+	}
+} 
+```
+
+```Java
+public interface IPlayer extends    ICommand, ITime, IVisualPlayer, 
+                                    IPlayerInteraction, IPlayerSwitchHability, IPlayerBH {
+
+}
+```
+
+```Java
+public interface ICommand {
+	public void moveLeft();
+	public void moveRight();
+	public void moveUp();
+	public void moveDown();
+	public void moveTo(int x, int y);
+	public void commandAction();
+	public void commandDeaction();
+	public void useHability(int i);
+	public void dropCrystal();
+}
+```
+
+
 # Destaques de Pattern
+
+## Diagrama do Pattern
+## Código do Pattern
+
+Facade: Usado na criação do jogo
+
+```Java
+public class AppTheGargamaze extends Game implements IGame {
+
+	public void createTutorial() {
+         Builder bob = new BuilderTutorial(this);
+         
+         try {
+             bob.build();
+         }
+	...
+	}
+	public void createGame() {
+		 Builder bob = new Builder(this);
+		 try {
+			 bob.build();
+		 }
+	...
+	}	 
+}
+```
+
+```Java
+ public void build() throws AssembleError {
+		try{
+			readFile();
+		}
+		catch(Exception IOException){
+			throw new AssembleError("Error while building map.");
+		}
+		
+		space = new Space();
+		space.setAlwaysVisibleCells(visibilityMatrix);
+		createView();
+		connectCells();
+		createControl();
+		
+		// Monta o mapa
+		buildMaze();
+		buildButtons();
+		
+		// Cria Habilidades
+		createHability(0);  // Habilidade Visual
+		createHability(1);  // Habilidade troca de lugar.
+		createHability(2);  // Habilidade atravessar paredes
+		
+		// cria lanternas
+		createLantern(pCase);
+		createLantern(pTars);
+		
+		// Cria Buraco negro
+		createBlackhole();
+       ...
+    }
+```
+Observer: Habilidades disponíveis e no View
+
+```Java
+public abstract class Hability implements IHability{
+	public void update(float t) {
+        ...
+        if(time < 0) {
+            if(onCooldown) {
+                onCooldown = false;
+                time = 0;
+            }
+            else if(isRunning)
+                removeEffect();
+        }
+    }
+}
+```
+```Java
+public class ViewCell implements IUpdate {
+	public void update() {
+		...
+		textures.clear();
+		textures.add(imgGround);
+		...
+
+	}
+}
+```
+
+
+
 
 # Conclusão e trabalhos futuros
 
@@ -306,3 +585,13 @@ public interface IPlayerBH {
     public boolean hasCrystal(char variation);
 }
 ```
+
+# Plano de Exceções 
+
+## Diagrama da Hierarquia de Exceções
+
+![Diagrama da Hierarquia de Exceções](imgs/diagramaExceptions.png)
+
+## Descrição das Classes de Exceções
+
+![tabela da descricao de Exceções](imgs/TabelaExceptions.png)
