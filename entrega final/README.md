@@ -331,10 +331,9 @@ public interface ICommand {
 
 
 # Destaques de Pattern
-* Facade: usado na inicialização do jogo, na construção dos mapa.  
+* Facade: usado na inicialização do jogo, na construção dos mapa. O App apenas pede ao builder para montar o jogo, sem saber da enorme complexidade desta tarefa. 
 
-* Observer: usado no monitoramento da presença dos cristais para que as habilidades fiquem disponíveis. É usado também na atuaização das células do view, 
-quando qualquer evento acontece as células do view são avisadas para que atualizem na tela a movimentação.
+* Observer: usado no monitoramento da presença dos cristais para que as habilidades fiquem disponíveis. É usado também na atualização das células do view: quando qualquer evento acontece as células do view são avisadas para que atualizem na tela a posição/estado dos elementos e a iluminação.
  
 ## Diagrama do Pattern
 
@@ -344,14 +343,13 @@ quando qualquer evento acontece as células do view são avisadas para que atual
 
 * Observer
 
-	* Hability: 
+* Hability: 
+
 ![Diagrama observer Hability](imgs/diagramaObserverHability.png)
 
-	* ViewCell:
+* ViewCell:
+
 ![Diagrama observer ViewCell](imgs/cell_viewCell.png)
-
-
-
 
 ## Código do Pattern
 
@@ -406,16 +404,13 @@ public class AppTheGargamaze extends Game implements IGame {
 * Observer: 
 
 ```Java
-public abstract class Hability implements IHability{
-    public void update(float t) {
-        ...
-        if(time < 0) {
-            if(onCooldown) {
-                onCooldown = false;
-                time = 0;
-            }
-            else if(isRunning)
-                removeEffect();
+public class PhantomHability extends Hability { // Implementação da habilidade fantasma
+    public void update() {
+        if(player.hasCrystal('2'))
+            unlock();
+        else {
+            lock();
+            ...
         }
     }
 }
@@ -426,20 +421,22 @@ public class ViewCell implements IUpdate {
         ...
         textures.clear();
         textures.add(imgGround);
-        ...
 
+        if(!cell.visible()) {  
+            textures.add(imgDark);
+        }
+        else {
+            for(int i = 0;i < nbElements;i++) {
+                ... // Monta as texturas
+            }
+        }
     }
 }
 ```
 
-
-
-
 # Conclusão e trabalhos futuros
 
 Para o futuro, pensa-se em implementar mais alguns patterns, como o singleton para os construtores. No atual código não tem prejuízos sem esse pattern, mas atualmente é  suscetível a más implementações que instanciam o construtor em outro lugar que não o App, que é a classe responsável por inicializar as telas e os construtores. Além disso, pretendemos colocar mais fases para o jogo, e acrescentar mais elementos algo que será relativamente simples devido a grande generalidade dos elementos e métodos de interação.
-
-
 
 # Diagramas
 
