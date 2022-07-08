@@ -520,7 +520,7 @@ Interfaces associadas a esse componente:
 
 ![Diagrama Interfaces do Jogador](imgs/interfacesJogador.png)
 
-Interface agregadora do componente em Java:
+Interface agregadora do componente::
 
 ```java
 public interface IPlayer extends ICommand, ITime, IVisualPlayer, IPlayerInteraction, IPlayerSwitchHability, IPlayerBH {
@@ -634,7 +634,7 @@ Interfaces associadas a esse componente:
 
 ![Diagrama Interfaces do Controle](imgs/interfacesControle.png)
 
-Interface agregadora do componente em Java:
+Interface agregadora do componente::
 
 ```java
 public interface IControl extends IControllerTimeOut, ITime {
@@ -685,7 +685,7 @@ Interfaces associadas a esse componente:
 
 ![Diagrama Interfaces do Espaço](imgs/interfacesEspaco.png)
 
-Interface agregadora do componente em Java:
+Interface agregadora do componente::
 
 ```java
 public interface ISpace extends ISpaceIluminate, ISpaceCommand, ISpaceSwitchHability, ISpaceCrystal, ISpaceEdit{
@@ -834,7 +834,7 @@ Interfaces associadas a esse componente:
 
 ![Diagrama Interfaces da Célula](imgs/interfacesCell.png)
 
-Interface agregadora do componente em Java:
+Interface agregadora do componente::
 
 ```java
 public interface ICell extends IVisualCell, IAction, IUpdate{
@@ -906,6 +906,83 @@ Interface utilizada pela Célula corresponde para avisar a Célula View de que h
 ```java
 public interface IUpdate {
 	public void update();
+}
+```
+
+## Componente `Lanterna`
+
+A lanterna é responsável por iluminar as células ao redor do elemento ao qual ela esta conectada, sempre que solicitado pelo Espaço, ela também tem o poder de avisar ao espaço que a iluminação deve ser atualizada, o que é feito quando seu raio de iluminação muda ou ela é ligada/desligada.
+
+![Diagrama do Componente Lanterna](imgs/componenteLanterna.png)
+
+**Ficha Técnica**
+
+item | detalhamento
+----- | -----
+Classe | `com.mygdx.game.screens.game.Lantern`
+Interface <br />provida| `ILantern`
+
+### Interfaces
+
+Interfaces associadas a esse componente:
+
+![Diagrama Interfaces da Lanterna](imgs/interfacesLanterna.png)
+
+### Interface `ILantern`
+
+Disponibiliza tanto as funcionalidades para o elemento que a têm, como ligar/desligar e alterar seu raio, quanto o método para iluminar as células, utilizado pelo Espaço.
+
+```java
+public interface ILantern {
+    public void iluminate();
+    public int getRadius();
+    public void setRadius(int newRadius);
+    public void changeRadius(int change);
+    public void turnOff();
+    public void turnOn();
+}
+```
+
+## Componente `App`
+
+O app é responsável por gerenciar o andamento do jogo, escolhendo a tela que será exibida (menu, tutorial, partida, ...), e também informando a passagem de tempo para os Jogadores, Buraco negro e Controle.
+
+![Diagrama do Componente App](imgs/componenteApp.png)
+
+**Ficha Técnica**
+
+item | detalhamento
+----- | -----
+Classe | `com.mygdx.game.app.AppTheGargamaze`
+Interface  <br />provida| `IGameControl`
+
+### Interfaces
+
+Interfaces associadas a esse componente:
+
+![Diagrama Interfaces do App](imgs/interfacesApp.png)
+
+Interface agregadora do componente::
+
+```java
+public interface IGame extends IGameControl{
+
+}
+```
+
+## Detalhamento das Interfaces
+
+### Interface `IGameControl`
+
+Interface utilizada pelas telas para avisar o App sobre o andamento do jogo, por exemplo, quando o jogador quer sair do tutorial e aperta o botão de retornar ao menu, o controle da tela de turorial utiliza esta interface para alterar a tela para a incial.
+
+Esta também é a interface utilizada pelos jogadores e pelo buraco negro para informar o App sobre o fim de uma partida.
+
+```java
+public interface IGameControl {
+    public void setScreen(int i);
+    public void gameOver(boolean sucess);
+    public void gameOverContinue();
 }
 ```
 
