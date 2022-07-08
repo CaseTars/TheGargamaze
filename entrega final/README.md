@@ -141,7 +141,7 @@ public void update() {
 
 ``` Java
 private void drawMap() {
-batch.begin();
+    batch.begin();
 
     for(int x=0;x < size;x++){
         for(int y=0;y < size;y++){
@@ -154,7 +154,7 @@ batch.begin();
             ...
         }
     }
-batch.end();
+    batch.end();
 }
 ```
 
@@ -292,41 +292,40 @@ public class Cell implements ICell{
 }
 ```
 
-* Interfaces: Interfaces do Jogador
+* Interfaces do Jogador:
 
 ```Java
 public class Player extends Element implements IPlayer {
-	...
-	@Override
-	public void moveLeft(){
-	...
-	}
-	...
-	@Override
-	public void dropCrystal(){
-	...
-	}
+    ...
+    @Override
+    public void moveLeft(){
+    ...
+    }
+    ...
+    @Override
+    public void dropCrystal(){
+    ...
+    }
 } 
 ```
 
 ```Java
-public interface IPlayer extends    ICommand, ITime, IVisualPlayer, 
-                                    IPlayerInteraction, IPlayerSwitchHability, IPlayerBH {
+public interface IPlayer extends ICommand, ITime, IVisualPlayer, IPlayerInteraction, IPlayerSwitchHability, IPlayerBH {
 
 }
 ```
 
 ```Java
 public interface ICommand {
-	public void moveLeft();
-	public void moveRight();
-	public void moveUp();
-	public void moveDown();
-	public void moveTo(int x, int y);
-	public void commandAction();
-	public void commandDeaction();
-	public void useHability(int i);
-	public void dropCrystal();
+    public void moveLeft();
+    public void moveRight();
+    public void moveUp();
+    public void moveDown();
+    public void moveTo(int x, int y);
+    public void commandAction();
+    public void commandDeaction();
+    public void useHability(int i);
+    public void dropCrystal();
 }
 ```
 
@@ -361,54 +360,54 @@ quando qualquer evento acontece as células do view são avisadas para que atual
 ```Java
 public class AppTheGargamaze extends Game implements IGame {
 
-	public void createGame() {
-		 Builder bob = new Builder(this);
-		 try {
-			 bob.build();
-		 }
-	...
-	}	 
+    public void createGame() {
+        Builder bob = new Builder(this);
+        try {
+            bob.build();
+        }
+        ...
+    }	 
 }
 ```
 
 ```Java
  public void build() throws AssembleError {
-		try{
-			readFile();
-		}
-		catch(Exception IOException){
-			throw new AssembleError("Error while building map.");
-		}
-		
-		space = new Space();
-		space.setAlwaysVisibleCells(visibilityMatrix);
-		createView();
-		connectCells();
-		createControl();
-		
-		// Monta o mapa
-		buildMaze();
-		buildButtons();
-		
-		// Cria Habilidades
-		createHability(0);  // Habilidade Visual
-		createHability(1);  // Habilidade troca de lugar.
-		createHability(2);  // Habilidade atravessar paredes
-		
-		// cria lanternas
-		createLantern(pCase);
-		createLantern(pTars);
-		
-		// Cria Buraco negro
-		createBlackhole();
-       ...
+    try{
+        readFile();
     }
+    catch(Exception IOException){
+        throw new AssembleError("Error while building map.");
+    }
+
+    space = new Space();
+    space.setAlwaysVisibleCells(visibilityMatrix);
+    createView();
+    connectCells();
+    createControl();
+
+    // Monta o mapa
+    buildMaze();
+    buildButtons();
+
+    // Cria Habilidades
+    createHability(0);  // Habilidade Visual
+    createHability(1);  // Habilidade troca de lugar.
+    createHability(2);  // Habilidade atravessar paredes
+
+    // cria lanternas
+    createLantern(pCase);
+    createLantern(pTars);
+
+    // Cria Buraco negro
+    createBlackhole();
+    ...
+}
 ```
 * Observer: 
 
 ```Java
 public abstract class Hability implements IHability{
-	public void update(float t) {
+    public void update(float t) {
         ...
         if(time < 0) {
             if(onCooldown) {
@@ -423,13 +422,13 @@ public abstract class Hability implements IHability{
 ```
 ```Java
 public class ViewCell implements IUpdate {
-	public void update() {
-		...
-		textures.clear();
-		textures.add(imgGround);
-		...
+    public void update() {
+        ...
+        textures.clear();
+        textures.add(imgGround);
+        ...
 
-	}
+    }
 }
 ```
 
