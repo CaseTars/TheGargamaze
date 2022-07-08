@@ -4,7 +4,7 @@
 
 # Descrição Resumida do Projeto/Jogo
 
-> O propósito do jogo é a captura dos dois cristais principais para que consigam ganhar. Contudo, para isso, os jogadores precisam de habilidades que são adquiridas através da captura de outros cristais que ficam localizados no cantos do mapa, mas para isso precisam vencer desafios em um labirinto com pouca visibilidade e correr contra o seu pior inimigo: O tempo de duração de suas baterias. Além disso, no centro do mapa se encontra um buraco negro que distorce a passagem do tempo aos seus arredores, por conta disso, quanto mais longe do buraco negro os jogadores se encontram mais rapido suas baterias são descarregadas, e quando os jogadores entram no buraco negro, suas baterias são recarregadas. 
+> O propósito do jogo é a captura dos dois cristais principais para que os jogadores consigam ganhar. Contudo, para isso, os jogadores precisam de habilidades que são adquiridas através da captura de outros cristais que ficam localizados no cantos do mapa, mas para isso precisam vencer desafios em um labirinto com pouca visibilidade e correr contra o seu pior inimigo: O tempo de duração de suas baterias. Além disso, no centro do mapa se encontra um buraco negro que distorce a passagem do tempo aos seus arredores, por conta disso, quanto mais longe do buraco negro os jogadores se encontram mais rapido suas baterias são descarregadas, e quando os jogadores entram no buraco negro, suas baterias são recarregadas. 
 
 # Equipe
 * `Thiago Máximo Pavão `           - `247381`
@@ -24,15 +24,23 @@
 
 # Relatório de evolução
 
-Inicialmente o projeto começou com uma estrutura base, apenas dois jogadores recebendo comandos do teclado e pedindo para o espaço movimentá-los pelas células, e nesse ponto já existia uma interface gráfica.
+Inicialmente o projeto começou com uma estrutura base, queríamos poder ter um jogo funcional para poder expandi-lo e modifica-lo com a passagem do tempo, de forma a evitar que o jogo tivesse muitas dificuldades para rodar pela primeira vez. Desenvolvemos então um model simples, apenas com o espaço, com sua matriz de células, o controle recebendo apenas comandos de movimentação e o view apenas colocando cores nas células de acordo com o elemento dentro dela. Tínhamos então apenas dois quadrados que podiam se movimentar em uma matriz, e nesse ponto já existia uma interface gráfica.
 
 ![Figura da primeira versão funcional do jogo](imgs/first.png)
 
-A partir disso acrescentamos a leitura de um arquivo .txt para a criação do labirinto em si. Nesse ponto surgiram algumas dúvidas e decisões importantes precisaram ser tomadas, como a de como representaríamos os elementos no arquivo, e além disso, tínhamos a intenção de que algumas partes do labirinto, como o centro e as paredes laterais, fossem sempre iluminadas. Optamos então por ter dois mapas em um mesmo arquivo .txt, um com os elementos e outro que mostrava somente quais teclas sempre seriam iluminadas. Nesse momento decidimos também como representar os botões e os seus respectivos portões que abrem, e foi decidido que, como não seriam muitos, essa informação seria passada através de coordenadas. Na hora dessa implementação algumas decisões erradas foram tomadas de modo que seria necessário fazer um downcasting, por isso tivemos que fazer algumas alterações na lógica de leitura.
+A partir disso acrescentamos a leitura de um arquivo .txt para a criação do labirinto em si. Nesse ponto surgiram algumas dúvidas e decisões importantes precisaram ser tomadas, como a de como representaríamos os elementos no arquivo, e além disso, tínhamos a intenção de que algumas partes do labirinto, como o centro e as paredes laterais, fossem sempre iluminadas. Optamos então por ter dois mapas em um mesmo arquivo .txt, um com os elementos e outro que mostrava somente quais teclas sempre seriam iluminadas. Nesse momento decidimos também como representar os botões e os seus respectivos portões que abrem, e foi decidido que, inicialmente esses elementos eram colocados diretamente na matriz do arquivo, porém essa implementação forçava o uso de casting para recuperaos elementos já inseridos no espaço.
 
-Com a implementação de muitos elementos no jogo que tinham que se comunicar com outros, vimos a necessidade de acrescentar mais interfaces específicas de modo que seria possível essa comunicação mas também ela seria controlada e organizada.
+Para resolver este problema, os botões e seus portões são passados após as matrizes de elementos e iluminação, de forma que são instanciados, conectados e inseridos no espaço juntos.
 
-Uma dificuldade enfrentada foi na implementação da interface gráfica, uma vez que teríamos uma quantidade razoável de texturas possíveis que deveriam ser mostradas em uma única célula. Uma solução encontrada foi a criação de uma matriz de células do view, cujas células comunicam-se com as células nas quais os elementos se encontram e com isso descobrem quais texturas devem ser exibidas no momento. E para minimizar a quantidade de texturas carregadas, elas foram carregadas somente uma vez como atributos estáticos de modo que todas as células do view tinham acesso a ela.
+Com a implementação de muitos elementos no jogo que tinham que se comunicar com outros, vimos a necessidade de acrescentar mais interfaces específicas de modo que seria possível essa comunicação sempre garantindo que ela seria controlada e organizada.
+
+Uma dificuldade enfrentada foi na implementação da interface gráfica, uma vez que era desejado que a textura de uma célula mostrasse tudo que existe nela. Isso tornava muito complexo o trabalho do View, que precisava encontrar cada textura para representar cada elemento em cada célula do espaço. Uma solução encontrada foi a criação de uma matriz de células do view, cujas células comunicam-se com as células nas quais os elementos se encontram (matriz do espaço) e com isso descobrem quais texturas devem ser exibidas no momento. E para minimizar a quantidade de texturas carregadas, elas foram carregadas somente uma vez como atributos estáticos da classe ViewCell, de modo que todas as células do view tinham acesso a ela.
+
+Após isso foi implementada a lógica de lanternas, inicialmente as lanterrnas eram associadas internamente aos jogadores, e eles eram responsáveis por iluminar o espaço ao seu redor. Posteriormente, com a chegada da ideia de que seria necessário lanternas para outros elementos, como os cristais, ou botões que ilumissem certos locais, surgiu a ideia de lanternas para controlar a visibilidade do mapa. Ainda mais para o final, surgiu a ideia de existir uma diferença de luminosidade para células mais distantes do centro da lanterna, o que pôde ser feito sem muitas modificações na logica geral, graças à forma que foi feita a lógica de iluminação.
+
+Também inserimos o tempo de vida dos jogadores, novamente, os jogadores eram responsáveis por calcular sua distância ao centro do mapa e atualizar sua vida de acordo, com o desenvolvimento do projeto, essa função foi dada ao próprio buraco negro, quando este foi criado. Isto possibilita que o buraco negro esteja em qualquer local do mapa e ainda tenha o funcionamento esperado, além de retirar do jogador um trabalho que não cabia à ele.
+
+O resto do jogo cresceu naturalmente, as habilidades foram sendo implementadas, o view se complexificou de forma a acompanhar as necessidades do jogo, como mostrar as habilidades dos jogadores e seus inventários assim como o Controle, que se adaptou as novas funções que poderiam ser executadas pelo jogador. Por fim, foram criadas as diferentes telas do jogo, o menu, a tela de finalização da partida, a tela de história e o tutorial. Retocando seus últimos detalhes para garantir um jogo completamente amarrado.
 
 # Destaques de Código
 
@@ -53,11 +61,20 @@ private void buildMaze() throws AssembleError {
 
 * Codigo criação do cristal do player
 
+```Java
+private void createLantern(Player p) {
+    Lantern lantern = new Lantern();
+    lantern.connect(p);
+    lantern.connect(space);
+    p.connect(lantern);
+    space.addLantern(lantern);
+}
+```
+
 * Codigo Array de Ilantern do space
 
 ```Java
 public class Space implements ISpace {
-    
 	private Array<ILantern> lanterns = new Array<ILantern>();
     ...
 }
@@ -83,9 +100,11 @@ public class Lantern implements ILantern {
 }
 ```
 
-Outro destaque é a forma como os as imagens são dispostas na tela, com o uso da sobreposição de imagens para evitar a criação de imagens para casos muito específicos. Por exemplo, em um caso em que um dos jogadores entra na frente dos botões, em uma mesma renderização é desenhado primeiro o botão e depois o jogador. E isso é feito com o uso de um array de texturas de uma mesma célula, um array com todas as texturas em ordem de prioridade é enviada para o view, responsável por desenhá-las na tela.
+O método iluminate da lanterna é chamado pelo espaço quando algum dos jogadores se move ou o estado das lanternas muda. Nesses casos, o espaço escurece o mapa inteiro e pede para cada lanterna iluminar a parte que deve ser iluminada. 
 
-* Codigo de texturas 1
+Outro destaque é a forma como as imagens são dispostas na tela, com o uso da sobreposição de imagens para evitar a criação de imagens para casos muito específicos. Por exemplo, em um caso em que um dos jogadores entra na frente dos botões, em uma mesma renderização é desenhado primeiro o botão e depois o jogador. E isso é feito com o uso de um array de texturas de uma mesma célula, um array com todas as texturas em ordem de prioridade é enviada para o view, responsável por desenhá-las na tela.
+
+* Codigo da ViewCell
 
 ```Java
 public void update() {
@@ -119,7 +138,7 @@ public void update() {
 }
 ```
 
-* Codigo de texturas 2
+* Codigo do View
 
 ``` Java
 private void drawMap() {
@@ -140,7 +159,7 @@ private void drawMap() {
 }
 ```
 
-Outro destaque é o controle do tempo de vida dos jogadores dependendo da posição em que este se encontra no mapa, quanto mais longe do buraco negro mais rápido o tempo passa. Essa implementação se alinha com a ideia do jogo, o buraco negro que se encontra no centro é o responsável por controlar essa variação do tempo.
+Outro destaque é o controle do tempo de vida dos jogadores dependendo da posição em que eles se encontram no mapa, quanto mais longe do buraco negro mais rápido o tempo passa. Essa implementação se alinha com a ideia do jogo, o buraco negro que se encontra no centro é o responsável por controlar essa variação do tempo.
 
 * Codigo do tempo buraco negro
 
@@ -174,7 +193,9 @@ public class Blackhole implements IUpdate, ITime, IVisualBH {
 
 ```
 
-Outro destaque é que o mapa é criado com base em um arquivo .txt. Por isso, o mapa pode ser criado em vários tamanhos e com diversas variações de puzzles e desafios, bastando somente alterar o .txt.
+O incremento é atualizado sempre que um dos jogadores se move, caso o jogador esteja dentro do buraco negro, seu incremento é positivo, caso contrário ele é negativo e tem maior módulo para maiores distâncias da jogador até a posição do buraco negro. Por fim, este incremento é utilizado quando é necessário avisar os jogadores da passagem de tempo.
+
+Outro destaque é que o mapa é criado com base em um arquivo .txt. Por isso, o arquivo foi feito de forma que o mapa pode ser criado em vários tamanhos e com diversas variações de puzzles e desafios, bastando somente alterar o .txt.
 
 * Código do Builder
 
@@ -192,11 +213,10 @@ public class Builder {
 }
 ```
 
-
 # Destaques de Orientação a Objetos
 
-* Polimorfismo: usado para lidar com a presença de elementos em uma mesma célula, com isso cada célula tem um array de elementos genéricos e por isso consegue inserir
-qualquer objeto que seja elemento, independentemente da sua especificidade.
+* Polimorfismo: usado para lidar com a presença de elementos distintos em uma mesma célula, com isso cada célula tem um array de elementos genéricos e consegue inserir objetos, independentemente da sua especificidade. Cada elemento implementa um método de interação com o jogador quando este entra na célula (utilizado, por exemplo, pela escuridão, para diminuir o raio de visão do jogador que entra nela), e uma de ação, chamada quando o jogador pressiona sua tecla de ação (utilizada, por exemplo, pelo botão e pelo cristal). Como todos os elementos são obrigados a implementar estes métodos, a chamada ocorre para todos da mesma forma, porém nem todos realmente tomam alguma ação nesta chamada.
+
 * Interfaces: usadas nas comunicações entre diferentes objetos, usada para filtrar os métodos providos disponíveis.o
 
 ## Diagrama de Classes Usado no Destaque de OO
