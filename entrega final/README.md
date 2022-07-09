@@ -30,7 +30,7 @@ Inicialmente o projeto começou com uma estrutura base, queríamos poder ter um 
 
 A partir disso acrescentamos a leitura de um arquivo .txt para a criação do labirinto em si. Nesse ponto surgiram algumas dúvidas e decisões importantes precisaram ser tomadas, como a de como representaríamos os elementos no arquivo, e além disso, tínhamos a intenção de que algumas partes do labirinto, como o centro e as paredes laterais, fossem sempre iluminadas. Optamos então por ter dois mapas em um mesmo arquivo .txt, um com os elementos e outro que mostrava somente quais teclas sempre seriam iluminadas. Nesse momento decidimos também como representar os botões e os seus respectivos portões que abrem, e foi decidido que, inicialmente esses elementos eram colocados diretamente na matriz do arquivo, porém essa implementação forçava o uso de casting para recuperaos elementos já inseridos no espaço.
 
-Para resolver este problema, os botões e seus portões são passados após as matrizes de elementos e iluminação, de forma que são instanciados, conectados e inseridos no espaço juntos.
+Para resolver este problema, os botões e seus portões são passados após as matrizes de elementos e iluminação, de forma que são instanciados, conectados e inseridos no espaço juntos. 
 
 Com a implementação de muitos elementos no jogo que tinham que se comunicar com outros, vimos a necessidade de acrescentar mais interfaces específicas de modo que seria possível essa comunicação sempre garantindo que ela seria controlada e organizada.
 
