@@ -436,7 +436,9 @@ public class ViewCell implements IUpdate {
 
 # Conclusão e trabalhos futuros
 
-Para o futuro, pensa-se em implementar mais alguns patterns, como o singleton para os construtores. No atual código não tem prejuízos sem esse pattern, mas atualmente é  suscetível a más implementações que instanciam o construtor em outro lugar que não o App, que é a classe responsável por inicializar as telas e os construtores. Além disso, pretendemos colocar mais fases para o jogo, e acrescentar mais elementos algo que será relativamente simples devido a grande generalidade dos elementos e métodos de interação.
+Para o futuro, seria interessante continuar expandindo o jogo, implementando mais fases e mais habilidades, talvez até mesmo alterando um pouco a forma que o Jogador guarda suas habilidades, para que elas só aparecam quando o cristal necessário é coletado. Isso possibilitaria que houvessem diversas habilidades, sem a necessidade de adicionar cada uma delas com uma tecla de uso permanente.
+
+Pensa-se também em implementar mais alguns patterns, que auxiliariam em uma expansão mais segura do jogo, como o singleton para os construtores. O atual código não tem prejuízos sem esse pattern, mas atualmente é suscetível a más implementações que instanciem o construtor em outro lugar que não o App, que é a classe responsável por inicializar as telas e os construtores. Também seria interessante acrescentar mais elementos, algo que seria relativamente simples devido a grande generalidade dos elementos e dos métodos de interação.
 
 # Diagramas
 
@@ -1046,7 +1048,9 @@ public interface IGameControl {
 Existem mais componentes implementados no jogo, porém foram documentados aqui somente os mais relevantes para seu funcionamento.
 
 # Plano de Exceções 
-O jogo não possui grandes casos de exceções. Mas algumas foram implementadas, como a de leitura do arquivo de texto usado para a montagem do jogo a qual imprime uma mensagem de erro caso isso ocorra e a de movimentos inválidos que somente levanta a exceção mas não acontece nada, uma vez que esse caso pode ocorrer em diversos momentos por erros de movimentação por parte do jogador por trás do jogo.
+O jogo não possui grandes casos de exceções. Mas algumas foram implementadas, como a de leitura do arquivo de texto usado para a montagem do jogo, a qual imprime uma mensagem de erro personalizada caso ocorra um problema na leitura do arquivo, e outra caso tenha sido colocado um elemento inexistente na matriz de elementos.
+
+Também temos os movimentos inválidos, como já explicado nos destaques de código, o Espaço joga uma exceção de célula obstruida para o jogador caso o nível de obstrução da célula-alvo seja maior do que o permitido. Essa implementação facilitou um ajuste correto da iluminação do mapa.
 
 ## Diagrama da Hierarquia de Exceções
 
@@ -1054,4 +1058,7 @@ O jogo não possui grandes casos de exceções. Mas algumas foram implementadas,
 
 ## Descrição das Classes de Exceções
 
-![tabela da descricao de Exceções](imgs/TabelaExceptions.png)
+Classe | Descrição
+----- | -----
+AssembleError | Indica que houve um problema na leitura do arquivo de montagem. Ou que foram colocados elementos inexistentes na matriz.
+ObstructedCell | Indica que um dos jogadores tentou se movimentar para uma célula inválida.
